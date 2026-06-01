@@ -224,7 +224,7 @@ function updateAuthUI() {
         footerText.innerText = "Don't have an account?";
         toggleBtn.innerText = "Sign Up";
         nameField.style.display = "none";
-        googleBtnText.innerText = "Sign in with Google";
+        if(googleBtnText) googleBtnText.innerText = "Sign in with Google";
     } else {
         title.innerText = "Create Account";
         subtitle.innerText = "Join Bloorush today";
@@ -232,7 +232,7 @@ function updateAuthUI() {
         footerText.innerText = "Already have an account?";
         toggleBtn.innerText = "Login";
         nameField.style.display = "flex";
-        googleBtnText.innerText = "Sign up with Google";
+        if(googleBtnText) googleBtnText.innerText = "Sign up with Google";
     }
 }
 
@@ -361,20 +361,23 @@ function initGoogleClient() {
     });
 }
 
-document.querySelector('.google-btn').addEventListener('click', function (e) {
-    e.preventDefault();
-    if (GOOGLE_CLIENT_ID === "YOUR_GOOGLE_CLIENT_ID_HERE.apps.googleusercontent.com") {
-        alert("Developer Note:\n\nYou must replace 'YOUR_GOOGLE_CLIENT_ID_HERE' in script.js with your actual Google OAuth Client ID to test the real login!");
-        return;
-    }
+const googleBtnElem = document.querySelector('.google-btn');
+if (googleBtnElem) {
+    googleBtnElem.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (GOOGLE_CLIENT_ID === "YOUR_GOOGLE_CLIENT_ID_HERE.apps.googleusercontent.com") {
+            alert("Developer Note:\n\nYou must replace 'YOUR_GOOGLE_CLIENT_ID_HERE' in script.js with your actual Google OAuth Client ID to test the real login!");
+            return;
+        }
 
-    if (tokenClient) {
-        // Triggers the Google Login Popup
-        tokenClient.requestAccessToken();
-    } else {
-        alert("Google Identity Services not loaded yet. Please try again.");
-    }
-});
+        if (tokenClient) {
+            // Triggers the Google Login Popup
+            tokenClient.requestAccessToken();
+        } else {
+            alert("Google Identity Services not loaded yet. Please try again.");
+        }
+    });
+}
 
 function fetchGoogleUserProfile(accessToken) {
     // Fetch user details like email and name from Google
@@ -546,6 +549,22 @@ function updateCartUI() {
     let total = 0;
     let totalItems = 0;
 
+    // Calculate totalItems for Floating Button BEFORE early return
+    for (let item in cart) {
+        totalItems += cart[item].count;
+    }
+
+    // Manage Floating Cart Button (Mobile)
+    const floatingBtn = document.getElementById("floatingCartBtn");
+    if (floatingBtn) {
+        if (totalItems > 0) {
+            floatingBtn.style.display = "flex";
+            document.getElementById("floatingCartCount").innerText = totalItems;
+        } else {
+            floatingBtn.style.display = "none";
+        }
+    }
+
     if (Object.keys(cart).length === 0) {
         cartEmpty.style.display = "block";
         totalPrice.innerText = "0";
@@ -643,11 +662,18 @@ function proceedToCheckout() {
 
     // Hide Services, Show Checkout
     document.querySelector('.services-section').style.display = 'none';
-    if (document.querySelector('.why-section')) document.querySelector('.why-section').style.display = 'none';
+    if (document.querySelector('.hero-section')) document.querySelector('.hero-section').style.display = 'none';
+    if (document.querySelector('.offers-section')) document.querySelector('.offers-section').style.display = 'none';
+        if (document.querySelector('.why-section')) document.querySelector('.why-section').style.display = 'none';
     if (document.querySelector('.how-works-section')) document.querySelector('.how-works-section').style.display = 'none';
     if (document.querySelector('.testimonial-section')) document.querySelector('.testimonial-section').style.display = 'none';
 
     document.getElementById('checkoutSection').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Explicitly hide floating cart button
+    const floatingBtn = document.getElementById("floatingCartBtn");
+    if(floatingBtn) floatingBtn.style.display = 'none';
 
     // Refresh Dynamic View State dynamically
     updateCheckoutUI();
@@ -677,12 +703,17 @@ function backToServices() {
     // Hide Checkout, Show Services
     document.getElementById('checkoutSection').style.display = 'none';
     document.querySelector('.services-section').style.display = 'block';
-    if (document.querySelector('.why-section')) document.querySelector('.why-section').style.display = 'block';
+    if (document.querySelector('.hero-section')) document.querySelector('.hero-section').style.display = 'block';
+    if (document.querySelector('.offers-section')) document.querySelector('.offers-section').style.display = 'block';
+        if (document.querySelector('.why-section')) document.querySelector('.why-section').style.display = 'block';
     if (document.querySelector('.how-works-section')) document.querySelector('.how-works-section').style.display = 'block';
     if (document.querySelector('.testimonial-section')) document.querySelector('.testimonial-section').style.display = 'block';
 
     // Scroll smoothly to services
     document.querySelector('.services-section').scrollIntoView({ behavior: 'smooth' });
+    
+    // Refresh floating cart visibility naturally
+    updateCartUI();
 }
 
 // SLOT BOOKING MODAL & WHATSAPP REDIRECT ARCHITECTURE
@@ -717,7 +748,8 @@ function toggleNewAddressForm() {
 function openSlotBooking() {
     // Geofence Interceptor
     const userLocation = (document.getElementById("locationText").innerText || "").toLowerCase();
-    const isAvailable = userLocation.includes("nagpur") || userLocation.includes("shahjahanpur");
+    const allowedLocations = ["nagpur", "narendra nagar", "manish nagar", "chhatrepathi square", "shahjahanpur"];
+    const isAvailable = allowedLocations.some(loc => userLocation.includes(loc));
     
     if (!isAvailable) {
         $('#locationErrorModal').modal('show');
@@ -876,7 +908,7 @@ ${finalAddress}
 Please confirm my booking!`;
 
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/918010687985?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/917843021334?text=${encodedMessage}`;
 
     const originalText = btn.innerHTML;
     btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Redirecting to WhatsApp...';
@@ -955,4 +987,414 @@ function completeBooking(paymentId) {
 
     // Automatically redirect back to the home view underneath the overlay
     backToServices();
+}
+
+function renderBookingsTab() {
+    const upcomingTab = document.getElementById('upcoming');
+    const completedTab = document.getElementById('completed');
+    if(!completedTab) return;
+    
+    // Ensure upcoming tab always shows empty state since we are moving bookings to completed
+    if (upcomingTab) {
+        upcomingTab.innerHTML = `
+            <i class="far fa-calendar-times" style="font-size: 60px; color: #ddd; margin-bottom: 20px;"></i>
+            <h5 class="font-weight-bold text-muted">No upcoming bookings</h5>
+            <p class="text-muted" style="font-size: 0.9rem;">Your bookings will appear here.</p>
+        `;
+    }
+
+    if (userBookings && userBookings.length > 0) {
+        let htmlContent = '';
+        userBookings.forEach(booking => {
+            htmlContent += `
+                <div class="card mb-3 shadow-sm border-0" style="border-radius: 12px; text-align: left;">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="font-weight-bold mb-0" style="color:var(--primary);">${booking.id}</h6>
+                            <span class="badge badge-success text-white">Confirmed</span>
+                        </div>
+                        <p class="text-muted mb-1" style="font-size: 0.9rem;"><i class="far fa-calendar-alt mr-2"></i>${booking.date}</p>
+                        <p class="font-weight-bold mb-2">₹${booking.total}</p>
+                        <p class="mb-0" style="font-size: 0.85rem; color: #555;">${booking.service}</p>
+                        <button class="btn btn-sm btn-outline-primary mt-3 w-100" style="border-radius: 8px;" onclick="viewBill('${booking.id}')">View Bill</button>
+                    </div>
+                </div>
+            `;
+        });
+        completedTab.innerHTML = htmlContent;
+    } else {
+        completedTab.innerHTML = `
+            <i class="fas fa-check-circle" style="font-size: 60px; color: #ddd; margin-bottom: 20px;"></i>
+            <h5 class="font-weight-bold text-muted">No completed bookings</h5>
+        `;
+    }
+}
+
+// SPA View Routing (Mobile Only)
+function switchView(viewId, element) {
+    // Hide all main views
+    document.getElementById('homeView').style.display = 'none';
+    document.getElementById('bookingsView').style.display = 'none';
+    document.getElementById('packagesView').style.display = 'none';
+    
+    // Show selected view
+    document.getElementById(viewId).style.display = 'block';
+    window.scrollTo(0, 0);
+
+    // Render bookings if it's bookings view
+    if (viewId === 'bookingsView') {
+        renderBookingsTab();
+    } else if (viewId === 'homeView') {
+        // Ensure all sections are unhidden if user was previously in checkout
+        backToServices();
+    }
+    
+    // Update active nav class
+    if (element) {
+        document.querySelectorAll('.bottom-nav-item').forEach(el => el.classList.remove('active'));
+        element.classList.add('active');
+    }
+    
+    // Explicitly hide floating cart button when not on home view
+    const floatingBtn = document.getElementById("floatingCartBtn");
+    if(floatingBtn) {
+        if(viewId !== 'homeView') {
+            floatingBtn.style.display = 'none';
+        } else {
+            updateCartUI(); // Restore cart button visibility logic if returning to home
+        }
+    }
+}
+
+// ==========================================
+// NEW MOBILE UI LOGIC
+// ==========================================
+
+let currentCleaningMode = 'regular';
+
+function toggleCleaningMode(mode) {
+    currentCleaningMode = mode;
+    
+    document.getElementById('regularModeBtn').classList.remove('active');
+    document.getElementById('deepModeBtn').classList.remove('active');
+    
+    const grid = document.querySelector('.services-grid');
+    const placeholder = document.getElementById('deepCleanPlaceholder');
+    
+    if (mode === 'regular') {
+        document.getElementById('regularModeBtn').classList.add('active');
+        document.getElementById('regularModeBtn').style.background = '#fff';
+        document.getElementById('regularModeBtn').style.color = '#004aad';
+        document.getElementById('regularModeBtn').style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+        
+        document.getElementById('deepModeBtn').style.background = 'transparent';
+        document.getElementById('deepModeBtn').style.color = '#888';
+        document.getElementById('deepModeBtn').style.boxShadow = 'none';
+        
+        if(grid) grid.style.display = 'grid';
+        if(placeholder) placeholder.style.display = 'none';
+        
+        // Trigger all selects to restore correct price from dropdowns
+        const selects = document.querySelectorAll('.service-duration-select');
+        selects.forEach(s => s.dispatchEvent(new Event('change')));
+        
+        if (typeof syncGridCounters === "function") syncGridCounters();
+    } else {
+        document.getElementById('deepModeBtn').classList.add('active');
+        document.getElementById('deepModeBtn').style.background = '#fff';
+        document.getElementById('deepModeBtn').style.color = '#004aad';
+        document.getElementById('deepModeBtn').style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+        
+        document.getElementById('regularModeBtn').style.background = 'transparent';
+        document.getElementById('regularModeBtn').style.color = '#888';
+        document.getElementById('regularModeBtn').style.boxShadow = 'none';
+        
+        if(grid) grid.style.display = 'none';
+        if(placeholder) placeholder.style.display = 'block';
+    }
+}
+
+function addFixedService(rawName, basePrice) {
+    let finalPrice = basePrice;
+    if (currentCleaningMode === 'deep') finalPrice += 50; // Dynamic Deep Clean Markup
+
+    const cartItemId = rawName + (currentCleaningMode === 'deep' ? ' (Deep Clean)' : ' (Regular)');
+    
+    if (!cart[cartItemId]) {
+        cart[cartItemId] = { rawName: rawName, count: 1, price: finalPrice, timeLimit: 'N/A' };
+    } else {
+        cart[cartItemId].count++;
+    }
+    
+    // Animate Button
+    showToast("Added", rawName + ' added to cart!', true);
+    updateCartUI();
+}
+
+function addQuickBook(timeLabel, price) {
+    const cartItemId = 'Quick Book | ' + timeLabel;
+    
+    if (!cart[cartItemId]) {
+        cart[cartItemId] = { rawName: 'Quick Book', count: 1, price: price, timeLimit: timeLabel };
+    } else {
+        cart[cartItemId].count++;
+    }
+    
+    showToast("Added", 'Quick Book (' + timeLabel + ') added to cart!', true);
+    updateCartUI();
+}
+
+
+// ==========================================
+// NEW GRID COUNTER LOGIC
+// ==========================================
+
+function addFixedServiceFromGrid(btn, rawName, basePrice) {
+    let finalPrice = basePrice;
+    if (currentCleaningMode === 'deep') finalPrice += 50;
+
+    const cartItemId = rawName + (currentCleaningMode === 'deep' ? ' (Deep Clean)' : ' (Regular)');
+    
+    if (!cart[cartItemId]) {
+        cart[cartItemId] = { rawName: rawName, count: 1, price: finalPrice, timeLimit: 'N/A' };
+    } else {
+        cart[cartItemId].count++;
+    }
+    
+    showToast("Success", rawName + ' added to cart!', true);
+    updateCartUI();
+    syncGridCounters();
+}
+
+
+// ==========================================
+// DYNAMIC PRICING LOGIC
+// ==========================================
+
+function updateServicePrice(selectElem, rawName) {
+    const selectedOption = selectElem.options[selectElem.selectedIndex];
+    const price = selectedOption.getAttribute('data-price');
+    
+    // Update displayed price
+    const container = selectElem.closest('.service-grid-item');
+    if(container) {
+        const priceDisplay = container.querySelector('.service-display-price');
+        if(priceDisplay) priceDisplay.innerText = '₹' + price;
+    }
+    
+    // Resync counters because duration changed
+    syncGridCounters();
+}
+
+function addDynamicService(btn, rawName) {
+    const container = btn.closest('.service-grid-item');
+    const selectElem = container.querySelector('.service-duration-select');
+    
+    let duration = '';
+    let basePrice = 0;
+    
+    if(selectElem) {
+        const selectedOption = selectElem.options[selectElem.selectedIndex];
+        duration = selectedOption.value;
+        basePrice = parseInt(selectedOption.getAttribute('data-price'));
+    } else {
+        // Fallback for any static items
+        basePrice = parseInt(container.querySelector('.service-display-price').innerText);
+    }
+    
+    const cleaningModeSuffix = currentCleaningMode === 'deep' ? ' (Deep Clean)' : ' (Regular)';
+    const cartItemId = rawName + (duration ? " (" + duration + ")" : "") + cleaningModeSuffix;
+    
+    if (!cart[cartItemId]) {
+        cart[cartItemId] = { rawName: rawName + (duration ? " (" + duration + ")" : ""), count: 1, price: basePrice, timeLimit: duration };
+    } else {
+        cart[cartItemId].count++;
+    }
+    
+    if (typeof showToast === "function") showToast("Success", rawName + " (" + duration + ") added to cart!", true);
+    else alert(rawName + " (" + duration + ") added to cart!");
+    updateCartUI();
+    syncGridCounters();
+}
+
+function updateCountFromDynamicGrid(btn, rawName, change) {
+    const container = btn.closest('.service-grid-item');
+    const selectElem = container.querySelector('.service-duration-select');
+    
+    let duration = '';
+    if(selectElem) {
+        duration = selectElem.options[selectElem.selectedIndex].value;
+    }
+    
+    const cleaningModeSuffix = currentCleaningMode === 'deep' ? ' (Deep Clean)' : ' (Regular)';
+    const cartItemId = rawName + (duration ? " (" + duration + ")" : "") + cleaningModeSuffix;
+    
+    if (cart[cartItemId]) {
+        cart[cartItemId].count += change;
+        if (cart[cartItemId].count <= 0) {
+            delete cart[cartItemId];
+        }
+    }
+    updateCartUI();
+    syncGridCounters();
+}
+
+function updateCountFromGrid(btn, rawName, change) {
+    const cartItemId = rawName + (currentCleaningMode === 'deep' ? ' (Deep Clean)' : ' (Regular)');
+    
+    if (cart[cartItemId]) {
+        cart[cartItemId].count += change;
+        if (cart[cartItemId].count <= 0) {
+            delete cart[cartItemId];
+        }
+    }
+    updateCartUI();
+    syncGridCounters();
+}
+
+function syncGridCounters() {
+    const gridItems = document.querySelectorAll('.service-grid-item');
+    gridItems.forEach(item => {
+        const rawName = item.getAttribute('data-name');
+        const selectElem = item.querySelector('.service-duration-select');
+        let duration = '';
+        if(selectElem) {
+            duration = selectElem.options[selectElem.selectedIndex].value;
+        }
+        
+        const suffix = duration ? " (" + duration + ")" : "";
+        const cartItemId = rawName + suffix + (currentCleaningMode === 'deep' ? ' (Deep Clean)' : ' (Regular)');
+        
+        const imgContainer = item.querySelector('.img-container');
+        if(!imgContainer) return;
+        
+        const addBtn = imgContainer.querySelector('.add-btn-small');
+        const counterPill = imgContainer.querySelector('.counter-pill-grid');
+        
+        if (cart[cartItemId] && cart[cartItemId].count > 0) {
+            if(addBtn) addBtn.style.display = 'none';
+            if(counterPill) {
+                counterPill.style.display = 'flex';
+                counterPill.querySelector('span').innerText = cart[cartItemId].count;
+                // Update onclick for counter pill to use dynamic version
+                const minusBtn = counterPill.querySelector('button:first-child');
+                const plusBtn = counterPill.querySelector('button:last-child');
+                if(minusBtn) minusBtn.setAttribute('onclick', `updateCountFromDynamicGrid(this, '${rawName}', -1)`);
+                if(plusBtn) plusBtn.setAttribute('onclick', `updateCountFromDynamicGrid(this, '${rawName}', 1)`);
+            }
+        } else {
+            if(addBtn) addBtn.style.display = 'flex';
+            if(counterPill) counterPill.style.display = 'none';
+        }
+    });
+}
+
+
+
+
+
+
+
+
+
+// Ensure counters stay synced when cart updates from right panel
+const originalUpdateCartUI = updateCartUI;
+updateCartUI = function() {
+    originalUpdateCartUI();
+    if(typeof syncGridCounters === 'function') syncGridCounters();
+        
+    // Ensure floating cart button is only visible on the home view
+    const floatingBtn = document.getElementById("floatingCartBtn");
+    const homeView = document.getElementById("homeView");
+    if(floatingBtn && homeView && homeView.style.display === "none") {
+        floatingBtn.style.display = "none";
+    }
+}
+
+// INTERSECTION OBSERVER FOR FLOATING CART BUTTON
+document.addEventListener('DOMContentLoaded', () => {
+    const cartSection = document.querySelector('.services-right');
+    const floatingBtn = document.getElementById('floatingCartBtn');
+    
+    if (cartSection && floatingBtn) {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                // Cart is in view, hide floating button
+                floatingBtn.style.opacity = '0';
+                floatingBtn.style.pointerEvents = 'none';
+            } else {
+                // Cart is not in view, show floating button (if items > 0)
+                floatingBtn.style.opacity = '1';
+                floatingBtn.style.pointerEvents = 'auto';
+            }
+        }, { threshold: 0.1 });
+        
+        observer.observe(cartSection);
+    }
+    
+    // DYNAMIC OFFER DOTS
+    const slider = document.getElementById("offersSlider");
+    const dots = document.querySelectorAll(".offer-dot");
+    
+    if (slider && dots.length > 0) {
+        slider.addEventListener("scroll", () => {
+            // Calculate active index based on scroll position
+            const cardWidth = slider.scrollWidth / dots.length;
+            const index = Math.round(slider.scrollLeft / cardWidth);
+            
+            // Update dots styles
+            dots.forEach((dot, i) => {
+                if (i === index) {
+                    dot.style.width = "20px";
+                    dot.style.background = "#333";
+                } else {
+                    dot.style.width = "6px";
+                    dot.style.background = "#ccc";
+                }
+            });
+        });
+    }
+});
+
+
+function scrollToCleaningMode() {
+    if(document.getElementById('homeView').style.display === 'none') {
+        const homeNavBtn = document.querySelector('.bottom-nav-item[onclick*="homeView"]');
+        if (typeof switchView === 'function') {
+            switchView('homeView', homeNavBtn);
+        }
+    }
+    
+    setTimeout(() => {
+        const section = document.getElementById('cleaningModeSection');
+        if(section) {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, 100);
+}
+
+function bookFirstOrderOffer() {
+    let userName = "";
+    
+    // Attempt to get user name from currentUser variable or localStorage
+    try {
+        if (typeof currentUser !== 'undefined' && currentUser && currentUser.name) {
+            userName = currentUser.name;
+        } else {
+            const localUser = JSON.parse(localStorage.getItem('bloorush_currentUser'));
+            if(localUser && localUser.name) {
+                userName = localUser.name;
+            }
+        }
+    } catch(e) {}
+    
+    let message = "";
+    if (userName) {
+        message = `Hi, I am ${userName}. This is my first booking Service. I would like to avail the ₹49 First Order offer!`;
+    } else {
+        message = `Hi! This is my first booking Service. I would like to avail the ₹49 First Order offer!`;
+    }
+    
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/917843021334?text=${encodedMessage}`, '_blank');
 }
