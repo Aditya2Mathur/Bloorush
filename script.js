@@ -224,7 +224,7 @@ function updateAuthUI() {
         footerText.innerText = "Don't have an account?";
         toggleBtn.innerText = "Sign Up";
         nameField.style.display = "none";
-        if(googleBtnText) googleBtnText.innerText = "Sign in with Google";
+        if (googleBtnText) googleBtnText.innerText = "Sign in with Google";
     } else {
         title.innerText = "Create Account";
         subtitle.innerText = "Join Bloorush today";
@@ -232,7 +232,7 @@ function updateAuthUI() {
         footerText.innerText = "Already have an account?";
         toggleBtn.innerText = "Login";
         nameField.style.display = "flex";
-        if(googleBtnText) googleBtnText.innerText = "Sign up with Google";
+        if (googleBtnText) googleBtnText.innerText = "Sign up with Google";
     }
 }
 
@@ -275,7 +275,7 @@ document.getElementById('authSubmitBtn').addEventListener('click', function (e) 
         showToast("Error", "Email and Password are required!", false);
         return;
     }
-    
+
     // JS Security Authentication Hardening
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(emailField)) {
@@ -410,11 +410,11 @@ function fetchGoogleUserProfile(accessToken) {
 const servicePricingMatrix = {
     'Utensils Cleaning': { '30': 89, '45': 129, '60': 169, '90': 239 },
     'Bathroom Cleaning': { '30': 99, '45': 149, '60': 189, '90': 189 },
-    'Toilet Cleaning':   { '30': 99, '45': 149, '60': 189, '90': 239 },
-    'Mopping & Sweeping':{ '30': 79, '45': 119, '60': 159, '90': 219 },
-    'Home Dusting':      { '30': 79, '45': 119, '60': 159, '90': 219 },
-    'Fan Cleaning':      { '1': 49, '2': 98, '3': 147, '4': 196 },
-    'Window Cleaning':   { '1': 49, '2': 98, '3': 147, '4': 196 }
+    'Toilet Cleaning': { '30': 99, '45': 149, '60': 189, '90': 239 },
+    'Mopping & Sweeping': { '30': 79, '45': 119, '60': 159, '90': 219 },
+    'Home Dusting': { '30': 79, '45': 119, '60': 159, '90': 219 },
+    'Fan Cleaning': { '1': 49, '2': 98, '3': 147, '4': 196 },
+    'Window Cleaning': { '1': 49, '2': 98, '3': 147, '4': 196 }
 };
 
 let currentFilter = 'prebooking';
@@ -427,9 +427,9 @@ function setServiceFilter(filter) {
         document.querySelectorAll('.add-btn').forEach(btn => btn.style.display = 'flex');
         updateCartUI();
     }
-    
+
     currentFilter = filter;
-    
+
     // Update active tab UI
     document.querySelectorAll('.filter-tab').forEach(b => {
         b.classList.remove('active', 'btn-primary', 'text-white');
@@ -459,15 +459,15 @@ function updateCardPrice(selectElem) {
     // Default to Mopping logic if somehow explicitly missing from map
     const matrix = servicePricingMatrix[title] || servicePricingMatrix['Mopping & Sweeping'];
     let basePrice = matrix[duration] || 0;
-    
+
     // Core Modifiers
     let newPrice = basePrice;
-    if (currentFilter === 'instant')       newPrice = basePrice + 15;
+    if (currentFilter === 'instant') newPrice = basePrice + 15;
     else if (currentFilter === 'prebooking') newPrice = basePrice;
-    else if (currentFilter === 'reliable')   newPrice = basePrice;
+    else if (currentFilter === 'reliable') newPrice = basePrice;
 
     priceText.innerText = "₹" + newPrice;
-    
+
     // Update container datasets for the Add To Cart logic
     let timeLabel = duration + ' min';
     if (title.includes('Fan') || title.includes('Window')) {
@@ -483,16 +483,16 @@ let cart = {};
 function showCounter(btn) {
     const container = btn.parentElement;
     const counterPill = container.querySelector('.counter-pill');
-    
+
     const card = container.closest(".service-card");
     const nameStr = card.getAttribute("data-name");
-    
+
     // Safety sync to ensure current duration is accurately grabbed if user clicked blindly
     updateCardPrice(container.closest('.service-item').querySelector('.duration-selector'));
 
     const price = parseInt(card.getAttribute("data-price"));
     const timeLimit = card.getAttribute("data-time") || "30 min";
-    
+
     // Unique ID combining service name and the precise duration
     const cartItemId = `${nameStr} | ${timeLimit}`;
 
@@ -518,7 +518,7 @@ function updateCount(btn, change) {
     const nameStr = card.getAttribute("data-name");
     const price = parseInt(card.getAttribute("data-price"));
     const timeLimit = card.getAttribute("data-time");
-    
+
     const cartItemId = `${nameStr} | ${timeLimit}`;
 
     let count = 0;
@@ -633,12 +633,12 @@ function syncFrontEndCounters() {
     allContainers.forEach(container => {
         const nameStr = container.getAttribute('data-name');
         const activeSelect = container.closest('.service-item').querySelector('.duration-selector');
-        
+
         // Safety sync to ensure data sets accurately reflect the currently selected combo
-        if(cart[`${nameStr} | ${activeSelect.value} min`]) { 
-           // Edgecase: Reliable logic overrides time limits appended strings
+        if (cart[`${nameStr} | ${activeSelect.value} min`]) {
+            // Edgecase: Reliable logic overrides time limits appended strings
         }
-        
+
         let cartItemId = `${nameStr} | ${container.getAttribute('data-time')}`;
 
         if (cart[cartItemId]) {
@@ -664,7 +664,7 @@ function proceedToCheckout() {
     document.querySelector('.services-section').style.display = 'none';
     if (document.querySelector('.hero-section')) document.querySelector('.hero-section').style.display = 'none';
     if (document.querySelector('.offers-section')) document.querySelector('.offers-section').style.display = 'none';
-        if (document.querySelector('.why-section')) document.querySelector('.why-section').style.display = 'none';
+    if (document.querySelector('.why-section')) document.querySelector('.why-section').style.display = 'none';
     if (document.querySelector('.how-works-section')) document.querySelector('.how-works-section').style.display = 'none';
     if (document.querySelector('.testimonial-section')) document.querySelector('.testimonial-section').style.display = 'none';
 
@@ -673,7 +673,7 @@ function proceedToCheckout() {
 
     // Explicitly hide floating cart button
     const floatingBtn = document.getElementById("floatingCartBtn");
-    if(floatingBtn) floatingBtn.style.display = 'none';
+    if (floatingBtn) floatingBtn.style.display = 'none';
 
     // Refresh Dynamic View State dynamically
     updateCheckoutUI();
@@ -705,13 +705,13 @@ function backToServices() {
     document.querySelector('.services-section').style.display = 'block';
     if (document.querySelector('.hero-section')) document.querySelector('.hero-section').style.display = 'block';
     if (document.querySelector('.offers-section')) document.querySelector('.offers-section').style.display = 'block';
-        if (document.querySelector('.why-section')) document.querySelector('.why-section').style.display = 'block';
+    if (document.querySelector('.why-section')) document.querySelector('.why-section').style.display = 'block';
     if (document.querySelector('.how-works-section')) document.querySelector('.how-works-section').style.display = 'block';
     if (document.querySelector('.testimonial-section')) document.querySelector('.testimonial-section').style.display = 'block';
 
     // Scroll smoothly to services
     document.querySelector('.services-section').scrollIntoView({ behavior: 'smooth' });
-    
+
     // Refresh floating cart visibility naturally
     updateCartUI();
 }
@@ -720,15 +720,35 @@ function backToServices() {
 let selectedTimeSlot = null;
 
 // UTILS FOR ADDRESS
+
+function loadSavedPhones() {
+    return JSON.parse(localStorage.getItem('bloorush_savedPhones') || "[]");
+}
+
+function saveNewPhone(phone) {
+    let phones = loadSavedPhones();
+    if (!phones.includes(phone)) {
+        phones.unshift(phone); // Add to top
+        if (phones.length > 5) phones.pop(); // Keep max 5
+        localStorage.setItem('bloorush_savedPhones', JSON.stringify(phones));
+    }
+}
+
+function toggleNewPhoneForm() {
+    const form = document.getElementById('newPhoneForm');
+    const isHidden = form.style.display === 'none';
+    form.style.display = isHidden ? 'block' : 'none';
+}
+
 function loadSavedAddresses() {
-    if(!currentUser) return [];
+    if (!currentUser) return [];
     let addrs = localStorage.getItem('bloorush_userAddresses_' + currentUser.email);
     return addrs ? JSON.parse(addrs) : [];
 }
 function saveNewAddress(addrStr) {
-    if(!currentUser) return;
+    if (!currentUser) return;
     let addrs = loadSavedAddresses();
-    if(!addrs.includes(addrStr)) {
+    if (!addrs.includes(addrStr)) {
         addrs.push(addrStr);
         localStorage.setItem('bloorush_userAddresses_' + currentUser.email, JSON.stringify(addrs));
     }
@@ -736,7 +756,7 @@ function saveNewAddress(addrStr) {
 function toggleNewAddressForm() {
     const form = document.getElementById('newAddressForm');
     const btn = document.getElementById('toggleAddressBtn');
-    if(form.style.display === 'none') {
+    if (form.style.display === 'none') {
         form.style.display = 'block';
         btn.innerText = "- Cancel New Address";
     } else {
@@ -750,7 +770,7 @@ function openSlotBooking() {
     const userLocation = (document.getElementById("locationText").innerText || "").toLowerCase();
     const allowedLocations = ["nagpur", "narendra nagar", "manish nagar", "chhatrepathi square", "shahjahanpur"];
     const isAvailable = allowedLocations.some(loc => userLocation.includes(loc));
-    
+
     if (!isAvailable) {
         $('#locationErrorModal').modal('show');
         return;
@@ -776,12 +796,12 @@ function openSlotBooking() {
     const savedAddressBlock = document.getElementById('savedAddressBlock');
     const toggleAddrBtn = document.getElementById('toggleAddressBtn');
     const addresses = loadSavedAddresses();
-    
+
     if (addresses.length > 0) {
         let h = '';
         addresses.forEach((ad, idx) => {
             h += `<div class="form-check mb-1">
-                    <input class="form-check-input" type="radio" name="savedAddressRadio" id="addrRadio${idx}" value="${ad}" ${idx===0 ? 'checked' : ''}>
+                    <input class="form-check-input" type="radio" name="savedAddressRadio" id="addrRadio${idx}" value="${ad}" ${idx === 0 ? 'checked' : ''}>
                     <label class="form-check-label text-muted" style="font-size: 0.85rem;" for="addrRadio${idx}">${ad}</label>
                   </div>`;
         });
@@ -795,6 +815,31 @@ function openSlotBooking() {
         toggleAddrBtn.style.display = 'none'; // Force they write an address
     }
 
+    // Setup Phone UI
+    document.getElementById('newPhoneForm').style.display = 'none';
+    const savedPhoneBlock = document.getElementById('savedPhoneBlock');
+    const togglePhoneBtn = document.getElementById('togglePhoneBtn');
+    const phones = loadSavedPhones();
+
+    if (phones.length > 0) {
+        let h = '';
+        phones.forEach((ph, idx) => {
+            h += `<div class="form-check mb-1">
+                    <input class="form-check-input" type="radio" name="savedPhoneRadio" id="phoneRadio${idx}" value="${ph}" ${idx === 0 ? 'checked' : ''}>
+                    <label class="form-check-label text-muted" style="font-size: 0.85rem;" for="phoneRadio${idx}">${ph}</label>
+                  </div>`;
+        });
+        savedPhoneBlock.innerHTML = h;
+        savedPhoneBlock.style.display = 'block';
+        togglePhoneBtn.innerText = "+ Add New Number";
+        togglePhoneBtn.style.display = 'inline-block';
+    } else {
+        savedPhoneBlock.style.display = 'none';
+        document.getElementById('newPhoneForm').style.display = 'block';
+        togglePhoneBtn.style.display = 'none'; // Force they write a phone
+    }
+
+
     // Default Date & Temporal Limits
     const dateInput = document.getElementById('bookingDate');
     const todayStr = new Date().toISOString().split("T")[0];
@@ -804,7 +849,7 @@ function openSlotBooking() {
     // Reset slots cleanly before initial validate
     document.querySelectorAll('.slot-item').forEach(el => el.classList.remove('selected', 'disabled-slot'));
     selectedTimeSlot = null;
-    
+
     // Inject Total into Slot Modal
     document.getElementById('slotModalTotalAmount').innerText = totalAmount;
 
@@ -817,7 +862,7 @@ function validateBookingDate() {
     const dateInput = document.getElementById('bookingDate');
     const selectedDateStr = dateInput.value;
     const todayStr = new Date().toISOString().split("T")[0];
-    
+
     // Deselect active slot to prevent cheating by selecting early then changing date to today
     document.querySelectorAll('.slot-item').forEach(el => {
         el.classList.remove('selected', 'disabled-slot');
@@ -841,7 +886,7 @@ function validateBookingDate() {
 }
 
 function selectSlot(element) {
-    if(element.classList.contains('disabled-slot')) return;
+    if (element.classList.contains('disabled-slot')) return;
     document.querySelectorAll('.slot-item').forEach(el => el.classList.remove('selected'));
     element.classList.add('selected');
     selectedTimeSlot = element.innerText;
@@ -860,8 +905,8 @@ function confirmWhatsAppBooking(btn) {
         const h = document.getElementById('addrHouse').value.trim();
         const f = document.getElementById('addrFloor').value.trim();
         const s = document.getElementById('addrStreet').value.trim();
-        
-        if(!h || !s) {
+
+        if (!h || !s) {
             alert("House Number and Street Name are required for new addresses!");
             return;
         }
@@ -869,7 +914,7 @@ function confirmWhatsAppBooking(btn) {
         saveNewAddress(finalAddress);
     } else {
         const selectedRadio = document.querySelector('input[name="savedAddressRadio"]:checked');
-        if(selectedRadio){
+        if (selectedRadio) {
             finalAddress = selectedRadio.value;
         } else {
             alert("Please provide or select a service address.");
@@ -877,9 +922,30 @@ function confirmWhatsAppBooking(btn) {
         }
     }
 
+
+    // Extract Phone
+    let finalPhone = "";
+    if (document.getElementById('newPhoneForm').style.display === 'block') {
+        const ph = document.getElementById('contactPhone').value.trim();
+        if (!ph) {
+            alert("Mobile Number is required!");
+            return;
+        }
+        finalPhone = ph;
+        saveNewPhone(finalPhone);
+    } else {
+        const selectedRadio = document.querySelector('input[name="savedPhoneRadio"]:checked');
+        if (selectedRadio) {
+            finalPhone = selectedRadio.value;
+        } else {
+            alert("Please provide or select a mobile number.");
+            return;
+        }
+    }
+
     // Extract Date
     const chosenDate = document.getElementById('bookingDate').value;
-    if(!chosenDate) {
+    if (!chosenDate) {
         alert("Please select a preferred date.");
         return;
     }
@@ -898,7 +964,7 @@ ${itemsList.join('\n\n')}
 
 *Total Estimate:* ₹${totalAmount}
 
-*Customer Location:*
+*Customer Contact:* ${finalPhone}\n*Customer Location:*
 ${finalAddress}
 *Map Link:* https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(finalAddress)}
 
@@ -921,7 +987,7 @@ Please confirm my booking!`;
         // Complete the system booking to save to History Table
         completeBooking("wa_" + Math.random().toString(36).substring(2, 10));
         $('#slotBookingModal').modal('hide');
-        
+
         // Reset button
         btn.innerHTML = originalText;
         btn.disabled = false;
@@ -992,8 +1058,8 @@ function completeBooking(paymentId) {
 function renderBookingsTab() {
     const upcomingTab = document.getElementById('upcoming');
     const completedTab = document.getElementById('completed');
-    if(!completedTab) return;
-    
+    if (!completedTab) return;
+
     // Ensure upcoming tab always shows empty state since we are moving bookings to completed
     if (upcomingTab) {
         upcomingTab.innerHTML = `
@@ -1036,7 +1102,7 @@ function switchView(viewId, element) {
     document.getElementById('homeView').style.display = 'none';
     document.getElementById('bookingsView').style.display = 'none';
     document.getElementById('packagesView').style.display = 'none';
-    
+
     // Show selected view
     document.getElementById(viewId).style.display = 'block';
     window.scrollTo(0, 0);
@@ -1048,17 +1114,17 @@ function switchView(viewId, element) {
         // Ensure all sections are unhidden if user was previously in checkout
         backToServices();
     }
-    
+
     // Update active nav class
     if (element) {
         document.querySelectorAll('.bottom-nav-item').forEach(el => el.classList.remove('active'));
         element.classList.add('active');
     }
-    
+
     // Explicitly hide floating cart button when not on home view
     const floatingBtn = document.getElementById("floatingCartBtn");
-    if(floatingBtn) {
-        if(viewId !== 'homeView') {
+    if (floatingBtn) {
+        if (viewId !== 'homeView') {
             floatingBtn.style.display = 'none';
         } else {
             updateCartUI(); // Restore cart button visibility logic if returning to home
@@ -1074,43 +1140,43 @@ let currentCleaningMode = 'regular';
 
 function toggleCleaningMode(mode) {
     currentCleaningMode = mode;
-    
+
     document.getElementById('regularModeBtn').classList.remove('active');
     document.getElementById('deepModeBtn').classList.remove('active');
-    
+
     const grid = document.querySelector('.services-grid');
     const placeholder = document.getElementById('deepCleanPlaceholder');
-    
+
     if (mode === 'regular') {
         document.getElementById('regularModeBtn').classList.add('active');
         document.getElementById('regularModeBtn').style.background = '#fff';
         document.getElementById('regularModeBtn').style.color = '#004aad';
         document.getElementById('regularModeBtn').style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-        
+
         document.getElementById('deepModeBtn').style.background = 'transparent';
         document.getElementById('deepModeBtn').style.color = '#888';
         document.getElementById('deepModeBtn').style.boxShadow = 'none';
-        
-        if(grid) grid.style.display = 'grid';
-        if(placeholder) placeholder.style.display = 'none';
-        
+
+        if (grid) grid.style.display = 'grid';
+        if (placeholder) placeholder.style.display = 'none';
+
         // Trigger all selects to restore correct price from dropdowns
         const selects = document.querySelectorAll('.service-duration-select');
         selects.forEach(s => s.dispatchEvent(new Event('change')));
-        
+
         if (typeof syncGridCounters === "function") syncGridCounters();
     } else {
         document.getElementById('deepModeBtn').classList.add('active');
         document.getElementById('deepModeBtn').style.background = '#fff';
         document.getElementById('deepModeBtn').style.color = '#004aad';
         document.getElementById('deepModeBtn').style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-        
+
         document.getElementById('regularModeBtn').style.background = 'transparent';
         document.getElementById('regularModeBtn').style.color = '#888';
         document.getElementById('regularModeBtn').style.boxShadow = 'none';
-        
-        if(grid) grid.style.display = 'none';
-        if(placeholder) placeholder.style.display = 'block';
+
+        if (grid) grid.style.display = 'none';
+        if (placeholder) placeholder.style.display = 'block';
     }
 }
 
@@ -1119,13 +1185,13 @@ function addFixedService(rawName, basePrice) {
     if (currentCleaningMode === 'deep') finalPrice += 50; // Dynamic Deep Clean Markup
 
     const cartItemId = rawName + (currentCleaningMode === 'deep' ? ' (Deep Clean)' : ' (Regular)');
-    
+
     if (!cart[cartItemId]) {
         cart[cartItemId] = { rawName: rawName, count: 1, price: finalPrice, timeLimit: 'N/A' };
     } else {
         cart[cartItemId].count++;
     }
-    
+
     // Animate Button
     showToast("Added", rawName + ' added to cart!', true);
     updateCartUI();
@@ -1133,13 +1199,13 @@ function addFixedService(rawName, basePrice) {
 
 function addQuickBook(timeLabel, price) {
     const cartItemId = 'Quick Book | ' + timeLabel;
-    
+
     if (!cart[cartItemId]) {
         cart[cartItemId] = { rawName: 'Quick Book', count: 1, price: price, timeLimit: timeLabel };
     } else {
         cart[cartItemId].count++;
     }
-    
+
     showToast("Added", 'Quick Book (' + timeLabel + ') added to cart!', true);
     updateCartUI();
 }
@@ -1154,13 +1220,13 @@ function addFixedServiceFromGrid(btn, rawName, basePrice) {
     if (currentCleaningMode === 'deep') finalPrice += 50;
 
     const cartItemId = rawName + (currentCleaningMode === 'deep' ? ' (Deep Clean)' : ' (Regular)');
-    
+
     if (!cart[cartItemId]) {
         cart[cartItemId] = { rawName: rawName, count: 1, price: finalPrice, timeLimit: 'N/A' };
     } else {
         cart[cartItemId].count++;
     }
-    
+
     showToast("Success", rawName + ' added to cart!', true);
     updateCartUI();
     syncGridCounters();
@@ -1174,14 +1240,14 @@ function addFixedServiceFromGrid(btn, rawName, basePrice) {
 function updateServicePrice(selectElem, rawName) {
     const selectedOption = selectElem.options[selectElem.selectedIndex];
     const price = selectedOption.getAttribute('data-price');
-    
+
     // Update displayed price
     const container = selectElem.closest('.service-grid-item');
-    if(container) {
+    if (container) {
         const priceDisplay = container.querySelector('.service-display-price');
-        if(priceDisplay) priceDisplay.innerText = '₹' + price;
+        if (priceDisplay) priceDisplay.innerText = '₹' + price;
     }
-    
+
     // Resync counters because duration changed
     syncGridCounters();
 }
@@ -1189,11 +1255,11 @@ function updateServicePrice(selectElem, rawName) {
 function addDynamicService(btn, rawName) {
     const container = btn.closest('.service-grid-item');
     const selectElem = container.querySelector('.service-duration-select');
-    
+
     let duration = '';
     let basePrice = 0;
-    
-    if(selectElem) {
+
+    if (selectElem) {
         const selectedOption = selectElem.options[selectElem.selectedIndex];
         duration = selectedOption.value;
         basePrice = parseInt(selectedOption.getAttribute('data-price'));
@@ -1201,16 +1267,16 @@ function addDynamicService(btn, rawName) {
         // Fallback for any static items
         basePrice = parseInt(container.querySelector('.service-display-price').innerText);
     }
-    
+
     const cleaningModeSuffix = currentCleaningMode === 'deep' ? ' (Deep Clean)' : ' (Regular)';
     const cartItemId = rawName + (duration ? " (" + duration + ")" : "") + cleaningModeSuffix;
-    
+
     if (!cart[cartItemId]) {
         cart[cartItemId] = { rawName: rawName + (duration ? " (" + duration + ")" : ""), count: 1, price: basePrice, timeLimit: duration };
     } else {
         cart[cartItemId].count++;
     }
-    
+
     if (typeof showToast === "function") showToast("Success", rawName + " (" + duration + ") added to cart!", true);
     else alert(rawName + " (" + duration + ") added to cart!");
     updateCartUI();
@@ -1220,15 +1286,15 @@ function addDynamicService(btn, rawName) {
 function updateCountFromDynamicGrid(btn, rawName, change) {
     const container = btn.closest('.service-grid-item');
     const selectElem = container.querySelector('.service-duration-select');
-    
+
     let duration = '';
-    if(selectElem) {
+    if (selectElem) {
         duration = selectElem.options[selectElem.selectedIndex].value;
     }
-    
+
     const cleaningModeSuffix = currentCleaningMode === 'deep' ? ' (Deep Clean)' : ' (Regular)';
     const cartItemId = rawName + (duration ? " (" + duration + ")" : "") + cleaningModeSuffix;
-    
+
     if (cart[cartItemId]) {
         cart[cartItemId].count += change;
         if (cart[cartItemId].count <= 0) {
@@ -1241,7 +1307,7 @@ function updateCountFromDynamicGrid(btn, rawName, change) {
 
 function updateCountFromGrid(btn, rawName, change) {
     const cartItemId = rawName + (currentCleaningMode === 'deep' ? ' (Deep Clean)' : ' (Regular)');
-    
+
     if (cart[cartItemId]) {
         cart[cartItemId].count += change;
         if (cart[cartItemId].count <= 0) {
@@ -1258,33 +1324,33 @@ function syncGridCounters() {
         const rawName = item.getAttribute('data-name');
         const selectElem = item.querySelector('.service-duration-select');
         let duration = '';
-        if(selectElem) {
+        if (selectElem) {
             duration = selectElem.options[selectElem.selectedIndex].value;
         }
-        
+
         const suffix = duration ? " (" + duration + ")" : "";
         const cartItemId = rawName + suffix + (currentCleaningMode === 'deep' ? ' (Deep Clean)' : ' (Regular)');
-        
+
         const imgContainer = item.querySelector('.img-container');
-        if(!imgContainer) return;
-        
+        if (!imgContainer) return;
+
         const addBtn = imgContainer.querySelector('.add-btn-small');
         const counterPill = imgContainer.querySelector('.counter-pill-grid');
-        
+
         if (cart[cartItemId] && cart[cartItemId].count > 0) {
-            if(addBtn) addBtn.style.display = 'none';
-            if(counterPill) {
+            if (addBtn) addBtn.style.display = 'none';
+            if (counterPill) {
                 counterPill.style.display = 'flex';
                 counterPill.querySelector('span').innerText = cart[cartItemId].count;
                 // Update onclick for counter pill to use dynamic version
                 const minusBtn = counterPill.querySelector('button:first-child');
                 const plusBtn = counterPill.querySelector('button:last-child');
-                if(minusBtn) minusBtn.setAttribute('onclick', `updateCountFromDynamicGrid(this, '${rawName}', -1)`);
-                if(plusBtn) plusBtn.setAttribute('onclick', `updateCountFromDynamicGrid(this, '${rawName}', 1)`);
+                if (minusBtn) minusBtn.setAttribute('onclick', `updateCountFromDynamicGrid(this, '${rawName}', -1)`);
+                if (plusBtn) plusBtn.setAttribute('onclick', `updateCountFromDynamicGrid(this, '${rawName}', 1)`);
             }
         } else {
-            if(addBtn) addBtn.style.display = 'flex';
-            if(counterPill) counterPill.style.display = 'none';
+            if (addBtn) addBtn.style.display = 'flex';
+            if (counterPill) counterPill.style.display = 'none';
         }
     });
 }
@@ -1299,14 +1365,14 @@ function syncGridCounters() {
 
 // Ensure counters stay synced when cart updates from right panel
 const originalUpdateCartUI = updateCartUI;
-updateCartUI = function() {
+updateCartUI = function () {
     originalUpdateCartUI();
-    if(typeof syncGridCounters === 'function') syncGridCounters();
-        
+    if (typeof syncGridCounters === 'function') syncGridCounters();
+
     // Ensure floating cart button is only visible on the home view
     const floatingBtn = document.getElementById("floatingCartBtn");
     const homeView = document.getElementById("homeView");
-    if(floatingBtn && homeView && homeView.style.display === "none") {
+    if (floatingBtn && homeView && homeView.style.display === "none") {
         floatingBtn.style.display = "none";
     }
 }
@@ -1315,7 +1381,7 @@ updateCartUI = function() {
 document.addEventListener('DOMContentLoaded', () => {
     const cartSection = document.querySelector('.services-right');
     const floatingBtn = document.getElementById('floatingCartBtn');
-    
+
     if (cartSection && floatingBtn) {
         const observer = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting) {
@@ -1328,20 +1394,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 floatingBtn.style.pointerEvents = 'auto';
             }
         }, { threshold: 0.1 });
-        
+
         observer.observe(cartSection);
     }
-    
+
     // DYNAMIC OFFER DOTS
     const slider = document.getElementById("offersSlider");
     const dots = document.querySelectorAll(".offer-dot");
-    
+
     if (slider && dots.length > 0) {
         slider.addEventListener("scroll", () => {
             // Calculate active index based on scroll position
             const cardWidth = slider.scrollWidth / dots.length;
             const index = Math.round(slider.scrollLeft / cardWidth);
-            
+
             // Update dots styles
             dots.forEach((dot, i) => {
                 if (i === index) {
@@ -1358,16 +1424,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function scrollToCleaningMode() {
-    if(document.getElementById('homeView').style.display === 'none') {
+    if (document.getElementById('homeView').style.display === 'none') {
         const homeNavBtn = document.querySelector('.bottom-nav-item[onclick*="homeView"]');
         if (typeof switchView === 'function') {
             switchView('homeView', homeNavBtn);
         }
     }
-    
+
     setTimeout(() => {
         const section = document.getElementById('cleaningModeSection');
-        if(section) {
+        if (section) {
             section.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     }, 100);
@@ -1375,26 +1441,26 @@ function scrollToCleaningMode() {
 
 function bookFirstOrderOffer() {
     let userName = "";
-    
+
     // Attempt to get user name from currentUser variable or localStorage
     try {
         if (typeof currentUser !== 'undefined' && currentUser && currentUser.name) {
             userName = currentUser.name;
         } else {
             const localUser = JSON.parse(localStorage.getItem('bloorush_currentUser'));
-            if(localUser && localUser.name) {
+            if (localUser && localUser.name) {
                 userName = localUser.name;
             }
         }
-    } catch(e) {}
-    
+    } catch (e) { }
+
     let message = "";
     if (userName) {
         message = `Hi, I am ${userName}. This is my first booking Service. I would like to avail the ₹49 First Order offer!`;
     } else {
         message = `Hi! This is my first booking Service. I would like to avail the ₹49 First Order offer!`;
     }
-    
+
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/917843021334?text=${encodedMessage}`, '_blank');
 }
