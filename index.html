@@ -321,7 +321,7 @@
 
                         <!-- Item 2 -->
                         <div class="service-grid-item" style="text-align: center;" data-name="Bathroom Cleaning"
-                            data-base-price="99">
+                            data-base-price="89">
                             <div class="img-container"
                                 style="background: #f8f9fa; border-radius: 16px; padding: 15px; position: relative; margin-bottom: 8px;">
                                 <img src="assets/service_bathroom_icon.png" alt="Bathroom"
@@ -345,10 +345,10 @@
                                 onmouseover="this.style.borderColor='#004aad'"
                                 onmouseout="this.style.borderColor='#b3d4ff'"
                                 onchange="updateServicePrice(this, 'Bathroom Cleaning')">
-                                <option value="30 min" data-price="89">30 min</option>
-                                <option value="45 min" data-price="149">45 min</option>
-                                <option value="60 min" data-price="189">60 min</option>
-                                <option value="90 min" data-price="239">90 min</option>
+                                <option value="1 unit" data-price="89">1 unit</option>
+                                <option value="2 unit" data-price="178">2 unit</option>
+                                <option value="3 unit" data-price="267">3 unit</option>
+                                <option value="4 unit" data-price="356">4 unit</option>
                             </select>
                             <span class="font-weight-bold price-label service-display-price"
                                 style="color: #004aad; font-size: 0.95rem;">₹89</span>
@@ -424,9 +424,15 @@
                                 style="color: #004aad; font-size: 0.95rem;">₹79</span>
                         </div>
 
+                        
+                        <!-- Coming soon tube -->
+                        <div style="grid-column: 1 / -1; background: linear-gradient(90deg, #ff9a9e 0%, #fecfef 100%); color: #d81b60; text-align: center; padding: 10px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin: 10px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                            Coming Soon: Fan cleaning and Windows cleaning will be coming soon!
+                        </div>
                         <!-- Item 5 -->
-                        <div class="service-grid-item" style="text-align: center;" data-name="Fan Cleaning"
+                        <div class="service-grid-item" style="text-align: center; position: relative; opacity: 0.6; pointer-events: none;" data-name="Fan Cleaning"
                             data-base-price="49">
+                            
                             <div class="img-container"
                                 style="background: #f8f9fa; border-radius: 16px; padding: 15px; position: relative; margin-bottom: 8px;">
                                 <img src="assets/service_fan_icon.png" alt="Fan"
@@ -460,8 +466,9 @@
                         </div>
 
                         <!-- Item 6 -->
-                        <div class="service-grid-item" style="text-align: center;" data-name="Window Cleaning"
+                        <div class="service-grid-item" style="text-align: center; position: relative; opacity: 0.6; pointer-events: none;" data-name="Window Cleaning"
                             data-base-price="49">
+                            
                             <div class="img-container"
                                 style="background: #f8f9fa; border-radius: 16px; padding: 15px; position: relative; margin-bottom: 8px;">
                                 <img src="assets/service_window_icon.png" alt="Window"
@@ -1160,7 +1167,7 @@
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
     <!-- Custom JS -->
-    <script src="script.js?v=5"></script>
+    <script src="script.js?v=7"></script>
 
 </body>
 
