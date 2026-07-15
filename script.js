@@ -1043,7 +1043,7 @@ function confirmWhatsAppBooking(btn) {
 
 
     // -- LOG ANALYTICS & USER DATA --
-    let userPhoneNumber = document.getElementById('userPhone') ? document.getElementById('userPhone').value.trim() : '';
+    let userPhoneNumber = finalPhone;
     
     // ENFORCE PHONE NUMBER
     if (!userPhoneNumber) {
@@ -1052,7 +1052,7 @@ function confirmWhatsAppBooking(btn) {
     }
     
     let finalTotalVal = parseInt(document.getElementById('slotModalTotalAmount').innerText.replace(/,/g, '')) || 0;
-    let uName = typeof currentUser !== 'undefined' && currentUser.name ? currentUser.name : (document.getElementById('userName') ? document.getElementById('userName').value : 'Guest');
+    let uName = (typeof currentUser !== 'undefined' && currentUser && currentUser.name) ? currentUser.name : (document.getElementById('userName') ? document.getElementById('userName').value : 'Guest');
     
     if(typeof recordAnalyticsAndUser === 'function') {
         recordAnalyticsAndUser(uName, userPhoneNumber, finalTotalVal);

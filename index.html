@@ -1054,10 +1054,17 @@
                     </div>
 
                     
-                    <!-- Phone Number -->
-                    <div class="mb-3">
-                        <label class="font-weight-bold mb-1" style="color:var(--primary); font-size: 0.9rem;"><i class="fas fa-phone-alt mr-2"></i>Phone Number</label>
-                        <input type="tel" id="userPhone" class="form-control" placeholder="10-digit Mobile Number" style="border-radius: 8px;">
+                    <!-- Phone Number Section -->
+                    <h6 class="font-weight-bold text-muted mb-2 mt-3" style="font-size: 0.95rem;">Contact Number:</h6>
+                    <div id="savedPhoneBlock" style="display:none; margin-bottom: 5px;"></div>
+                    <button class="btn btn-sm btn-outline-primary mb-3" id="togglePhoneBtn"
+                        onclick="toggleNewPhoneForm()">+ Add New Number</button>
+
+                    <div id="newPhoneForm"
+                        style="display:none; border: 1px solid #eaeaea; padding: 15px; border-radius: 8px; margin-bottom: 15px; background: #fafbfc;">
+                        <input type="tel" id="contactPhone" class="form-control mb-2" placeholder="10-digit Mobile Number"
+                            style="border-radius:6px; box-shadow:inset 0 1px 3px rgba(0,0,0,0.05);">
+                        <input type="hidden" id="userPhone">
                     </div>
                     
                     <!-- Available Offers -->
