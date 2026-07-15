@@ -4,7 +4,7 @@ with open('c:/Users/saxen/OneDrive/Desktop/Bloorush/index.html', 'r', encoding='
     html = f.read()
 
 # Replace pink colors. 
-# #e91e63 is standard pink. #c2185b is dark pink. #fce4ec is very light pink (might be rgb).
+#e91e63 is standard pink. #c2185b is dark pink. #fce4ec is very light pink (might be rgb).
 html = html.replace('#e91e63', '#38b6ff')
 html = html.replace('#c2185b', '#004aad') 
 html = html.replace('#fce4ec', '#f0f7ff') # light pink to light blue
