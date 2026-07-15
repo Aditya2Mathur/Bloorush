@@ -30,6 +30,40 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* Glassmorphism Admin Dashboard */
+        #adminPanelSection {
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%) !important;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.45) !important;
+            backdrop-filter: blur(15px) !important;
+            -webkit-backdrop-filter: blur(15px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.6) !important;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15) !important;
+            border-radius: 20px !important;
+        }
+        .glass-text {
+            color: #2c3e50 !important;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+        }
+        /* Make nav tabs glassy too */
+        #adminTab .nav-link {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px 12px 0 0;
+            margin-right: 5px;
+            color: #2c3e50;
+            backdrop-filter: blur(5px);
+        }
+        #adminTab .nav-link.active {
+            background: rgba(255, 255, 255, 0.6);
+            border-bottom-color: transparent;
+            font-weight: 800;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -1164,7 +1198,7 @@
 <div id="adminPanelSection" style="display: none; padding: 40px 15px; background: #f8f9fa; min-height: 100vh;">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="font-weight-bold text-primary"><i class="fas fa-chart-line mr-2"></i> Bloorush Admin</h2>
+            <h2 class="font-weight-bold glass-text"><i class="fas fa-chart-line mr-2"></i> Bloorush Admin</h2>
             <button class="btn btn-outline-danger" onclick="exitAdmin()"><i class="fas fa-sign-out-alt mr-1"></i> Exit</button>
         </div>
         
@@ -1189,7 +1223,7 @@
             <div class="tab-pane fade show active" id="admin-dashboard" role="tabpanel">
                 <div class="row">
                     <div class="col-md-4 mb-3">
-                        <div class="card shadow-sm border-0 bg-primary text-white" style="border-radius: 12px;">
+                        <div class="card glass-card text-center text-dark">
                             <div class="card-body">
                                 <h6>Total Revenue</h6>
                                 <h3 class="font-weight-bold">₹<span id="statRevenue">0</span></h3>
@@ -1197,7 +1231,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <div class="card shadow-sm border-0 bg-success text-white" style="border-radius: 12px;">
+                        <div class="card glass-card text-center text-dark">
                             <div class="card-body">
                                 <h6>Total Bookings</h6>
                                 <h3 class="font-weight-bold" id="statBookings">0</h3>
@@ -1205,7 +1239,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <div class="card shadow-sm border-0 bg-warning text-white" style="border-radius: 12px;">
+                        <div class="card glass-card text-center text-dark">
                             <div class="card-body">
                                 <h6>Coupons Redeemed</h6>
                                 <h3 class="font-weight-bold" id="statCouponsUsed">0</h3>
@@ -1218,7 +1252,7 @@
             
                 <div class="row mb-4">
                     <div class="col-md-6 mb-3">
-                        <div class="card shadow-sm border-0" style="border-radius: 12px;">
+                        <div class="card glass-card">
                             <div class="card-body">
                                 <h6 class="font-weight-bold">Revenue Growth</h6>
                                 <canvas id="revenueChart" style="max-height: 250px;"></canvas>
@@ -1226,7 +1260,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <div class="card shadow-sm border-0" style="border-radius: 12px;">
+                        <div class="card glass-card">
                             <div class="card-body">
                                 <h6 class="font-weight-bold">Coupons Redeemed</h6>
                                 <canvas id="bookingsChart" style="max-height: 250px;"></canvas>
@@ -1237,7 +1271,7 @@
 
 <!-- User Management -->
             <div class="tab-pane fade" id="admin-users" role="tabpanel">
-                <div class="card shadow-sm border-0" style="border-radius: 15px;">
+                <div class="card glass-card">
                     <div class="card-body">
                         <h5 class="font-weight-bold mb-3">Customer Database</h5>
                         <div class="table-responsive">
@@ -1261,7 +1295,7 @@
             
             <!-- Advanced Coupon Manager -->
             <div class="tab-pane fade" id="admin-coupons" role="tabpanel">
-                <div class="card shadow-sm border-0" style="border-radius: 15px;">
+                <div class="card glass-card">
                     <div class="card-body">
                         <h5 class="font-weight-bold mb-3">Generate Advanced Coupon</h5>
                         <div class="row">
@@ -1305,7 +1339,7 @@
             
             <!-- Slot Manager -->
             <div class="tab-pane fade" id="admin-slots" role="tabpanel">
-                <div class="card shadow-sm border-0" style="border-radius: 15px;">
+                <div class="card glass-card">
                     <div class="card-body">
                         <h5 class="font-weight-bold mb-3">Slot Capacity Manager</h5>
                         <input type="date" id="adminSlotDate" class="form-control mb-3" onchange="loadAdminSlots()">
@@ -1383,7 +1417,7 @@
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
     <!-- Custom JS -->
-    <script src="script.js?v=14"></script>
+    <script src="script.js?v=15"></script>
 
 </body>
 
