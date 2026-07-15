@@ -1,3 +1,58 @@
+
+// --- ARCHITECTURE UPGRADE: FIREBASE & T&C ---
+const firebaseConfig = {
+    // Developer Note: Replace this with your actual Firebase config!
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
+
+let db = null;
+try {
+    if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+        console.log("Firebase initialized successfully.");
+    } else {
+        console.warn("Firebase not configured. Using localStorage fallback mode.");
+    }
+} catch (e) {
+    console.error("Firebase init failed:", e);
+}
+
+// Fallback DB wrappers
+async function getFirestoreDoc(collection, docId) {
+    if (db) {
+        const doc = await db.collection(collection).doc(docId).get();
+        return doc.exists ? doc.data() : null;
+    } else {
+        const data = JSON.parse(localStorage.getItem(`db_${collection}_${docId}`) || "null");
+        return data;
+    }
+}
+async function setFirestoreDoc(collection, docId, data) {
+    if (db) {
+        await db.collection(collection).doc(docId).set(data);
+    } else {
+        localStorage.setItem(`db_${collection}_${docId}`, JSON.stringify(data));
+    }
+}
+
+// T&C Gate Logic
+document.addEventListener("DOMContentLoaded", () => {
+    if (!localStorage.getItem("bloorush_tc_accepted")) {
+        $('#tcGateModal').modal('show');
+    }
+});
+
+function acceptTC() {
+    localStorage.setItem("bloorush_tc_accepted", "true");
+    $('#tcGateModal').modal('hide');
+}
+
 // Reload
 function reloadPage() {
     location.reload();
@@ -806,6 +861,11 @@ function openSlotBooking() {
     selectedTimeSlot = null;
     
     // Inject Total into Slot Modal
+    fetchPublicCoupons();
+    appliedCouponDiscount = 0;
+    if(document.getElementById('couponMessage')) document.getElementById('couponMessage').style.display = 'none';
+    if(document.getElementById('couponInput')) document.getElementById('couponInput').value = '';
+    
     document.getElementById('slotModalTotalAmount').innerText = totalAmount;
 
     // Show Interactive Modal & immediately run validation against current OS clock
@@ -856,7 +916,10 @@ function confirmWhatsAppBooking(btn) {
 
     // Extract Address logic
     let finalAddress = "";
-    if (document.getElementById('newAddressForm').style.display === 'block') {
+    let osmAddr = document.getElementById('osmAddressInput') ? document.getElementById('osmAddressInput').value.trim() : '';
+    if (osmAddr) {
+        finalAddress = osmAddr;
+    } else if (document.getElementById('newAddressForm') && document.getElementById('newAddressForm').style.display === 'block') {
         const h = document.getElementById('addrHouse').value.trim();
         const f = document.getElementById('addrFloor').value.trim();
         const s = document.getElementById('addrStreet').value.trim();
@@ -1397,4 +1460,470 @@ function bookFirstOrderOffer() {
     
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/917843021334?text=${encodedMessage}`, '_blank');
+}
+
+// --- ADVANCED ADMIN & COUPON ENGINE ---
+function promptAdminLogin(e) {
+    e.preventDefault();
+    const pwd = prompt("Enter Admin Password:");
+    if (pwd === "BloorushAdmin2026") {
+        const adminHTML = document.getElementById('adminPanelSection').outerHTML;
+        document.body.innerHTML = adminHTML;
+        document.getElementById('adminPanelSection').style.display = 'block';
+        
+        // Load initial dashboard data
+        loadAdminDashboard();
+    } else if (pwd !== null) {
+        alert("Incorrect password.");
+    }
+}
+
+function exitAdmin() {
+    location.reload(); 
+}
+
+async function loadAdminDashboard() {
+    // Analytics
+    const analytics = await getFirestoreDoc('stats', 'global') || { revenue: 0, bookings: 0, coupons: 0 };
+    document.getElementById('statRevenue').innerText = analytics.revenue;
+    document.getElementById('statBookings').innerText = analytics.bookings;
+    document.getElementById('statCouponsUsed').innerText = analytics.coupons;
+    
+    // Render Charts
+    renderAdminCharts(analytics);
+    
+    // Users Table
+    loadAdminUsers();
+    
+    // Active Coupons
+    loadAdminCoupons();
+}
+
+let revenueChartInstance = null;
+let bookingsChartInstance = null;
+
+function renderAdminCharts(analytics) {
+    if(typeof Chart === 'undefined') return;
+    
+    // Mock historical data leading up to current totals
+    const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Today'];
+    const revData = [0, 0, 0, 0, 0, 0, analytics.revenue];
+    const bkgData = [0, 0, 0, 0, 0, 0, analytics.coupons];
+    
+    const revCtx = document.getElementById('revenueChart');
+    if(revenueChartInstance) revenueChartInstance.destroy();
+    if(revCtx) {
+        revenueChartInstance = new Chart(revCtx, {
+            type: 'line',
+            data: { labels, datasets: [{ label: 'Revenue (₹)', data: revData, borderColor: '#38b6ff', tension: 0.3, fill: true, backgroundColor: 'rgba(56, 182, 255, 0.1)' }] },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+    }
+    
+    const bkgCtx = document.getElementById('bookingsChart');
+    if(bookingsChartInstance) bookingsChartInstance.destroy();
+    if(bkgCtx) {
+        bookingsChartInstance = new Chart(bkgCtx, {
+            type: 'bar',
+            data: { labels, datasets: [{ label: 'Coupons Redeemed', data: bkgData, backgroundColor: '#ffc107' }] },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+    }
+}
+
+async function loadAdminUsers() {
+    const users = await getFirestoreDoc('stats', 'users') || {};
+    const tbody = document.getElementById('adminUsersTable');
+    if (Object.keys(users).length > 0) {
+        let html = '';
+        for(let phone in users) {
+            let u = users[phone];
+            let nameEscaped = u.name ? u.name.replace(/'/g, "\'") : 'Unknown';
+            html += `<tr>
+                <td>${u.name}</td>
+                <td>${phone}</td>
+                <td>${u.totalBookings}</td>
+                <td>${u.lastBooking ? new Date(u.lastBooking).toLocaleDateString() : 'N/A'}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-primary" onclick="openAdminEditUser('${phone}', '${nameEscaped}', ${u.totalBookings})"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-sm btn-outline-danger" onclick="deleteAdminUser('${phone}')"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>`;
+        }
+        tbody.innerHTML = html;
+    } else {
+        tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No users found.</td></tr>';
+    }
+}
+
+function openAdminEditUser(phone, name, bookings) {
+    document.getElementById('editUserPhone').value = phone;
+    document.getElementById('editUserName').value = name;
+    document.getElementById('editUserBookings').value = bookings;
+    $('#adminEditUserModal').modal('show');
+}
+
+async function saveAdminUserEdit() {
+    const phone = document.getElementById('editUserPhone').value;
+    const name = document.getElementById('editUserName').value;
+    const bookings = parseInt(document.getElementById('editUserBookings').value) || 0;
+    
+    const users = await getFirestoreDoc('stats', 'users') || {};
+    if(users[phone]) {
+        users[phone].name = name;
+        users[phone].totalBookings = bookings;
+        await setFirestoreDoc('stats', 'users', users);
+        $('#adminEditUserModal').modal('hide');
+        loadAdminUsers(); // refresh
+    }
+}
+
+async function deleteAdminUser(phone) {
+    if(confirm("Are you sure you want to delete user " + phone + "?")) {
+        const users = await getFirestoreDoc('stats', 'users') || {};
+        if(users[phone]) {
+            delete users[phone];
+            await setFirestoreDoc('stats', 'users', users);
+            loadAdminUsers();
+        }
+    }
+}
+
+
+async function createAdvancedCoupon() {
+    const code = document.getElementById('newCouponCode').value.toUpperCase().trim();
+    const type = document.getElementById('newCouponType').value;
+    const discount = parseInt(document.getElementById('newCouponDiscount').value);
+    const expiry = document.getElementById('newCouponExpiry').value;
+    const globalLimit = parseInt(document.getElementById('newCouponGlobalLimit').value) || 0;
+    const userLimit = parseInt(document.getElementById('newCouponUserLimit').value) || 1;
+    
+    if(!code || !discount || !expiry) return alert("Please fill all fields.");
+    
+    const couponData = {
+        code, type, discount, expiry, globalLimit, userLimit,
+        usedCount: 0,
+        active: true
+    };
+    
+    await setFirestoreDoc('coupons', code, couponData);
+    
+    // Track in index of coupons
+    let couponList = await getFirestoreDoc('stats', 'couponList') || { codes: [] };
+    if(!couponList.codes.includes(code)) {
+        couponList.codes.push(code);
+        await setFirestoreDoc('stats', 'couponList', couponList);
+    }
+    
+    alert(`Coupon ${code} created successfully!`);
+    loadAdminCoupons();
+}
+
+async function loadAdminCoupons() {
+    const container = document.getElementById('adminCouponsContainer');
+    let couponList = await getFirestoreDoc('stats', 'couponList') || { codes: [] };
+    
+    if(couponList.codes.length === 0) {
+        container.innerHTML = '<p class="text-muted">No active coupons.</p>';
+        return;
+    }
+    
+    let html = '<div class="list-group">';
+    for(let code of couponList.codes) {
+        let c = await getFirestoreDoc('coupons', code);
+        if(!c) continue;
+        let expired = new Date(c.expiry) < new Date() ? '<span class="badge badge-danger">Expired</span>' : '';
+        let active = c.active ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-secondary">Disabled</span>';
+        let val = c.type === 'flat' ? `₹${c.discount} OFF` : `${c.discount}% OFF`;
+        
+        html += `
+        <div class="list-group-item d-flex justify-content-between align-items-center mb-2" style="border-radius: 8px;">
+            <div>
+                <h6 class="mb-1 font-weight-bold">${c.code} ${active} ${expired}</h6>
+                <small class="text-muted">${val} | Expires: ${c.expiry} | Uses: ${c.usedCount} / ${c.globalLimit === 0 ? 'Unlimited' : c.globalLimit}</small>
+            </div>
+            <button class="btn btn-sm ${c.active ? 'btn-outline-danger' : 'btn-outline-success'}" onclick="toggleCoupon('${c.code}', ${!c.active})">
+                ${c.active ? 'Disable' : 'Enable'}
+            </button>
+        </div>`;
+    }
+    html += '</div>';
+    container.innerHTML = html;
+}
+
+async function toggleCoupon(code, status) {
+    let c = await getFirestoreDoc('coupons', code);
+    if(c) {
+        c.active = status;
+        await setFirestoreDoc('coupons', code, c);
+        loadAdminCoupons();
+    }
+}
+
+async function loadAdminSlots() {
+    const date = document.getElementById('adminSlotDate').value;
+    if(!date) return;
+    const container = document.getElementById('adminSlotsContainer');
+    
+    let slots = await getFirestoreDoc('slots', date) || {
+        "10:00 AM - 12:00 PM": 2,
+        "01:00 PM - 03:00 PM": 3,
+        "04:00 PM - 06:00 PM": 1
+    };
+    
+    let html = '';
+    for(let time in slots) {
+        html += `
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <span>${time}</span>
+            <input type="number" class="form-control form-control-sm slot-capacity-input" data-time="${time}" value="${slots[time]}" style="width: 80px;">
+        </div>`;
+    }
+    container.innerHTML = html;
+}
+
+async function saveAdminSlots() {
+    const date = document.getElementById('adminSlotDate').value;
+    if(!date) return alert("Select a date first.");
+    
+    const inputs = document.querySelectorAll('.slot-capacity-input');
+    let data = {};
+    inputs.forEach(inp => {
+        data[inp.getAttribute('data-time')] = parseInt(inp.value);
+    });
+    
+    await setFirestoreDoc('slots', date, data);
+    alert("Slot capacity saved live!");
+}
+
+// --- PUBLIC COUPON ENGINE ---
+fetchPublicCoupons();
+let appliedCouponDiscount_unused;
+    appliedCouponDiscount = 0;
+let appliedCouponCode = "";
+
+async function fetchPublicCoupons() {
+    const container = document.getElementById('publicCouponsList');
+    const wrapper = document.getElementById('availableOffersContainer');
+    let couponList = await getFirestoreDoc('stats', 'couponList') || { codes: [] };
+    
+    let activeCoupons = [];
+    for(let code of couponList.codes) {
+        let c = await getFirestoreDoc('coupons', code);
+        if(c && c.active && new Date(c.expiry) >= new Date() && (c.globalLimit === 0 || c.usedCount < c.globalLimit)) {
+            activeCoupons.push(c);
+        }
+    }
+    
+    wrapper.style.display = 'block';
+    if(activeCoupons.length === 0) {
+        container.innerHTML = '<div class="text-muted text-center w-100 p-2"><small>No coupons available.</small></div>';
+        return;
+    }
+    
+    wrapper.style.display = 'block';
+    let html = '';
+    activeCoupons.forEach(c => {
+        let text = c.type === 'flat' ? `₹${c.discount} OFF` : `${c.discount}% OFF`;
+        html += `
+        <div class="border border-primary rounded p-2 text-center" style="min-width: 120px; cursor: pointer; background: #eef7ff;" onclick="document.getElementById('couponInput').value = '${c.code}'; applyCoupon();">
+            <div class="font-weight-bold text-primary" style="font-size: 0.9rem;">${c.code}</div>
+            <small class="text-muted">${text}</small>
+        </div>`;
+    });
+    container.innerHTML = html;
+}
+
+async function searchOSMAddress() {
+    const query = document.getElementById('osmAddressInput').value.trim();
+    if(!query) return;
+    
+    const resBox = document.getElementById('osmResults');
+    resBox.innerHTML = '<div class="p-2 text-muted">Searching...</div>';
+    resBox.style.display = 'block';
+    
+    try {
+        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ', Nagpur')}`);
+        const data = await response.json();
+        
+        if (data.length === 0) {
+            resBox.innerHTML = '<div class="p-2 text-danger">No results found.</div>';
+            return;
+        }
+        
+        let html = '';
+        data.slice(0, 5).forEach(place => {
+            html += `<a href="#" class="list-group-item list-group-item-action py-2" onclick="selectOSMAddress('${place.display_name.replace(/'/g, "\'")}')" style="font-size: 0.85rem;">${place.display_name}</a>`;
+        });
+        resBox.innerHTML = html;
+    } catch(e) {
+        resBox.innerHTML = '<div class="p-2 text-danger">Error fetching address.</div>';
+    }
+}
+
+function selectOSMAddress(address) {
+    document.getElementById('osmAddressInput').value = address;
+    document.getElementById('osmResults').style.display = 'none';
+}
+
+async function applyCoupon() {
+    const code = document.getElementById('couponInput').value.toUpperCase().trim();
+    const msg = document.getElementById('couponMessage');
+    const userPhone = document.getElementById('userPhone').value.trim(); // We need a phone to check per-user limits, assuming userPhone exists
+    
+    if(!code) {
+        msg.style.display = 'block';
+        msg.className = "form-text text-danger";
+        msg.innerText = "Please enter a code.";
+        return;
+    }
+    
+    const c = await getFirestoreDoc('coupons', code);
+    
+    if (!c || !c.active) {
+        msg.style.display = 'block';
+        msg.className = "form-text text-danger";
+        msg.innerText = "Invalid or expired coupon.";
+        resetCoupon();
+        return;
+    }
+    
+    if (new Date(c.expiry) < new Date()) {
+        msg.style.display = 'block';
+        msg.className = "form-text text-danger";
+        msg.innerText = "This coupon has expired.";
+        resetCoupon();
+        return;
+    }
+    
+    if (c.globalLimit > 0 && c.usedCount >= c.globalLimit) {
+        msg.style.display = 'block';
+        msg.className = "form-text text-danger";
+        msg.innerText = "Coupon usage limit reached.";
+        resetCoupon();
+        return;
+    }
+    
+    // Check per user limit if phone is provided
+    if (userPhone) {
+        const userUsage = await getFirestoreDoc('coupon_usage', `${code}_${userPhone}`) || { count: 0 };
+        if (userUsage.count >= c.userLimit) {
+            msg.style.display = 'block';
+            msg.className = "form-text text-danger";
+            msg.innerText = "You have reached the usage limit for this coupon.";
+            resetCoupon();
+            return;
+        }
+    }
+    
+    // Calculate discount
+    let rawTotal = 0;
+    for (let item in cart) rawTotal += cart[item].count * cart[item].price;
+    
+    appliedCouponDiscount = c.type === 'flat' ? c.discount : (rawTotal * (c.discount / 100));
+    appliedCouponCode = c.code;
+    
+    msg.style.display = 'block';
+    msg.className = "form-text text-success";
+    msg.innerText = `Coupon Applied! -₹${appliedCouponDiscount.toFixed(0)}`;
+    refreshSlotTotal();
+}
+
+function resetCoupon() {
+    fetchPublicCoupons();
+    appliedCouponDiscount = 0;
+    appliedCouponCode = "";
+    refreshSlotTotal();
+}
+
+function refreshSlotTotal() {
+    let rawTotal = 0;
+    for (let item in cart) rawTotal += cart[item].count * cart[item].price;
+    
+    let finalAmount = rawTotal;
+    if (rawTotal >= 199) finalAmount -= 49; 
+    finalAmount -= appliedCouponDiscount;
+    
+    if(finalAmount < 0) finalAmount = 0;
+    
+    const el = document.getElementById('slotModalTotalAmount');
+    if (el) el.innerText = finalAmount;
+}
+
+// Hook into date change to fetch live slots
+const bDate = document.getElementById('bookingDate');
+if(bDate) {
+    bDate.addEventListener('change', async function() {
+        const date = this.value;
+        const container = document.getElementById('dynamicSlotsContainer');
+        
+        if(!date) return;
+        
+        let slots = await getFirestoreDoc('slots', date) || {
+            "10:00 AM - 12:00 PM": 2,
+            "01:00 PM - 03:00 PM": 3,
+            "04:00 PM - 06:00 PM": 1
+        };
+        
+        let html = '';
+        for(let time in slots) {
+            let capacity = slots[time];
+            let isFull = capacity <= 0;
+            let opacity = isFull ? '0.4' : '1';
+            let ptr = isFull ? 'none' : 'auto';
+            let label = isFull ? 'Full' : `${capacity} left`;
+            
+            html += `
+            <div class="slot-item border rounded p-2 text-center" 
+                 style="cursor: pointer; opacity: ${opacity}; pointer-events: ${ptr}; flex: 1 1 30%; min-width: 100px; transition: 0.2s;"
+                 onclick="selectSlot(this)">
+                <p class="mb-0 font-weight-bold" style="font-size: 0.85rem;">${time}</p>
+                <small class="text-muted">${label}</small>
+            </div>`;
+        }
+        
+        if(container) {
+            container.innerHTML = html;
+        }
+    });
+}
+
+// --- DATA TRACKING FUNCTIONS ---
+async function recordAnalyticsAndUser(name, phone, revenue) {
+    if(!phone) return;
+    // 1. Update Global Analytics
+    const stats = await getFirestoreDoc('stats', 'global') || { revenue: 0, bookings: 0, coupons: 0 };
+    stats.revenue += revenue;
+    stats.bookings += 1;
+    await setFirestoreDoc('stats', 'global', stats);
+    
+    // 2. Update User Database
+    const users = await getFirestoreDoc('stats', 'users') || {};
+    if (!users[phone]) {
+        users[phone] = { name: name, totalBookings: 0, lastBooking: null };
+    }
+    users[phone].totalBookings += 1;
+    users[phone].lastBooking = new Date().toISOString();
+    await setFirestoreDoc('stats', 'users', users);
+}
+
+async function recordCouponUsage(code, phone) {
+    // Increment global coupon usage
+    const c = await getFirestoreDoc('coupons', code);
+    if(c) {
+        c.usedCount += 1;
+        await setFirestoreDoc('coupons', code, c);
+    }
+    
+    // Increment global stats
+    const stats = await getFirestoreDoc('stats', 'global') || { revenue: 0, bookings: 0, coupons: 0 };
+    stats.coupons += 1;
+    await setFirestoreDoc('stats', 'global', stats);
+    
+    // Record per-user usage
+    if(phone) {
+        const userUsage = await getFirestoreDoc('coupon_usage', `${code}_${phone}`) || { count: 0 };
+        userUsage.count += 1;
+        await setFirestoreDoc('coupon_usage', `${code}_${phone}`, userUsage);
+    }
 }

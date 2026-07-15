@@ -36,7 +36,7 @@ new_cards = """
                 </div>
 """
 
-# Replace in slider
+Replace in slider
 html = re.sub(r'(<div id="offersSlider"[^>]*>).*?(</div>\s*<!-- Dot Indicators -->)', r'\1' + new_cards + r'\2', html, flags=re.DOTALL)
 
 # Replace in packages grid
