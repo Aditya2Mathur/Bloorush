@@ -954,6 +954,20 @@ function confirmWhatsAppBooking(btn) {
         itemsList.push(`*${cart[item].rawName} (x${cart[item].count})*\n${cart[item].price} rs\n${cart[item].timeLimit}`);
     }
 
+    // -- LOG ANALYTICS & USER DATA --
+    let userPhoneNumber = document.getElementById('userPhone') ? document.getElementById('userPhone').value.trim() : '';
+    let finalTotalVal = parseInt(document.getElementById('slotModalTotalAmount').innerText.replace(/,/g, '')) || 0;
+    let uName = typeof currentUser !== 'undefined' && currentUser.name ? currentUser.name : (document.getElementById('userName') ? document.getElementById('userName').value : 'Guest');
+    
+    if(typeof recordAnalyticsAndUser === 'function') {
+        recordAnalyticsAndUser(uName, userPhoneNumber, finalTotalVal);
+    }
+    if (typeof appliedCouponCode !== 'undefined' && appliedCouponCode !== "") {
+        if(typeof recordCouponUsage === 'function') {
+            recordCouponUsage(appliedCouponCode, userPhoneNumber);
+        }
+    }
+
     const message = `Hello Bloorush!
 I am ${currentUser.name}, and I would like to pre-book the following premium services:
 
