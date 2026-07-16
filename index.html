@@ -73,7 +73,7 @@
         <div class="navbar-container">
 
             <!-- Logo -->
-            <div class="logo-text" onclick="reloadPage()">Bloorush</div>
+            <div class="nav-logo" onclick="reloadPage()">bloorush<sup style="font-size:14px;top:-0.5em;color:var(--primary-dark);">✦</sup></div>
 
             <!-- Right -->
             <div class="nav-right">
@@ -322,216 +322,228 @@
                     </div>
                     <div class="services-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
 
-                        <!-- Item 1 -->
-                        <div class="service-grid-item" style="text-align: center;" data-name="Utensils Cleaning"
-                            data-base-price="89">
-                            <div class="img-container"
-                                style="background: #f8f9fa; border-radius: 16px; padding: 15px; position: relative; margin-bottom: 8px;">
-
-                                <img src="assets/service_utensils_icon.png" alt="Utensils"
-                                    style="width: 100%; object-fit: contain; height: 60px;">
-
-                                <div class="grid-btn-wrapper" style="position: absolute; bottom: -10px; right: -5px;">
-                                    <button class="add-btn-small"
-                                        onclick="addDynamicService(this, 'Utensils Cleaning')">+</button>
-                                    <div class="counter-pill-grid"
-                                        style="display:none; background: white; border: 1px solid #004aad; border-radius: 8px; color: #004aad; font-weight: bold; padding: 2px 5px; height: 30px; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;"
-                                            onclick="updateCountFromDynamicGrid(this, 'Utensils Cleaning', -1)">-</button>
+                        <!-- Utensils Cleaning -->
+                        <div class="service-grid-item" style="text-align: center;" data-name="Utensils Cleaning" data-base-price="89">
+                            <div class="img-container" style="background: #f8f9fa; border-radius: 16px; overflow: hidden; position: relative; margin-bottom: 8px;">
+                                <img src="https://i.ibb.co/DHts69Sv/Whats-App-Image-2026-07-13-at-3-51-48-PM.jpg" alt="Utensils" style="width: 100%; height: 90px; object-fit: cover; transition: transform 0.3s ease;">
+                                <div class="grid-btn-wrapper" style="position: absolute; bottom: 8px; right: 8px;">
+                                    <button class="add-btn-small" onclick="addDynamicService(this, 'Utensils Cleaning')">+</button>
+                                    <div class="counter-pill-grid" style="display:none; background: white; border: 1px solid #004aad; border-radius: 8px; color: #004aad; font-weight: bold; padding: 2px 5px; height: 30px; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;" onclick="updateCountFromDynamicGrid(this, 'Utensils Cleaning', -1)">-</button>
                                         <span>1</span>
-                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;"
-                                            onclick="updateCountFromDynamicGrid(this, 'Utensils Cleaning', 1)">+</button>
+                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;" onclick="updateCountFromDynamicGrid(this, 'Utensils Cleaning', 1)">+</button>
                                     </div>
                                 </div>
                             </div>
                             <h6 class="font-weight-bold mb-0" style="font-size: 0.85rem;">Utensils</h6>
-                            <select class="custom-select custom-select-sm mb-1 mt-1 service-duration-select"
-                                style="font-size: 0.85rem; font-weight: 600; border-radius: 8px; width: 95%; text-align: center; text-align-last: center; margin: 6px auto; display: block; background-color: #f4f9ff; color: #004aad; border: 1px solid #b3d4ff; padding: 6px 20px 6px 5px; box-shadow: 0 2px 6px rgba(0,74,173,0.08); cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22%23004aad%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/><path d=%22M0 0h24v24H0z%22 fill=%22none%22/></svg>'); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; outline: none; transition: all 0.2s ease;"
-                                onmouseover="this.style.borderColor='#004aad'"
-                                onmouseout="this.style.borderColor='#b3d4ff'"
-                                onchange="updateServicePrice(this, 'Utensils Cleaning')">
+                            <select class="custom-select custom-select-sm mb-1 mt-1 service-duration-select" style="font-size: 0.85rem; font-weight: 600; border-radius: 8px; width: 95%; text-align: center; text-align-last: center; margin: 6px auto; display: block; background-color: #f4f9ff; color: #004aad; border: 1px solid #b3d4ff; padding: 6px 20px 6px 5px; box-shadow: 0 2px 6px rgba(0,74,173,0.08); cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22%23004aad%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/><path d=%22M0 0h24v24H0z%22 fill=%22none%22/></svg>'); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; outline: none; transition: all 0.2s ease;" onchange="updateServicePrice(this, 'Utensils Cleaning')">
                                 <option value="30 min" data-price="89">30 min</option>
                                 <option value="45 min" data-price="129">45 min</option>
-                                <option value="60 min" data-price="169">60 min</option>
+                                <option value="60 min" data-price="179">60 min</option>
                                 <option value="90 min" data-price="239">90 min</option>
+                                <option value="120 min" data-price="299">120 min</option>
                             </select>
-                            <span class="font-weight-bold price-label service-display-price"
-                                style="color: #004aad; font-size: 0.95rem;">₹89</span>
+                            <span class="font-weight-bold price-label service-display-price" style="color: #004aad; font-size: 0.95rem;">&#8377;89</span>
                         </div>
 
-                        <!-- Item 2 -->
-                        <div class="service-grid-item" style="text-align: center;" data-name="Bathroom Cleaning"
-                            data-base-price="99">
-                            <div class="img-container"
-                                style="background: #f8f9fa; border-radius: 16px; padding: 15px; position: relative; margin-bottom: 8px;">
-                                <img src="assets/service_bathroom_icon.png" alt="Bathroom"
-                                    style="width: 100%; object-fit: contain; height: 60px;">
-                                <div class="grid-btn-wrapper" style="position: absolute; bottom: -10px; right: -5px;">
-                                    <button class="add-btn-small"
-                                        onclick="addDynamicService(this, 'Bathroom Cleaning')">+</button>
-                                    <div class="counter-pill-grid"
-                                        style="display:none; background: white; border: 1px solid #004aad; border-radius: 8px; color: #004aad; font-weight: bold; padding: 2px 5px; height: 30px; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;"
-                                            onclick="updateCountFromDynamicGrid(this, 'Bathroom Cleaning', -1)">-</button>
+                        <!-- Mopping & Sweeping -->
+                        <div class="service-grid-item" style="text-align: center;" data-name="Mopping & Sweeping" data-base-price="99">
+                            <div class="img-container" style="background: #f8f9fa; border-radius: 16px; overflow: hidden; position: relative; margin-bottom: 8px;">
+                                <img src="https://i.ibb.co/qM01ThTm/Whats-App-Image-2026-07-13-at-3-51-50-PM.jpg" alt="Mopping" style="width: 100%; height: 90px; object-fit: cover; transition: transform 0.3s ease;">
+                                <div class="grid-btn-wrapper" style="position: absolute; bottom: 8px; right: 8px;">
+                                    <button class="add-btn-small" onclick="addDynamicService(this, 'Mopping & Sweeping')">+</button>
+                                    <div class="counter-pill-grid" style="display:none; background: white; border: 1px solid #004aad; border-radius: 8px; color: #004aad; font-weight: bold; padding: 2px 5px; height: 30px; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;" onclick="updateCountFromDynamicGrid(this, 'Mopping & Sweeping', -1)">-</button>
                                         <span>1</span>
-                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;"
-                                            onclick="updateCountFromDynamicGrid(this, 'Bathroom Cleaning', 1)">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <h6 class="font-weight-bold mb-0" style="font-size: 0.85rem;">Bathroom</h6>
-                            <select class="custom-select custom-select-sm mb-1 mt-1 service-duration-select"
-                                style="font-size: 0.85rem; font-weight: 600; border-radius: 8px; width: 95%; text-align: center; text-align-last: center; margin: 6px auto; display: block; background-color: #f4f9ff; color: #004aad; border: 1px solid #b3d4ff; padding: 6px 20px 6px 5px; box-shadow: 0 2px 6px rgba(0,74,173,0.08); cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22%23004aad%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/><path d=%22M0 0h24v24H0z%22 fill=%22none%22/></svg>'); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; outline: none; transition: all 0.2s ease;"
-                                onmouseover="this.style.borderColor='#004aad'"
-                                onmouseout="this.style.borderColor='#b3d4ff'"
-                                onchange="updateServicePrice(this, 'Bathroom Cleaning')">
-                                <option value="30 min" data-price="89">30 min</option>
-                                <option value="45 min" data-price="149">45 min</option>
-                                <option value="60 min" data-price="189">60 min</option>
-                                <option value="90 min" data-price="239">90 min</option>
-                            </select>
-                            <span class="font-weight-bold price-label service-display-price"
-                                style="color: #004aad; font-size: 0.95rem;">₹89</span>
-                        </div>
-
-                        <!-- Item 3 -->
-                        <div class="service-grid-item" style="text-align: center;" data-name="Home Dusting"
-                            data-base-price="79">
-                            <div class="img-container"
-                                style="background: #f8f9fa; border-radius: 16px; padding: 15px; position: relative; margin-bottom: 8px;">
-                                <img src="assets/service_dusting_icon.png" alt="Dusting"
-                                    style="width: 100%; object-fit: contain; height: 60px;">
-                                <div class="grid-btn-wrapper" style="position: absolute; bottom: -10px; right: -5px;">
-                                    <button class="add-btn-small"
-                                        onclick="addDynamicService(this, 'Home Dusting')">+</button>
-                                    <div class="counter-pill-grid"
-                                        style="display:none; background: white; border: 1px solid #004aad; border-radius: 8px; color: #004aad; font-weight: bold; padding: 2px 5px; height: 30px; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;"
-                                            onclick="updateCountFromDynamicGrid(this, 'Home Dusting', -1)">-</button>
-                                        <span>1</span>
-                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;"
-                                            onclick="updateCountFromDynamicGrid(this, 'Home Dusting', 1)">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <h6 class="font-weight-bold mb-0" style="font-size: 0.85rem;">Dusting</h6>
-                            <select class="custom-select custom-select-sm mb-1 mt-1 service-duration-select"
-                                style="font-size: 0.85rem; font-weight: 600; border-radius: 8px; width: 95%; text-align: center; text-align-last: center; margin: 6px auto; display: block; background-color: #f4f9ff; color: #004aad; border: 1px solid #b3d4ff; padding: 6px 20px 6px 5px; box-shadow: 0 2px 6px rgba(0,74,173,0.08); cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22%23004aad%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/><path d=%22M0 0h24v24H0z%22 fill=%22none%22/></svg>'); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; outline: none; transition: all 0.2s ease;"
-                                onmouseover="this.style.borderColor='#004aad'"
-                                onmouseout="this.style.borderColor='#b3d4ff'"
-                                onchange="updateServicePrice(this, 'Home Dusting')">
-                                <option value="30 min" data-price="79">30 min</option>
-                                <option value="45 min" data-price="119">45 min</option>
-                                <option value="60 min" data-price="159">60 min</option>
-                                <option value="90 min" data-price="219">90 min</option>
-                            </select>
-                            <span class="font-weight-bold price-label service-display-price"
-                                style="color: #004aad; font-size: 0.95rem;">₹79</span>
-                        </div>
-
-                        <!-- Item 4 -->
-                        <div class="service-grid-item" style="text-align: center;" data-name="Mopping & Sweeping"
-                            data-base-price="79">
-                            <div class="img-container"
-                                style="background: #f8f9fa; border-radius: 16px; padding: 15px; position: relative; margin-bottom: 8px;">
-                                <img src="assets/service_mopping_icon.png" alt="Mopping"
-                                    style="width: 100%; object-fit: contain; height: 60px;">
-                                <div class="grid-btn-wrapper" style="position: absolute; bottom: -10px; right: -5px;">
-                                    <button class="add-btn-small"
-                                        onclick="addDynamicService(this, 'Mopping & Sweeping')">+</button>
-                                    <div class="counter-pill-grid"
-                                        style="display:none; background: white; border: 1px solid #004aad; border-radius: 8px; color: #004aad; font-weight: bold; padding: 2px 5px; height: 30px; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;"
-                                            onclick="updateCountFromDynamicGrid(this, 'Mopping & Sweeping', -1)">-</button>
-                                        <span>1</span>
-                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;"
-                                            onclick="updateCountFromDynamicGrid(this, 'Mopping & Sweeping', 1)">+</button>
+                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;" onclick="updateCountFromDynamicGrid(this, 'Mopping & Sweeping', 1)">+</button>
                                     </div>
                                 </div>
                             </div>
                             <h6 class="font-weight-bold mb-0" style="font-size: 0.85rem;">Mopping</h6>
-                            <select class="custom-select custom-select-sm mb-1 mt-1 service-duration-select"
-                                style="font-size: 0.85rem; font-weight: 600; border-radius: 8px; width: 95%; text-align: center; text-align-last: center; margin: 6px auto; display: block; background-color: #f4f9ff; color: #004aad; border: 1px solid #b3d4ff; padding: 6px 20px 6px 5px; box-shadow: 0 2px 6px rgba(0,74,173,0.08); cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22%23004aad%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/><path d=%22M0 0h24v24H0z%22 fill=%22none%22/></svg>'); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; outline: none; transition: all 0.2s ease;"
-                                onmouseover="this.style.borderColor='#004aad'"
-                                onmouseout="this.style.borderColor='#b3d4ff'"
-                                onchange="updateServicePrice(this, 'Mopping & Sweeping')">
-                                <option value="30 min" data-price="79">30 min</option>
-                                <option value="45 min" data-price="119">45 min</option>
-                                <option value="60 min" data-price="159">60 min</option>
-                                <option value="90 min" data-price="219">90 min</option>
+                            <select class="custom-select custom-select-sm mb-1 mt-1 service-duration-select" style="font-size: 0.85rem; font-weight: 600; border-radius: 8px; width: 95%; text-align: center; text-align-last: center; margin: 6px auto; display: block; background-color: #f4f9ff; color: #004aad; border: 1px solid #b3d4ff; padding: 6px 20px 6px 5px; box-shadow: 0 2px 6px rgba(0,74,173,0.08); cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22%23004aad%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/><path d=%22M0 0h24v24H0z%22 fill=%22none%22/></svg>'); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; outline: none; transition: all 0.2s ease;" onchange="updateServicePrice(this, 'Mopping & Sweeping')">
+                                <option value="1 BHK 15 min" data-price="99">1 BHK (15m)</option>
+                                <option value="2 BHK 25 min" data-price="119">2 BHK (25m)</option>
+                                <option value="3 BHK 40 min" data-price="139">3 BHK (40m)</option>
+                                <option value="4 BHK 55 min" data-price="179">4 BHK (55m)</option>
                             </select>
-                            <span class="font-weight-bold price-label service-display-price"
-                                style="color: #004aad; font-size: 0.95rem;">₹79</span>
+                            <span class="font-weight-bold price-label service-display-price" style="color: #004aad; font-size: 0.95rem;">&#8377;99</span>
                         </div>
 
-                        <!-- Item 5 -->
-                        <div class="service-grid-item" style="text-align: center;" data-name="Fan Cleaning"
-                            data-base-price="49">
-                            <div class="img-container"
-                                style="background: #f8f9fa; border-radius: 16px; padding: 15px; position: relative; margin-bottom: 8px;">
-                                <img src="assets/service_fan_icon.png" alt="Fan"
-                                    style="width: 100%; object-fit: contain; height: 60px;">
-                                <div class="grid-btn-wrapper" style="position: absolute; bottom: -10px; right: -5px;">
-                                    <button class="add-btn-small"
-                                        onclick="addDynamicService(this, 'Fan Cleaning')">+</button>
-                                    <div class="counter-pill-grid"
-                                        style="display:none; background: white; border: 1px solid #004aad; border-radius: 8px; color: #004aad; font-weight: bold; padding: 2px 5px; height: 30px; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;"
-                                            onclick="updateCountFromDynamicGrid(this, 'Fan Cleaning', -1)">-</button>
+                        <!-- Dusting -->
+                        <div class="service-grid-item" style="text-align: center;" data-name="Home Dusting" data-base-price="99">
+                            <div class="img-container" style="background: #f8f9fa; border-radius: 16px; overflow: hidden; position: relative; margin-bottom: 8px;">
+                                <img src="https://i.ibb.co/v4rPWm4N/Whats-App-Image-2026-07-13-at-3-51-50-PM-1.jpg" alt="Dusting" style="width: 100%; height: 90px; object-fit: cover; transition: transform 0.3s ease;">
+                                <div class="grid-btn-wrapper" style="position: absolute; bottom: 8px; right: 8px;">
+                                    <button class="add-btn-small" onclick="addDynamicService(this, 'Home Dusting')">+</button>
+                                    <div class="counter-pill-grid" style="display:none; background: white; border: 1px solid #004aad; border-radius: 8px; color: #004aad; font-weight: bold; padding: 2px 5px; height: 30px; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;" onclick="updateCountFromDynamicGrid(this, 'Home Dusting', -1)">-</button>
                                         <span>1</span>
-                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;"
-                                            onclick="updateCountFromDynamicGrid(this, 'Fan Cleaning', 1)">+</button>
+                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;" onclick="updateCountFromDynamicGrid(this, 'Home Dusting', 1)">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <h6 class="font-weight-bold mb-0" style="font-size: 0.85rem;">Dusting</h6>
+                            <select class="custom-select custom-select-sm mb-1 mt-1 service-duration-select" style="font-size: 0.85rem; font-weight: 600; border-radius: 8px; width: 95%; text-align: center; text-align-last: center; margin: 6px auto; display: block; background-color: #f4f9ff; color: #004aad; border: 1px solid #b3d4ff; padding: 6px 20px 6px 5px; box-shadow: 0 2px 6px rgba(0,74,173,0.08); cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22%23004aad%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/><path d=%22M0 0h24v24H0z%22 fill=%22none%22/></svg>'); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; outline: none; transition: all 0.2s ease;" onchange="updateServicePrice(this, 'Home Dusting')">
+                                <option value="1 BHK 30 min" data-price="99">1 BHK (30m)</option>
+                                <option value="2 BHK 40 min" data-price="129">2 BHK (40m)</option>
+                                <option value="3 BHK 60 min" data-price="179">3 BHK (60m)</option>
+                                <option value="4 BHK 80 min" data-price="229">4 BHK (80m)</option>
+                            </select>
+                            <span class="font-weight-bold price-label service-display-price" style="color: #004aad; font-size: 0.95rem;">&#8377;99</span>
+                        </div>
+
+                        <!-- Toilet & bathroom -->
+                        <div class="service-grid-item" style="text-align: center;" data-name="Toilet & Bathroom" data-base-price="99">
+                            <div class="img-container" style="background: #f8f9fa; border-radius: 16px; overflow: hidden; position: relative; margin-bottom: 8px;">
+                                <img src="https://i.ibb.co/VpCVZYMP/Whats-App-Image-2026-07-13-at-9-52-24-PM.jpg" alt="Bathroom" style="width: 100%; height: 90px; object-fit: cover; transition: transform 0.3s ease;">
+                                <div class="grid-btn-wrapper" style="position: absolute; bottom: 8px; right: 8px;">
+                                    <button class="add-btn-small" onclick="addDynamicService(this, 'Toilet & Bathroom')">+</button>
+                                    <div class="counter-pill-grid" style="display:none; background: white; border: 1px solid #004aad; border-radius: 8px; color: #004aad; font-weight: bold; padding: 2px 5px; height: 30px; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;" onclick="updateCountFromDynamicGrid(this, 'Toilet & Bathroom', -1)">-</button>
+                                        <span>1</span>
+                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;" onclick="updateCountFromDynamicGrid(this, 'Toilet & Bathroom', 1)">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <h6 class="font-weight-bold mb-0" style="font-size: 0.85rem;">Washroom</h6>
+                            <select class="custom-select custom-select-sm mb-1 mt-1 service-duration-select" style="font-size: 0.85rem; font-weight: 600; border-radius: 8px; width: 95%; text-align: center; text-align-last: center; margin: 6px auto; display: block; background-color: #f4f9ff; color: #004aad; border: 1px solid #b3d4ff; padding: 6px 20px 6px 5px; box-shadow: 0 2px 6px rgba(0,74,173,0.08); cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22%23004aad%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/><path d=%22M0 0h24v24H0z%22 fill=%22none%22/></svg>'); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; outline: none; transition: all 0.2s ease;" onchange="updateServicePrice(this, 'Toilet & Bathroom')">
+                                <option value="Single toilet 30 min" data-price="99">Toilet</option>
+                                <option value="Single bathroom 30 min" data-price="99">Bathroom</option>
+                                <option value="Combined 30 min" data-price="159">1 Combined</option>
+                                <option value="2 combined 60 min" data-price="318">2 Combined</option>
+                                <option value="3 combined 90 min" data-price="477">3 Combined</option>
+                            </select>
+                            <span class="font-weight-bold price-label service-display-price" style="color: #004aad; font-size: 0.95rem;">&#8377;99</span>
+                        </div>
+
+                        <!-- Kitchen cleaning -->
+                        <div class="service-grid-item" style="text-align: center;" data-name="Kitchen Cleaning" data-base-price="399">
+                            <div class="img-container" style="background: #f8f9fa; border-radius: 16px; overflow: hidden; position: relative; margin-bottom: 8px;">
+                                <img src="https://i.ibb.co/Y79LtB5z/Whats-App-Image-2026-07-13-at-9-57-05-PM.jpg" alt="Kitchen" style="width: 100%; height: 90px; object-fit: cover; transition: transform 0.3s ease;">
+                                <div class="grid-btn-wrapper" style="position: absolute; bottom: 8px; right: 8px;">
+                                    <button class="add-btn-small" onclick="addDynamicService(this, 'Kitchen Cleaning')">+</button>
+                                    <div class="counter-pill-grid" style="display:none; background: white; border: 1px solid #004aad; border-radius: 8px; color: #004aad; font-weight: bold; padding: 2px 5px; height: 30px; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;" onclick="updateCountFromDynamicGrid(this, 'Kitchen Cleaning', -1)">-</button>
+                                        <span>1</span>
+                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;" onclick="updateCountFromDynamicGrid(this, 'Kitchen Cleaning', 1)">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <h6 class="font-weight-bold mb-0" style="font-size: 0.85rem;">Kitchen</h6>
+                            <select class="custom-select custom-select-sm mb-1 mt-1 service-duration-select" style="font-size: 0.85rem; font-weight: 600; border-radius: 8px; width: 95%; text-align: center; text-align-last: center; margin: 6px auto; display: block; background-color: #f4f9ff; color: #004aad; border: 1px solid #b3d4ff; padding: 6px 20px 6px 5px; box-shadow: 0 2px 6px rgba(0,74,173,0.08); cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22%23004aad%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/><path d=%22M0 0h24v24H0z%22 fill=%22none%22/></svg>'); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; outline: none; transition: all 0.2s ease;" onchange="updateServicePrice(this, 'Kitchen Cleaning')">
+                                <option value="1 kitchen 60 min" data-price="399">1 Kitchen</option>
+                            </select>
+                            <span class="font-weight-bold price-label service-display-price" style="color: #004aad; font-size: 0.95rem;">&#8377;399</span>
+                        </div>
+
+                        <!-- Deep toilet & bathroom clean -->
+                        <div class="service-grid-item" style="text-align: center;" data-name="Deep Washroom Cleaning" data-base-price="199">
+                            <div class="img-container" style="background: #f8f9fa; border-radius: 16px; overflow: hidden; position: relative; margin-bottom: 8px;">
+                                <img src="https://i.ibb.co/7twSMkj1/Whats-App-Image-2026-07-13-at-9-34-21-PM.jpg" alt="Deep Washroom" style="width: 100%; height: 90px; object-fit: cover; transition: transform 0.3s ease;">
+                                <div class="grid-btn-wrapper" style="position: absolute; bottom: 8px; right: 8px;">
+                                    <button class="add-btn-small" onclick="addDynamicService(this, 'Deep Washroom Cleaning')">+</button>
+                                    <div class="counter-pill-grid" style="display:none; background: white; border: 1px solid #004aad; border-radius: 8px; color: #004aad; font-weight: bold; padding: 2px 5px; height: 30px; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;" onclick="updateCountFromDynamicGrid(this, 'Deep Washroom Cleaning', -1)">-</button>
+                                        <span>1</span>
+                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;" onclick="updateCountFromDynamicGrid(this, 'Deep Washroom Cleaning', 1)">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <h6 class="font-weight-bold mb-0" style="font-size: 0.85rem;">Deep Bath</h6>
+                            <select class="custom-select custom-select-sm mb-1 mt-1 service-duration-select" style="font-size: 0.85rem; font-weight: 600; border-radius: 8px; width: 95%; text-align: center; text-align-last: center; margin: 6px auto; display: block; background-color: #f4f9ff; color: #004aad; border: 1px solid #b3d4ff; padding: 6px 20px 6px 5px; box-shadow: 0 2px 6px rgba(0,74,173,0.08); cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22%23004aad%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/><path d=%22M0 0h24v24H0z%22 fill=%22none%22/></svg>'); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; outline: none; transition: all 0.2s ease;" onchange="updateServicePrice(this, 'Deep Washroom Cleaning')">
+                                <option value="1 unit 30 min" data-price="199">1 Unit (30m)</option>
+                            </select>
+                            <span class="font-weight-bold price-label service-display-price" style="color: #004aad; font-size: 0.95rem;">&#8377;199</span>
+                        </div>
+
+                        <!-- Ironing service -->
+                        <div class="service-grid-item" style="text-align: center;" data-name="Ironing Service" data-base-price="179">
+                            <div class="img-container" style="background: #f8f9fa; border-radius: 16px; overflow: hidden; position: relative; margin-bottom: 8px;">
+                                <img src="https://i.ibb.co/DHts69Sv/Whats-App-Image-2026-07-13-at-3-51-48-PM.jpg" alt="Ironing" style="width: 100%; height: 90px; object-fit: cover; transition: transform 0.3s ease;">
+                                <div class="grid-btn-wrapper" style="position: absolute; bottom: 8px; right: 8px;">
+                                    <button class="add-btn-small" onclick="addDynamicService(this, 'Ironing Service')">+</button>
+                                    <div class="counter-pill-grid" style="display:none; background: white; border: 1px solid #004aad; border-radius: 8px; color: #004aad; font-weight: bold; padding: 2px 5px; height: 30px; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;" onclick="updateCountFromDynamicGrid(this, 'Ironing Service', -1)">-</button>
+                                        <span>1</span>
+                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;" onclick="updateCountFromDynamicGrid(this, 'Ironing Service', 1)">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <h6 class="font-weight-bold mb-0" style="font-size: 0.85rem;">Ironing</h6>
+                            <select class="custom-select custom-select-sm mb-1 mt-1 service-duration-select" style="font-size: 0.85rem; font-weight: 600; border-radius: 8px; width: 95%; text-align: center; text-align-last: center; margin: 6px auto; display: block; background-color: #f4f9ff; color: #004aad; border: 1px solid #b3d4ff; padding: 6px 20px 6px 5px; box-shadow: 0 2px 6px rgba(0,74,173,0.08); cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22%23004aad%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/><path d=%22M0 0h24v24H0z%22 fill=%22none%22/></svg>'); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; outline: none; transition: all 0.2s ease;" onchange="updateServicePrice(this, 'Ironing Service')">
+                                <option value="15-18 clothes 60 min" data-price="179">15-18 Clothes</option>
+                                <option value="25-32 clothes 90 min" data-price="259">25-32 Clothes</option>
+                                <option value="35-42 clothes 120 min" data-price="339">35-42 Clothes</option>
+                            </select>
+                            <span class="font-weight-bold price-label service-display-price" style="color: #004aad; font-size: 0.95rem;">&#8377;179</span>
+                        </div>
+
+                        <!-- Packing & unpacking -->
+                        <div class="service-grid-item" style="text-align: center;" data-name="Packing & Unpacking" data-base-price="199">
+                            <div class="img-container" style="background: #f8f9fa; border-radius: 16px; overflow: hidden; position: relative; margin-bottom: 8px;">
+                                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=250&auto=format&fit=crop" alt="Packing" style="width: 100%; height: 90px; object-fit: cover; transition: transform 0.3s ease;">
+                                <div class="grid-btn-wrapper" style="position: absolute; bottom: 8px; right: 8px;">
+                                    <button class="add-btn-small" onclick="addDynamicService(this, 'Packing & Unpacking')">+</button>
+                                    <div class="counter-pill-grid" style="display:none; background: white; border: 1px solid #004aad; border-radius: 8px; color: #004aad; font-weight: bold; padding: 2px 5px; height: 30px; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;" onclick="updateCountFromDynamicGrid(this, 'Packing & Unpacking', -1)">-</button>
+                                        <span>1</span>
+                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;" onclick="updateCountFromDynamicGrid(this, 'Packing & Unpacking', 1)">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <h6 class="font-weight-bold mb-0" style="font-size: 0.85rem;">Packing</h6>
+                            <select class="custom-select custom-select-sm mb-1 mt-1 service-duration-select" style="font-size: 0.85rem; font-weight: 600; border-radius: 8px; width: 95%; text-align: center; text-align-last: center; margin: 6px auto; display: block; background-color: #f4f9ff; color: #004aad; border: 1px solid #b3d4ff; padding: 6px 20px 6px 5px; box-shadow: 0 2px 6px rgba(0,74,173,0.08); cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22%23004aad%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/><path d=%22M0 0h24v24H0z%22 fill=%22none%22/></svg>'); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; outline: none; transition: all 0.2s ease;" onchange="updateServicePrice(this, 'Packing & Unpacking')">
+                                <option value="Small room/studio 60 min" data-price="199">Studio</option>
+                                <option value="1 BHK 90 min" data-price="349">1 BHK</option>
+                                <option value="2 BHK 120 min" data-price="449">2 BHK</option>
+                                <option value="3 BHK 240 min" data-price="799">3 BHK</option>
+                            </select>
+                            <span class="font-weight-bold price-label service-display-price" style="color: #004aad; font-size: 0.95rem;">&#8377;199</span>
+                        </div>
+
+                        <!-- Fan Cleaning -->
+                        <div class="service-grid-item" style="text-align: center;" data-name="Fan Cleaning" data-base-price="49">
+                            <div class="img-container" style="background: #f8f9fa; border-radius: 16px; overflow: hidden; position: relative; margin-bottom: 8px;">
+                                <img src="https://i.ibb.co/Q3kMczV7/Whats-App-Image-2026-07-13-at-9-40-11-PM.jpg" alt="Fan" style="width: 100%; height: 90px; object-fit: cover; transition: transform 0.3s ease;">
+                                <div class="grid-btn-wrapper" style="position: absolute; bottom: 8px; right: 8px;">
+                                    <button class="add-btn-small" onclick="addDynamicService(this, 'Fan Cleaning')">+</button>
+                                    <div class="counter-pill-grid" style="display:none; background: white; border: 1px solid #004aad; border-radius: 8px; color: #004aad; font-weight: bold; padding: 2px 5px; height: 30px; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;" onclick="updateCountFromDynamicGrid(this, 'Fan Cleaning', -1)">-</button>
+                                        <span>1</span>
+                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;" onclick="updateCountFromDynamicGrid(this, 'Fan Cleaning', 1)">+</button>
                                     </div>
                                 </div>
                             </div>
                             <h6 class="font-weight-bold mb-0" style="font-size: 0.85rem;">Fan</h6>
-                            <select class="custom-select custom-select-sm mb-1 mt-1 service-duration-select"
-                                style="font-size: 0.85rem; font-weight: 600; border-radius: 8px; width: 95%; text-align: center; text-align-last: center; margin: 6px auto; display: block; background-color: #f4f9ff; color: #004aad; border: 1px solid #b3d4ff; padding: 6px 20px 6px 5px; box-shadow: 0 2px 6px rgba(0,74,173,0.08); cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22%23004aad%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/><path d=%22M0 0h24v24H0z%22 fill=%22none%22/></svg>'); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; outline: none; transition: all 0.2s ease;"
-                                onmouseover="this.style.borderColor='#004aad'"
-                                onmouseout="this.style.borderColor='#b3d4ff'"
-                                onchange="updateServicePrice(this, 'Fan Cleaning')">
-                                <option value="1 unit" data-price="49">1 unit</option>
-                                <option value="2 unit" data-price="98">2 unit</option>
-                                <option value="3 unit" data-price="147">3 unit</option>
-                                <option value="4 unit" data-price="196">4 unit</option>
+                            <select class="custom-select custom-select-sm mb-1 mt-1 service-duration-select" style="font-size: 0.85rem; font-weight: 600; border-radius: 8px; width: 95%; text-align: center; text-align-last: center; margin: 6px auto; display: block; background-color: #f4f9ff; color: #004aad; border: 1px solid #b3d4ff; padding: 6px 20px 6px 5px; box-shadow: 0 2px 6px rgba(0,74,173,0.08); cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22%23004aad%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/><path d=%22M0 0h24v24H0z%22 fill=%22none%22/></svg>'); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; outline: none; transition: all 0.2s ease;" onchange="updateServicePrice(this, 'Fan Cleaning')">
+                                <option value="1" data-price="49">1 Fan</option>
+                                <option value="2" data-price="98">2 Fans</option>
+                                <option value="3" data-price="147">3 Fans</option>
+                                <option value="4" data-price="196">4 Fans</option>
                             </select>
-                            <span class="font-weight-bold price-label service-display-price"
-                                style="color: #004aad; font-size: 0.95rem;">₹49</span>
+                            <span class="font-weight-bold price-label service-display-price" style="color: #004aad; font-size: 0.95rem;">&#8377;49</span>
                         </div>
 
-                        <!-- Item 6 -->
-                        <div class="service-grid-item" style="text-align: center;" data-name="Window Cleaning"
-                            data-base-price="49">
-                            <div class="img-container"
-                                style="background: #f8f9fa; border-radius: 16px; padding: 15px; position: relative; margin-bottom: 8px;">
-                                <img src="assets/service_window_icon.png" alt="Window"
-                                    style="width: 100%; object-fit: contain; height: 60px;">
-                                <div class="grid-btn-wrapper" style="position: absolute; bottom: -10px; right: -5px;">
-                                    <button class="add-btn-small"
-                                        onclick="addDynamicService(this, 'Window Cleaning')">+</button>
-                                    <div class="counter-pill-grid"
-                                        style="display:none; background: white; border: 1px solid #004aad; border-radius: 8px; color: #004aad; font-weight: bold; padding: 2px 5px; height: 30px; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;"
-                                            onclick="updateCountFromDynamicGrid(this, 'Window Cleaning', -1)">-</button>
+                        <!-- Window Cleaning -->
+                        <div class="service-grid-item" style="text-align: center;" data-name="Window Cleaning" data-base-price="199">
+                            <div class="img-container" style="background: #f8f9fa; border-radius: 16px; overflow: hidden; position: relative; margin-bottom: 8px;">
+                                <img src="https://i.ibb.co/d0HBVK0m/Whats-App-Image-2026-07-13-at-9-41-43-PM.jpg" alt="Window" style="width: 100%; height: 90px; object-fit: cover; transition: transform 0.3s ease;">
+                                <div class="grid-btn-wrapper" style="position: absolute; bottom: 8px; right: 8px;">
+                                    <button class="add-btn-small" onclick="addDynamicService(this, 'Window Cleaning')">+</button>
+                                    <div class="counter-pill-grid" style="display:none; background: white; border: 1px solid #004aad; border-radius: 8px; color: #004aad; font-weight: bold; padding: 2px 5px; height: 30px; align-items: center; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;" onclick="updateCountFromDynamicGrid(this, 'Window Cleaning', -1)">-</button>
                                         <span>1</span>
-                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;"
-                                            onclick="updateCountFromDynamicGrid(this, 'Window Cleaning', 1)">+</button>
+                                        <button style="border:none; background:none; color:#004aad; padding: 0 5px;" onclick="updateCountFromDynamicGrid(this, 'Window Cleaning', 1)">+</button>
                                     </div>
                                 </div>
                             </div>
                             <h6 class="font-weight-bold mb-0" style="font-size: 0.85rem;">Window</h6>
-                            <select class="custom-select custom-select-sm mb-1 mt-1 service-duration-select"
-                                style="font-size: 0.85rem; font-weight: 600; border-radius: 8px; width: 95%; text-align: center; text-align-last: center; margin: 6px auto; display: block; background-color: #f4f9ff; color: #004aad; border: 1px solid #b3d4ff; padding: 6px 20px 6px 5px; box-shadow: 0 2px 6px rgba(0,74,173,0.08); cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22%23004aad%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/><path d=%22M0 0h24v24H0z%22 fill=%22none%22/></svg>'); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; outline: none; transition: all 0.2s ease;"
-                                onmouseover="this.style.borderColor='#004aad'"
-                                onmouseout="this.style.borderColor='#b3d4ff'"
-                                onchange="updateServicePrice(this, 'Window Cleaning')">
-                                <option value="1 unit" data-price="49">1 unit</option>
-                                <option value="2 unit" data-price="98">2 unit</option>
-                                <option value="3 unit" data-price="147">3 unit</option>
-                                <option value="4 unit" data-price="196">4 unit</option>
+                            <select class="custom-select custom-select-sm mb-1 mt-1 service-duration-select" style="font-size: 0.85rem; font-weight: 600; border-radius: 8px; width: 95%; text-align: center; text-align-last: center; margin: 6px auto; display: block; background-color: #f4f9ff; color: #004aad; border: 1px solid #b3d4ff; padding: 6px 20px 6px 5px; box-shadow: 0 2px 6px rgba(0,74,173,0.08); cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=%22%23004aad%22 height=%2224%22 viewBox=%220 0 24 24%22 width=%2224%22 xmlns=%22http://www.w3.org/2000/svg%22><path d=%22M7 10l5 5 5-5z%22/><path d=%22M0 0h24v24H0z%22 fill=%22none%22/></svg>'); background-repeat: no-repeat; background-position-x: 95%; background-position-y: 50%; outline: none; transition: all 0.2s ease;" onchange="updateServicePrice(this, 'Window Cleaning')">
+                                <option value="1 BHK" data-price="199">1 BHK</option>
+                                <option value="2 BHK" data-price="299">2 BHK</option>
+                                <option value="3 BHK" data-price="399">3 BHK</option>
                             </select>
-                            <span class="font-weight-bold price-label service-display-price"
-                                style="color: #004aad; font-size: 0.95rem;">₹49</span>
+                            <span class="font-weight-bold price-label service-display-price" style="color: #004aad; font-size: 0.95rem;">&#8377;199</span>
                         </div>
 
                     </div>
@@ -618,95 +630,136 @@
         </section>
         <!-- checkout end-->
 
-        <!-- WHY CHOOSE BLOORUSH -->
-        <section class="why-section">
-            <div class="text-center mb-5" style="width: 80%; margin: auto;">
-                <h2 class="font-weight-bold" style="color: var(--primary-dark);">Why Choose Bloorush</h2>
-                <p class="text-muted mt-2" style="font-size: 1.1rem; line-height: 1.6;">Experience premium home services
-                    with verified professionals,<br> transparent pricing, and unmatched convenience</p>
-            </div>
-
-            <div class="slider-container">
-                <div class="why-choose-slider">
-                    <!-- Orig 6 items -->
-                    <div class="why-card">
-                        <i class="fas fa-user-shield"></i>
-                        <h6>Verified Professionals</h6>
-                        <p>Background-checked, highly trained, and deeply trusted cleaning experts.</p>
-                    </div>
-                    <div class="why-card">
-                        <i class="fas fa-tags"></i>
-                        <h6>Transparent Pricing</h6>
-                        <p>No hidden charges or surprise fees. You literally pay exactly what you see.</p>
-                    </div>
-                    <div class="why-card">
-                        <i class="fas fa-thumbs-up"></i>
-                        <h6>100% Satisfaction</h6>
-                        <p>We take pride in our service. If you're not happy, we'll re-clean it for free.</p>
-                    </div>
-                    <div class="why-card">
-                        <i class="fas fa-calendar-check"></i>
-                        <h6>Convenient Booking</h6>
-                        <p>Select your time slot and schedule services seamlessly in just a few clicks.</p>
-                    </div>
-                    <div class="why-card">
-                        <i class="fas fa-leaf"></i>
-                        <h6>Eco-Friendly Products</h6>
-                        <p>Safe, non-toxic chemicals that protect your family, pets, and the earth.</p>
-                    </div>
-                    <div class="why-card">
-                        <i class="fas fa-headset"></i>
-                        <h6>24/7 Support</h6>
-                        <p>Our dedicated support team is always here to assist you, whenever you need.</p>
-                    </div>
-                    <!-- Duplicated 6 items for infinite seamless scroll -->
-                    <div class="why-card">
-                        <i class="fas fa-user-shield"></i>
-                        <h6>Verified Professionals</h6>
-                        <p>Background-checked, highly trained, and deeply trusted cleaning experts.</p>
-                    </div>
-                    <div class="why-card">
-                        <i class="fas fa-tags"></i>
-                        <h6>Transparent Pricing</h6>
-                        <p>No hidden charges or surprise fees. You literally pay exactly what you see.</p>
-                    </div>
-                    <div class="why-card">
-                        <i class="fas fa-thumbs-up"></i>
-                        <h6>100% Satisfaction</h6>
-                        <p>We take pride in our service. If you're not happy, we'll re-clean it for free.</p>
-                    </div>
-                    <div class="why-card">
-                        <i class="fas fa-calendar-check"></i>
-                        <h6>Convenient Booking</h6>
-                        <p>Select your time slot and schedule services seamlessly in just a few clicks.</p>
-                    </div>
-                    <div class="why-card">
-                        <i class="fas fa-leaf"></i>
-                        <h6>Eco-Friendly Products</h6>
-                        <p>Safe, non-toxic chemicals that protect your family, pets, and the earth.</p>
-                    </div>
-                    <div class="why-card">
-                        <i class="fas fa-headset"></i>
-                        <h6>24/7 Support</h6>
-                        <p>Our dedicated support team is always here to assist you, whenever you need.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        
 
 
 
         <!-- TESTIMONIALS SECTION -->
 
         <!-- TRUSTED SECTION -->
-        <section class="trusted-section center-60 px-3 mb-5 mt-5">
+        
+        <!-- HOW BLOORUSH WORKS SECTION -->
+        <section class="how-works-section" style="padding: 60px 0; background: #fff;">
+            <div class="text-center mb-5" style="width: 80%; margin: auto;">
+                <h2 class="font-weight-bold" style="color: var(--primary-dark);">How Bloorush Works</h2>
+                <h5 class="font-weight-bold" style="color: var(--primary-dark);">Simple. Fast. Reliable.</h5>
+                <p class="text-muted mt-2" style="font-size: 1.1rem; line-height: 1.6;">Your premium home service is just three simple steps away.<br>We make booking seamless, fast, and completely reliable.</p>
+            </div>
+            <div class="how-works-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; width: 80%; margin: 0 auto;">
+                <div class="how-card" style="background:#fff; border-radius:16px; padding:30px; box-shadow:0 6px 20px rgba(0,0,0,0.06); flex:1; min-width:250px; text-align:center;">
+                    <h5 style="color:var(--primary); font-weight:bold;">1. Choose Service</h5>
+                    <p style="color:#6B7280;">Select the cleaning or helper task you need from our wide variety of premium services.</p>
+                </div>
+                <div class="how-card" style="background:#fff; border-radius:16px; padding:30px; box-shadow:0 6px 20px rgba(0,0,0,0.06); flex:1; min-width:250px; text-align:center;">
+                    <h5 style="color:var(--primary); font-weight:bold;">2. WhatsApp Us</h5>
+                    <p style="color:#6B7280;">Click the button to confirm your booking instantly via WhatsApp with our support team.</p>
+                </div>
+                <div class="how-card" style="background:#fff; border-radius:16px; padding:30px; box-shadow:0 6px 20px rgba(0,0,0,0.06); flex:1; min-width:250px; text-align:center;">
+                    <h5 style="color:var(--primary); font-weight:bold;">3. Relax</h5>
+                    <p style="color:#6B7280;">A verified Bloorush helper arrives exactly at your door in 10 mins to handle everything perfectly.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BANNER 1 -->
+        <section style="padding: 20px; max-width: 1000px; margin: 0 auto;">
+            <div style="background-color: #0077BD; border-radius: 24px; padding: 30px; display: flex; flex-direction: column; gap: 20px;">
+                
+                <div style="background-color: #E0F2FE; border-radius: 20px; padding: 40px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 30px;">
+                    <div style="flex: 1; min-width: 300px;">
+                        <span style="background: white; color: #0077BD; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px;">
+                            <i class="fas fa-shield-alt"></i> Trusted by 1000+ families
+                        </span>
+                        <h2 style="font-size: 2.5rem; font-weight: 800; color: #0F172A; line-height: 1.2; margin-bottom: 20px;">
+                            Reliable Home Help in Just <span style="color: #0077BD;">Minutes</span>
+                        </h2>
+                        <p style="color: #475569; font-size: 1.1rem; line-height: 1.5; margin: 0;">
+                            Book trained & verified Bloorush Specialists for cleaning, cooking, laundry & more – instantly, whenever you need.
+                        </p>
+                    </div>
+                    <div style="flex: 0 1 300px; text-align: center;">
+                        <img src="assets/reliable.png" alt="Bloorush Professional" style="width: 100%; max-width: 250px; border-radius: 20px; object-fit: cover; aspect-ratio: 3/4; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+                    </div>
+                </div>
+
+                <div style="text-align: center; color: white;">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 20px;">Serving <span style="color: #004aad;">8 Areas</span> in Nagpur</h3>
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
+                        <span style="background: white; color: #0F172A; padding: 10px 25px; border-radius: 30px; font-weight: 600;">Narendra Nagar</span>
+                        <span style="background: white; color: #0F172A; padding: 10px 25px; border-radius: 30px; font-weight: 600;">Manish Nagar</span>
+                        <span style="background: white; color: #0F172A; padding: 10px 25px; border-radius: 30px; font-weight: 600;">Besa</span>
+                        <span style="background: white; color: #0F172A; padding: 10px 25px; border-radius: 30px; font-weight: 600;">Dharampeth</span>
+                        <span style="background: white; color: #0F172A; padding: 10px 25px; border-radius: 30px; font-weight: 600;">Ramdaspeth</span>
+                        <span style="background: white; color: #0F172A; padding: 10px 25px; border-radius: 30px; font-weight: 600;">Civil lines</span>
+                        <span style="background: white; color: #0F172A; padding: 10px 25px; border-radius: 30px; font-weight: 600;">Shivaji Nagar</span>
+                        <span style="background: white; color: #0F172A; padding: 10px 25px; border-radius: 30px; font-weight: 600;">Ram Nagar</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BANNER 2 -->
+        <section style="padding: 20px; max-width: 1000px; margin: 0 auto 60px auto;">
+            <div style="background-color: #E0F2FE; border-radius: 24px; padding: 40px; display: flex; flex-direction: column; gap: 30px;">
+                
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-around; gap: 20px;">
+                    <!-- Pro 1 -->
+                    <div style="text-align: center; flex: 1; min-width: 200px; background: white; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); overflow: hidden; padding-top: 20px; transition: transform 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='scale(1.05)'; this.querySelector('img').style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'; this.querySelector('img').style.transform='scale(1)'">
+                        <div style="background: white; height: 180px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                            <img src="assets/trained_transparent.png" alt="Trained" style="width: auto; height: 100%; max-width: 100%; object-fit: contain; transition: transform 0.3s ease;">
+                        </div>
+                        <div style="background: white; padding: 20px;">
+                            <div style="width: 40px; height: 4px; background: #004aad; margin: 0 auto 15px auto;"></div>
+                            <h4 style="font-weight: 800; color: #0F172A; margin: 0 0 5px 0;">Trained</h4>
+                            <p style="color: #6B7280; font-size: 0.9rem; margin: 0;">professionals</p>
+                        </div>
+                    </div>
+                    <!-- Pro 2 -->
+                    <div style="text-align: center; flex: 1; min-width: 200px; background: white; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); overflow: hidden; padding-top: 20px; transition: transform 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='scale(1.05)'; this.querySelector('img').style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'; this.querySelector('img').style.transform='scale(1)'">
+                        <div style="background: white; height: 180px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                            <img src="assets/veirfies_transparent.png" alt="Verified" style="width: auto; height: 100%; max-width: 100%; object-fit: contain; transition: transform 0.3s ease;">
+                        </div>
+                        <div style="background: white; padding: 20px;">
+                            <div style="width: 40px; height: 4px; background: #004aad; margin: 0 auto 15px auto;"></div>
+                            <h4 style="font-weight: 800; color: #0F172A; margin: 0 0 5px 0;">Verified</h4>
+                            <p style="color: #6B7280; font-size: 0.9rem; margin: 0;">background-checked</p>
+                        </div>
+                    </div>
+                    <!-- Pro 3 -->
+                    <div style="text-align: center; flex: 1; min-width: 200px; background: white; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); overflow: hidden; padding-top: 20px; transition: transform 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='scale(1.05)'; this.querySelector('img').style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'; this.querySelector('img').style.transform='scale(1)'">
+                        <div style="background: white; height: 180px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                            <img src="assets/fast_transparent.png" alt="Fast" style="width: auto; height: 100%; max-width: 100%; object-fit: contain; transition: transform 0.3s ease;">
+                        </div>
+                        <div style="background: white; padding: 20px;">
+                            <div style="width: 40px; height: 4px; background: #004aad; margin: 0 auto 15px auto;"></div>
+                            <h4 style="font-weight: 800; color: #0F172A; margin: 0 0 5px 0;">Fast</h4>
+                            <p style="color: #6B7280; font-size: 0.9rem; margin: 0;">booking in minutes</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: #0077BD; border-radius: 16px; padding: 25px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; color: white; gap: 40px;">
+                    <div style="text-align: center;">
+                        <span style="font-size: 2.5rem; font-weight: 800;">4.7</span>
+                        <span style="font-size: 0.9rem; font-weight: 600; opacity: 0.9; margin-left: 10px;">Average Rating</span>
+                    </div>
+                    <div style="width: 2px; height: 40px; background: rgba(255,255,255,0.3);"></div>
+                    <div style="text-align: center;">
+                        <span style="font-size: 2.5rem; font-weight: 800;">15 Min</span>
+                        <span style="font-size: 0.9rem; font-weight: 600; opacity: 0.9; margin-left: 10px;">Average Arrival</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<section class="trusted-section center-60 px-3 mb-5 mt-5">
             <h2 class="font-weight-bold text-center mb-5" style="color: var(--primary-dark);">Trusted Home Help for
                 Thousands of Families</h2>
             <div class="row">
                 <!-- Left Pink Box -->
                 <div class="col-md-5 mb-4 mb-md-0">
                     <div class="trusted-pink-box text-white"
-                        style="background: linear-gradient(135deg, #38b6ff, #004aad); border-radius: 20px; padding: 40px 30px; height: 100%; box-shadow: 0 10px 30px rgba(233, 30, 99, 0.3);">
+                        style="background: linear-gradient(135deg, #004aad, #004aad); border-radius: 20px; padding: 40px 30px; height: 100%; box-shadow: 0 10px 30px rgba(233, 30, 99, 0.3);">
                         <i class="fas fa-shield-alt mb-3" style="font-size: 30px; opacity: 0.8;"></i>
                         <h3 class="font-weight-bold mb-3">Trusted by Nagpur's Families</h3>
                         <p class="mb-4" style="font-size: 0.95rem; opacity: 0.9;">Every Expert is background checked,
@@ -749,7 +802,7 @@
                                 style="background: white; border-radius: 20px; padding: 25px 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); border: 1px solid #f0f0f0;">
                                 <div
                                     style="width: 40px; height: 40px; background: #fff0f5; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
-                                    <i class="fas fa-award" style="color: #38b6ff;"></i>
+                                    <i class="fas fa-award" style="color: #004aad;"></i>
                                 </div>
                                 <h6 class="font-weight-bold" style="color: var(--primary-dark);">Background Verified &
                                     Trusted</h6>
@@ -764,7 +817,7 @@
                                 style="background: white; border-radius: 20px; padding: 25px 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); border: 1px solid #f0f0f0;">
                                 <div
                                     style="width: 40px; height: 40px; background: #fff0f5; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
-                                    <i class="fas fa-female" style="color: #38b6ff;"></i>
+                                    <i class="fas fa-female" style="color: #004aad;"></i>
                                 </div>
                                 <h6 class="font-weight-bold" style="color: var(--primary-dark);">Powered by Women
                                     Workforce
@@ -779,7 +832,7 @@
                                 style="background: white; border-radius: 20px; padding: 25px 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); border: 1px solid #f0f0f0;">
                                 <div
                                     style="width: 40px; height: 40px; background: #fff0f5; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
-                                    <i class="fas fa-rupee-sign" style="color: #38b6ff;"></i>
+                                    <i class="fas fa-rupee-sign" style="color: #004aad;"></i>
                                 </div>
                                 <h6 class="font-weight-bold" style="color: var(--primary-dark);">No Hidden Charges</h6>
                                 <p class="text-muted mb-0" style="font-size: 0.85rem;">Transparent pricing is ensured,
@@ -792,7 +845,7 @@
                                 style="background: white; border-radius: 20px; padding: 25px 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); border: 1px solid #f0f0f0;">
                                 <div
                                     style="width: 40px; height: 40px; background: #fff0f5; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px;">
-                                    <i class="fas fa-star" style="color: #38b6ff;"></i>
+                                    <i class="fas fa-star" style="color: #004aad;"></i>
                                 </div>
                                 <h6 class="font-weight-bold" style="color: var(--primary-dark);">Top Rated Experts</h6>
                                 <p class="text-muted mb-0" style="font-size: 0.85rem;">Experts are rated and trusted by
@@ -806,55 +859,7 @@
 
 
         <!-- HOW BLOORUSH WORKS -->
-        <section class="how-works-section">
-            <div class="text-center mb-5" style="width: 80%; margin: auto;">
-                <h2 class="font-weight-bold" style="color: var(--primary-dark);">How Bloorush Works</h2>
-                <h5 class="font-weight-bold" style="color: var(--primary-dark);">Simple. Fast. Reliable.</h5>
-                <p class="text-muted mt-2" style="font-size: 1.1rem; line-height: 1.6;">Your premium home service is
-                    just
-                    three simple steps away.<br>We make booking seamless, fast, and completely reliable.</p>
-            </div>
-
-            <div class="how-works-container">
-                <!-- Step 1 -->
-                <div class="how-card">
-                    <div class="how-card-header">
-                        <span class="how-step-badge">Step 1</span>
-                        <div class="how-icon-tube"><i class="fas fa-hand-pointer"></i></div>
-                    </div>
-                    <h5>Choose Service</h5>
-                    <p>Select the cleaning or helper task you need from our wide variety of premium services.</p>
-                </div>
-
-                <!-- Arrow -->
-                <i class="fas fa-chevron-right how-arrow"></i>
-
-                <!-- Step 2 -->
-                <div class="how-card">
-                    <div class="how-card-header">
-                        <span class="how-step-badge">Step 2</span>
-                        <div class="how-icon-tube"><i class="fab fa-whatsapp"></i></div>
-                    </div>
-                    <h5>WhatsApp Us</h5>
-                    <p>Click the button to confirm your booking instantly via WhatsApp with our support team.</p>
-                </div>
-
-                <!-- Arrow -->
-                <i class="fas fa-chevron-right how-arrow"></i>
-
-                <!-- Step 3 -->
-                <div class="how-card">
-                    <div class="how-card-header">
-                        <span class="how-step-badge">Step 3</span>
-                        <div class="how-icon-tube"><i class="fas fa-couch"></i></div>
-                    </div>
-                    <h5>Relax</h5>
-                    <p>A verified Bloorush helper arrives exactly at your door in 10 mins to handle perfectly
-                        everything.
-                    </p>
-                </div>
-            </div>
-        </section>
+        
 
     </div> <!-- End homeView -->
 
@@ -1429,6 +1434,68 @@
 
     <!-- Custom JS -->
     <script src="script.js?v=17"></script>
+
+
+    <!-- T&C / Privacy Modal -->
+    <div id="tcModal" class="modal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgba(0,0,0,0.5); backdrop-filter:blur(5px);">
+        <div class="modal-content" style="background-color:#E0F2FE; margin:5% auto; padding:30px; border-radius:24px; width:90%; max-width:600px; position:relative; box-shadow:0 25px 50px rgba(0,0,0,0.15);">
+            <span class="close" onclick="closeTcModal()" style="position:absolute; right:20px; top:15px; font-size:28px; cursor:pointer; color:#6B7280;">&times;</span>
+            <div style="display:flex; justify-content:center; margin-bottom:10px;">
+                <div style="width:40px; height:4px; background:#CBD5E1; border-radius:2px;"></div>
+            </div>
+            
+            <h2 id="tcModalTitle" style="font-size:24px; font-weight:800; color:#0F172A; margin:0;">Terms & Conditions</h2>
+            <p style="color:#6B7280; font-size:14px; margin-top:4px; margin-bottom:20px;">Bloorush Ventures Private Limited &middot; Effective July 2, 2026</p>
+            
+            <div class="tc-tabs" style="display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap;">
+                <button class="tc-tab" onclick="openTcTab('privacy')" id="btn-privacy" style="border:none; padding:8px 16px; border-radius:20px; font-weight:600; cursor:pointer; background:#fff; color:#0F172A;">Privacy</button>
+                <button class="tc-tab active" onclick="openTcTab('terms')" id="btn-terms" style="border:none; padding:8px 16px; border-radius:20px; font-weight:600; cursor:pointer; background:#004aad; color:#fff;">Terms</button>
+                <button class="tc-tab" onclick="openTcTab('refund')" id="btn-refund" style="border:none; padding:8px 16px; border-radius:20px; font-weight:600; cursor:pointer; background:#fff; color:#0F172A;">Cancellation & Refund</button>
+            </div>
+            
+            <div id="tab-privacy" class="tc-tab-content" style="display:none; max-height:400px; overflow-y:auto; padding-right:10px; color:#334155; font-size:14px; line-height:1.6;">
+                <p><b>Information we collect:</b> Name, mobile number, email address, service address, live location (when required), booking history, payment information, and service-related photos.</p>
+                <p><b>How we use it:</b> Bookings, customer support, reminders, promotions, feedback, and business records.</p>
+                <p><b>Sharing:</b> Shared only with the assigned Bloorush Professional to deliver the service. We do not sell or rent personal information.</p>
+                <p><b>Payments:</b> UPI and Cash.</p>
+                <p><b>Data retention:</b> Retained for business records and future bookings.</p>
+                <p><b>Your rights:</b> You may request access, correction, or deletion of your personal information.</p>
+            </div>
+            
+            <div id="tab-terms" class="tc-tab-content" style="display:block; max-height:400px; overflow-y:auto; padding-right:10px; color:#334155; font-size:14px; line-height:1.6;">
+                <p><b>Eligibility:</b> Customers must be 18 years or older.</p>
+                <p><b>Services:</b> Home cleaning, utensils, kitchen, bathroom, laundry, ironing, fan/window cleaning, subscriptions, and one-time bookings.</p>
+                <p><b>Operating hours:</b> 8:00 AM&ndash;8:00 PM (IST).</p>
+                <p><b>Bookings:</b> Subject to availability. Customers must provide accurate details.</p>
+                <p><b>Customer responsibilities:</b> Provide safe access, utilities, and book the correct service.</p>
+                <p><b>Cleaning materials:</b> Customers provide materials unless otherwise stated (e.g. selected deep cleaning services).</p>
+                <p><b>Cancellation:</b> No refund after the Professional reaches the location. 10-minute wait for customer no-show.</p>
+                <p><b>Conduct:</b> Unsafe behaviour may lead to immediate termination of service.</p>
+                <p><b>Professional availability:</b> If the Professional does not arrive, a full refund will be issued.</p>
+                <p><b>Liability:</b> Damage claims are investigated. Liability is limited to the booking amount except where required by law.</p>
+            </div>
+            
+            <div id="tab-refund" class="tc-tab-content" style="display:none; max-height:400px; overflow-y:auto; padding-right:10px; color:#334155; font-size:14px; line-height:1.6;">
+                <ul style="padding-left:20px;">
+                    <li style="margin-bottom:8px;">Full refund if cancelled before the Professional starts traveling.</li>
+                    <li style="margin-bottom:8px;">No refund after the Professional reaches the location.</li>
+                    <li style="margin-bottom:8px;">10-minute wait for customer no-show.</li>
+                    <li style="margin-bottom:8px;">Service complaints may result in a re-service, partial refund, or full refund after review.</li>
+                    <li style="margin-bottom:8px;">Wrong service bookings may be rescheduled with any applicable price difference.</li>
+                    <li style="margin-bottom:8px;">Missed subscription visits are considered used.</li>
+                    <li style="margin-bottom:8px;">Bloorush cancellations due to operational reasons receive a free reschedule.</li>
+                    <li style="margin-bottom:8px;">If no Professional is available, a full refund will be issued.</li>
+                    <li style="margin-bottom:8px;">Subscription cancellations within 24 hours receive a full refund only if no service has been used.</li>
+                    <li style="margin-bottom:8px;">Eligible refunds are processed within 5-7 business days.</li>
+                </ul>
+            </div>
+            
+            <div style="background:#fff; padding:20px; border-radius:16px; margin-top:20px; box-shadow:0 -4px 10px rgba(0,0,0,0.02); text-align:center;">
+                <p style="font-size:14px; color:#0F172A; margin-bottom:15px;">By continuing, you agree to our <a href="#" onclick="openTcTab('privacy'); return false;" style="color:#004aad; text-decoration:none; font-weight:600;">privacy policy</a>.</p>
+                <button onclick="acceptTcModal()" style="width:100%; background:#0F172A; color:#fff; border:none; padding:12px; border-radius:12px; font-weight:600; font-size:16px; cursor:pointer;">I Accept</button>
+            </div>
+        </div>
+    </div>
 
 </body>
 

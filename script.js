@@ -279,7 +279,7 @@ function updateAuthUI() {
         footerText.innerText = "Don't have an account?";
         toggleBtn.innerText = "Sign Up";
         nameField.style.display = "none";
-        if(googleBtnText) googleBtnText.innerText = "Sign in with Google";
+        if (googleBtnText) googleBtnText.innerText = "Sign in with Google";
     } else {
         title.innerText = "Create Account";
         subtitle.innerText = "Join Bloorush today";
@@ -287,7 +287,7 @@ function updateAuthUI() {
         footerText.innerText = "Already have an account?";
         toggleBtn.innerText = "Login";
         nameField.style.display = "flex";
-        if(googleBtnText) googleBtnText.innerText = "Sign up with Google";
+        if (googleBtnText) googleBtnText.innerText = "Sign up with Google";
     }
 }
 
@@ -330,7 +330,7 @@ document.getElementById('authSubmitBtn').addEventListener('click', function (e) 
         showToast("Error", "Email and Password are required!", false);
         return;
     }
-    
+
     // JS Security Authentication Hardening
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(emailField)) {
@@ -463,13 +463,16 @@ function fetchGoogleUserProfile(accessToken) {
 
 //  Dynamic Pricing Logic
 const servicePricingMatrix = {
-    'Utensils Cleaning': { '30': 89, '45': 129, '60': 169, '90': 239 },
-    'Bathroom Cleaning': { '30': 99, '45': 149, '60': 189, '90': 189 },
-    'Toilet Cleaning':   { '30': 99, '45': 149, '60': 189, '90': 239 },
-    'Mopping & Sweeping':{ '30': 79, '45': 119, '60': 159, '90': 219 },
-    'Home Dusting':      { '30': 79, '45': 119, '60': 159, '90': 219 },
-    'Fan Cleaning':      { '1': 49, '2': 98, '3': 147, '4': 196 },
-    'Window Cleaning':   { '1': 49, '2': 98, '3': 147, '4': 196 }
+    'Utensils Cleaning': { '30 min': 89, '45 min': 129, '60 min': 179, '90 min': 239, '120 min': 299 },
+    'Toilet & Bathroom': { 'Single toilet 30 min': 99, 'Single bathroom 30 min': 99, 'Combined 30 min': 159, '2 combined 60 min': 318, '3 combined 90 min': 477 },
+    'Mopping & Sweeping': { '1 BHK 15 min': 99, '2 BHK 25 min': 119, '3 BHK 40 min': 139, '4 BHK 55 min': 179 },
+    'Home Dusting': { '1 BHK 30 min': 99, '2 BHK 40 min': 129, '3 BHK 60 min': 179, '4 BHK 80 min': 229 },
+    'Kitchen Cleaning': { '1 kitchen 60 min': 399 },
+    'Deep Washroom Cleaning': { '1 unit 30 min': 199 },
+    'Ironing Service': { '15-18 clothes 60 min': 179, '25-32 clothes 90 min': 259, '35-42 clothes 120 min': 339 },
+    'Packing & Unpacking': { 'Small room/studio 60 min': 199, '1 BHK 90 min': 349, '2 BHK 120 min': 449, '3 BHK 240 min': 799 },
+    'Fan Cleaning': { '1': 49, '2': 98, '3': 147, '4': 196 },
+    'Window Cleaning': { '1 BHK': 199, '2 BHK': 299, '3 BHK': 399 }
 };
 
 let currentFilter = 'prebooking';
@@ -482,9 +485,9 @@ function setServiceFilter(filter) {
         document.querySelectorAll('.add-btn').forEach(btn => btn.style.display = 'flex');
         updateCartUI();
     }
-    
+
     currentFilter = filter;
-    
+
     // Update active tab UI
     document.querySelectorAll('.filter-tab').forEach(b => {
         b.classList.remove('active', 'btn-primary', 'text-white');
@@ -514,15 +517,15 @@ function updateCardPrice(selectElem) {
     // Default to Mopping logic if somehow explicitly missing from map
     const matrix = servicePricingMatrix[title] || servicePricingMatrix['Mopping & Sweeping'];
     let basePrice = matrix[duration] || 0;
-    
+
     // Core Modifiers
     let newPrice = basePrice;
-    if (currentFilter === 'instant')       newPrice = basePrice + 15;
+    if (currentFilter === 'instant') newPrice = basePrice + 15;
     else if (currentFilter === 'prebooking') newPrice = basePrice;
-    else if (currentFilter === 'reliable')   newPrice = basePrice;
+    else if (currentFilter === 'reliable') newPrice = basePrice;
 
     priceText.innerText = "₹" + newPrice;
-    
+
     // Update container datasets for the Add To Cart logic
     let timeLabel = duration + ' min';
     if (title.includes('Fan') || title.includes('Window')) {
@@ -538,16 +541,16 @@ let cart = {};
 function showCounter(btn) {
     const container = btn.parentElement;
     const counterPill = container.querySelector('.counter-pill');
-    
+
     const card = container.closest(".service-card");
     const nameStr = card.getAttribute("data-name");
-    
+
     // Safety sync to ensure current duration is accurately grabbed if user clicked blindly
     updateCardPrice(container.closest('.service-item').querySelector('.duration-selector'));
 
     const price = parseInt(card.getAttribute("data-price"));
     const timeLimit = card.getAttribute("data-time") || "30 min";
-    
+
     // Unique ID combining service name and the precise duration
     const cartItemId = `${nameStr} | ${timeLimit}`;
 
@@ -573,7 +576,7 @@ function updateCount(btn, change) {
     const nameStr = card.getAttribute("data-name");
     const price = parseInt(card.getAttribute("data-price"));
     const timeLimit = card.getAttribute("data-time");
-    
+
     const cartItemId = `${nameStr} | ${timeLimit}`;
 
     let count = 0;
@@ -630,12 +633,16 @@ function updateCartUI() {
     cartEmpty.style.display = "none";
 
     const images = {
-        "Utensils Cleaning": "service_utensils_icon.png",
-        "Bathroom Cleaning": "service_bathroom_icon.png",
-        "Mopping & Sweeping": "service_mopping_icon.png",
-        "Home Dusting": "service_dusting_icon.png",
-        "Fan Cleaning": "service_fan_icon.png",
-        "Window Cleaning": "service_window_icon.png"
+        "Utensils Cleaning": "https://i.ibb.co/DHts69Sv/Whats-App-Image-2026-07-13-at-3-51-48-PM.jpg",
+        "Toilet & Bathroom": "https://i.ibb.co/VpCVZYMP/Whats-App-Image-2026-07-13-at-9-52-24-PM.jpg",
+        "Mopping & Sweeping": "https://i.ibb.co/qM01ThTm/Whats-App-Image-2026-07-13-at-3-51-50-PM.jpg",
+        "Home Dusting": "https://i.ibb.co/v4rPWm4N/Whats-App-Image-2026-07-13-at-3-51-50-PM-1.jpg",
+        "Kitchen Cleaning": "https://i.ibb.co/Y79LtB5z/Whats-App-Image-2026-07-13-at-9-57-05-PM.jpg",
+        "Deep Washroom Cleaning": "https://i.ibb.co/7twSMkj1/Whats-App-Image-2026-07-13-at-9-34-21-PM.jpg",
+        "Ironing Service": "https://i.ibb.co/DHts69Sv/Whats-App-Image-2026-07-13-at-3-51-48-PM.jpg",
+        "Packing & Unpacking": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=250&auto=format&fit=crop",
+        "Fan Cleaning": "assets/service_fan_icon.png",
+        "Window Cleaning": "assets/service_window_icon.png"
     };
 
     for (let item in cart) {
@@ -688,12 +695,12 @@ function syncFrontEndCounters() {
     allContainers.forEach(container => {
         const nameStr = container.getAttribute('data-name');
         const activeSelect = container.closest('.service-item').querySelector('.duration-selector');
-        
+
         // Safety sync to ensure data sets accurately reflect the currently selected combo
-        if(cart[`${nameStr} | ${activeSelect.value} min`]) { 
-           // Edgecase: Reliable logic overrides time limits appended strings
+        if (cart[`${nameStr} | ${activeSelect.value} min`]) {
+            // Edgecase: Reliable logic overrides time limits appended strings
         }
-        
+
         let cartItemId = `${nameStr} | ${container.getAttribute('data-time')}`;
 
         if (cart[cartItemId]) {
@@ -719,7 +726,7 @@ function proceedToCheckout() {
     document.querySelector('.services-section').style.display = 'none';
     if (document.querySelector('.hero-section')) document.querySelector('.hero-section').style.display = 'none';
     if (document.querySelector('.offers-section')) document.querySelector('.offers-section').style.display = 'none';
-        if (document.querySelector('.why-section')) document.querySelector('.why-section').style.display = 'none';
+    if (document.querySelector('.why-section')) document.querySelector('.why-section').style.display = 'none';
     if (document.querySelector('.how-works-section')) document.querySelector('.how-works-section').style.display = 'none';
     if (document.querySelector('.testimonial-section')) document.querySelector('.testimonial-section').style.display = 'none';
 
@@ -728,7 +735,7 @@ function proceedToCheckout() {
 
     // Explicitly hide floating cart button
     const floatingBtn = document.getElementById("floatingCartBtn");
-    if(floatingBtn) floatingBtn.style.display = 'none';
+    if (floatingBtn) floatingBtn.style.display = 'none';
 
     // Refresh Dynamic View State dynamically
     updateCheckoutUI();
@@ -770,13 +777,13 @@ function backToServices() {
     document.querySelector('.services-section').style.display = 'block';
     if (document.querySelector('.hero-section')) document.querySelector('.hero-section').style.display = 'block';
     if (document.querySelector('.offers-section')) document.querySelector('.offers-section').style.display = 'block';
-        if (document.querySelector('.why-section')) document.querySelector('.why-section').style.display = 'block';
+    if (document.querySelector('.why-section')) document.querySelector('.why-section').style.display = 'block';
     if (document.querySelector('.how-works-section')) document.querySelector('.how-works-section').style.display = 'block';
     if (document.querySelector('.testimonial-section')) document.querySelector('.testimonial-section').style.display = 'block';
 
     // Scroll smoothly to services
     document.querySelector('.services-section').scrollIntoView({ behavior: 'smooth' });
-    
+
     // Refresh floating cart visibility naturally
     updateCartUI();
 }
@@ -806,14 +813,14 @@ function toggleNewPhoneForm() {
 }
 
 function loadSavedAddresses() {
-    if(!currentUser) return [];
+    if (!currentUser) return [];
     let addrs = localStorage.getItem('bloorush_userAddresses_' + currentUser.email);
     return addrs ? JSON.parse(addrs) : [];
 }
 function saveNewAddress(addrStr) {
-    if(!currentUser) return;
+    if (!currentUser) return;
     let addrs = loadSavedAddresses();
-    if(!addrs.includes(addrStr)) {
+    if (!addrs.includes(addrStr)) {
         addrs.push(addrStr);
         localStorage.setItem('bloorush_userAddresses_' + currentUser.email, JSON.stringify(addrs));
     }
@@ -821,7 +828,7 @@ function saveNewAddress(addrStr) {
 function toggleNewAddressForm() {
     const form = document.getElementById('newAddressForm');
     const btn = document.getElementById('toggleAddressBtn');
-    if(form.style.display === 'none') {
+    if (form.style.display === 'none') {
         form.style.display = 'block';
         btn.innerText = "- Cancel New Address";
     } else {
@@ -835,7 +842,7 @@ function openSlotBooking() {
     const userLocation = (document.getElementById("locationText").innerText || "").toLowerCase();
     const allowedLocations = ["nagpur", "narendra nagar", "manish nagar", "chhatrepathi square", "shahjahanpur"];
     const isAvailable = allowedLocations.some(loc => userLocation.includes(loc));
-    
+
     if (!isAvailable) {
         $('#locationErrorModal').modal('show');
         return;
@@ -864,12 +871,12 @@ function openSlotBooking() {
     const savedAddressBlock = document.getElementById('savedAddressBlock');
     const toggleAddrBtn = document.getElementById('toggleAddressBtn');
     const addresses = loadSavedAddresses();
-    
+
     if (addresses.length > 0) {
         let h = '';
         addresses.forEach((ad, idx) => {
             h += `<div class="form-check mb-1">
-                    <input class="form-check-input" type="radio" name="savedAddressRadio" id="addrRadio${idx}" value="${ad}" ${idx===0 ? 'checked' : ''}>
+                    <input class="form-check-input" type="radio" name="savedAddressRadio" id="addrRadio${idx}" value="${ad}" ${idx === 0 ? 'checked' : ''}>
                     <label class="form-check-label text-muted" style="font-size: 0.85rem;" for="addrRadio${idx}">${ad}</label>
                   </div>`;
         });
@@ -888,12 +895,12 @@ function openSlotBooking() {
     const savedPhoneBlock = document.getElementById('savedPhoneBlock');
     const togglePhoneBtn = document.getElementById('togglePhoneBtn');
     const phones = loadSavedPhones();
-    
+
     if (phones.length > 0) {
         let h = '';
         phones.forEach((ph, idx) => {
             h += `<div class="form-check mb-1">
-                    <input class="form-check-input" type="radio" name="savedPhoneRadio" id="phoneRadio${idx}" value="${ph}" ${idx===0 ? 'checked' : ''}>
+                    <input class="form-check-input" type="radio" name="savedPhoneRadio" id="phoneRadio${idx}" value="${ph}" ${idx === 0 ? 'checked' : ''}>
                     <label class="form-check-label text-muted" style="font-size: 0.85rem;" for="phoneRadio${idx}">${ph}</label>
                   </div>`;
         });
@@ -917,13 +924,13 @@ function openSlotBooking() {
     // Reset slots cleanly before initial validate
     document.querySelectorAll('.slot-item').forEach(el => el.classList.remove('selected', 'disabled-slot'));
     selectedTimeSlot = null;
-    
+
     // Inject Total into Slot Modal
     fetchPublicCoupons();
     appliedCouponDiscount = 0;
-    if(document.getElementById('couponMessage')) document.getElementById('couponMessage').style.display = 'none';
-    if(document.getElementById('couponInput')) document.getElementById('couponInput').value = '';
-    
+    if (document.getElementById('couponMessage')) document.getElementById('couponMessage').style.display = 'none';
+    if (document.getElementById('couponInput')) document.getElementById('couponInput').value = '';
+
     document.getElementById('slotModalTotalAmount').innerText = totalAmount;
 
     // Show Interactive Modal & immediately run validation against current OS clock
@@ -935,7 +942,7 @@ function validateBookingDate() {
     const dateInput = document.getElementById('bookingDate');
     const selectedDateStr = dateInput.value;
     const todayStr = new Date().toISOString().split("T")[0];
-    
+
     // Deselect active slot to prevent cheating by selecting early then changing date to today
     document.querySelectorAll('.slot-item').forEach(el => {
         el.classList.remove('selected', 'disabled-slot');
@@ -959,7 +966,7 @@ function validateBookingDate() {
 }
 
 function selectSlot(element) {
-    if(element.classList.contains('disabled-slot')) return;
+    if (element.classList.contains('disabled-slot')) return;
     document.querySelectorAll('.slot-item').forEach(el => el.classList.remove('selected'));
     element.classList.add('selected');
     selectedTimeSlot = element.innerText;
@@ -981,8 +988,8 @@ function confirmWhatsAppBooking(btn) {
         const h = document.getElementById('addrHouse').value.trim();
         const f = document.getElementById('addrFloor').value.trim();
         const s = document.getElementById('addrStreet').value.trim();
-        
-        if(!h || !s) {
+
+        if (!h || !s) {
             alert("House Number and Street Name are required for new addresses!");
             return;
         }
@@ -990,7 +997,7 @@ function confirmWhatsAppBooking(btn) {
         saveNewAddress(finalAddress);
     } else {
         const selectedRadio = document.querySelector('input[name="savedAddressRadio"]:checked');
-        if(selectedRadio){
+        if (selectedRadio) {
             finalAddress = selectedRadio.value;
         } else {
             alert("Please provide or select a service address.");
@@ -998,12 +1005,12 @@ function confirmWhatsAppBooking(btn) {
         }
     }
 
-    
+
     // Extract Phone
     let finalPhone = "";
     if (document.getElementById('newPhoneForm').style.display === 'block') {
         const ph = document.getElementById('contactPhone').value.trim();
-        if(!ph) {
+        if (!ph) {
             alert("Mobile Number is required!");
             return;
         }
@@ -1011,7 +1018,7 @@ function confirmWhatsAppBooking(btn) {
         saveNewPhone(finalPhone);
     } else {
         const selectedRadio = document.querySelector('input[name="savedPhoneRadio"]:checked');
-        if(selectedRadio){
+        if (selectedRadio) {
             finalPhone = selectedRadio.value;
         } else {
             alert("Please provide or select a mobile number.");
@@ -1021,7 +1028,7 @@ function confirmWhatsAppBooking(btn) {
 
     // Extract Date
     const chosenDate = document.getElementById('bookingDate').value;
-    if(!chosenDate) {
+    if (!chosenDate) {
         alert("Please select a preferred date.");
         return;
     }
@@ -1033,7 +1040,7 @@ function confirmWhatsAppBooking(btn) {
         // Output format matching user prompt and cleanly mapping the inner tracking logic
         itemsList.push(`*${cart[item].rawName} (x${cart[item].count})*\n₹${cart[item].price * cart[item].count} \n${cart[item].timeLimit}`);
     }
-    
+
     let discountStr = "";
     let finalTotal = originalTotal;
     if (originalTotal >= 199) {
@@ -1044,21 +1051,21 @@ function confirmWhatsAppBooking(btn) {
 
     // -- LOG ANALYTICS & USER DATA --
     let userPhoneNumber = finalPhone;
-    
+
     // ENFORCE PHONE NUMBER
     if (!userPhoneNumber) {
         alert("Please enter your Phone Number before confirming.");
         return;
     }
-    
+
     let finalTotalVal = parseInt(document.getElementById('slotModalTotalAmount').innerText.replace(/,/g, '')) || 0;
     let uName = (typeof currentUser !== 'undefined' && currentUser && currentUser.name) ? currentUser.name : (document.getElementById('userName') ? document.getElementById('userName').value : 'Guest');
-    
-    if(typeof recordAnalyticsAndUser === 'function') {
+
+    if (typeof recordAnalyticsAndUser === 'function') {
         recordAnalyticsAndUser(uName, userPhoneNumber, finalTotalVal);
     }
     if (typeof appliedCouponCode !== 'undefined' && appliedCouponCode !== "") {
-        if(typeof recordCouponUsage === 'function') {
+        if (typeof recordCouponUsage === 'function') {
             recordCouponUsage(appliedCouponCode, userPhoneNumber);
         }
     }
@@ -1093,7 +1100,7 @@ Please confirm my booking!`;
         // Complete the system booking to save to History Table
         completeBooking("wa_" + Math.random().toString(36).substring(2, 10));
         $('#slotBookingModal').modal('hide');
-        
+
         // Reset button
         btn.innerHTML = originalText;
         btn.disabled = false;
@@ -1120,7 +1127,7 @@ function completeBooking(paymentId) {
             </div>
         `;
     }
-    
+
     if (totalAmount >= 199) {
         itemsListHtml += `
             <div class="receipt-item d-flex justify-content-between mb-2 text-success">
@@ -1174,8 +1181,8 @@ function completeBooking(paymentId) {
 function renderBookingsTab() {
     const upcomingTab = document.getElementById('upcoming');
     const completedTab = document.getElementById('completed');
-    if(!completedTab) return;
-    
+    if (!completedTab) return;
+
     // Ensure upcoming tab always shows empty state since we are moving bookings to completed
     if (upcomingTab) {
         upcomingTab.innerHTML = `
@@ -1218,7 +1225,7 @@ function switchView(viewId, element) {
     document.getElementById('homeView').style.display = 'none';
     document.getElementById('bookingsView').style.display = 'none';
     document.getElementById('packagesView').style.display = 'none';
-    
+
     // Show selected view
     document.getElementById(viewId).style.display = 'block';
     window.scrollTo(0, 0);
@@ -1230,17 +1237,17 @@ function switchView(viewId, element) {
         // Ensure all sections are unhidden if user was previously in checkout
         backToServices();
     }
-    
+
     // Update active nav class
     if (element) {
         document.querySelectorAll('.bottom-nav-item').forEach(el => el.classList.remove('active'));
         element.classList.add('active');
     }
-    
+
     // Explicitly hide floating cart button when not on home view
     const floatingBtn = document.getElementById("floatingCartBtn");
-    if(floatingBtn) {
-        if(viewId !== 'homeView') {
+    if (floatingBtn) {
+        if (viewId !== 'homeView') {
             floatingBtn.style.display = 'none';
         } else {
             updateCartUI(); // Restore cart button visibility logic if returning to home
@@ -1256,43 +1263,43 @@ let currentCleaningMode = 'regular';
 
 function toggleCleaningMode(mode) {
     currentCleaningMode = mode;
-    
+
     document.getElementById('regularModeBtn').classList.remove('active');
     document.getElementById('deepModeBtn').classList.remove('active');
-    
+
     const grid = document.querySelector('.services-grid');
     const placeholder = document.getElementById('deepCleanPlaceholder');
-    
+
     if (mode === 'regular') {
         document.getElementById('regularModeBtn').classList.add('active');
         document.getElementById('regularModeBtn').style.background = '#fff';
         document.getElementById('regularModeBtn').style.color = '#004aad';
         document.getElementById('regularModeBtn').style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-        
+
         document.getElementById('deepModeBtn').style.background = 'transparent';
         document.getElementById('deepModeBtn').style.color = '#888';
         document.getElementById('deepModeBtn').style.boxShadow = 'none';
-        
-        if(grid) grid.style.display = 'grid';
-        if(placeholder) placeholder.style.display = 'none';
-        
+
+        if (grid) grid.style.display = 'grid';
+        if (placeholder) placeholder.style.display = 'none';
+
         // Trigger all selects to restore correct price from dropdowns
         const selects = document.querySelectorAll('.service-duration-select');
         selects.forEach(s => s.dispatchEvent(new Event('change')));
-        
+
         if (typeof syncGridCounters === "function") syncGridCounters();
     } else {
         document.getElementById('deepModeBtn').classList.add('active');
         document.getElementById('deepModeBtn').style.background = '#fff';
         document.getElementById('deepModeBtn').style.color = '#004aad';
         document.getElementById('deepModeBtn').style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-        
+
         document.getElementById('regularModeBtn').style.background = 'transparent';
         document.getElementById('regularModeBtn').style.color = '#888';
         document.getElementById('regularModeBtn').style.boxShadow = 'none';
-        
-        if(grid) grid.style.display = 'none';
-        if(placeholder) placeholder.style.display = 'block';
+
+        if (grid) grid.style.display = 'none';
+        if (placeholder) placeholder.style.display = 'block';
     }
 }
 
@@ -1301,13 +1308,13 @@ function addFixedService(rawName, basePrice) {
     if (currentCleaningMode === 'deep') finalPrice += 50; // Dynamic Deep Clean Markup
 
     const cartItemId = rawName + (currentCleaningMode === 'deep' ? ' (Deep Clean)' : ' (Regular)');
-    
+
     if (!cart[cartItemId]) {
         cart[cartItemId] = { rawName: rawName, count: 1, price: finalPrice, timeLimit: 'N/A' };
     } else {
         cart[cartItemId].count++;
     }
-    
+
     // Animate Button
     showToast("Added", rawName + ' added to cart!', true);
     updateCartUI();
@@ -1315,13 +1322,13 @@ function addFixedService(rawName, basePrice) {
 
 function addQuickBook(timeLabel, price) {
     const cartItemId = 'Quick Book | ' + timeLabel;
-    
+
     if (!cart[cartItemId]) {
         cart[cartItemId] = { rawName: 'Quick Book', count: 1, price: price, timeLimit: timeLabel };
     } else {
         cart[cartItemId].count++;
     }
-    
+
     showToast("Added", 'Quick Book (' + timeLabel + ') added to cart!', true);
     updateCartUI();
 }
@@ -1336,13 +1343,13 @@ function addFixedServiceFromGrid(btn, rawName, basePrice) {
     if (currentCleaningMode === 'deep') finalPrice += 50;
 
     const cartItemId = rawName + (currentCleaningMode === 'deep' ? ' (Deep Clean)' : ' (Regular)');
-    
+
     if (!cart[cartItemId]) {
         cart[cartItemId] = { rawName: rawName, count: 1, price: finalPrice, timeLimit: 'N/A' };
     } else {
         cart[cartItemId].count++;
     }
-    
+
     showToast("Success", rawName + ' added to cart!', true);
     updateCartUI();
     syncGridCounters();
@@ -1356,14 +1363,14 @@ function addFixedServiceFromGrid(btn, rawName, basePrice) {
 function updateServicePrice(selectElem, rawName) {
     const selectedOption = selectElem.options[selectElem.selectedIndex];
     const price = selectedOption.getAttribute('data-price');
-    
+
     // Update displayed price
     const container = selectElem.closest('.service-grid-item');
-    if(container) {
+    if (container) {
         const priceDisplay = container.querySelector('.service-display-price');
-        if(priceDisplay) priceDisplay.innerText = '₹' + price;
+        if (priceDisplay) priceDisplay.innerText = '₹' + price;
     }
-    
+
     // Resync counters because duration changed
     syncGridCounters();
 }
@@ -1371,11 +1378,11 @@ function updateServicePrice(selectElem, rawName) {
 function addDynamicService(btn, rawName) {
     const container = btn.closest('.service-grid-item');
     const selectElem = container.querySelector('.service-duration-select');
-    
+
     let duration = '';
     let basePrice = 0;
-    
-    if(selectElem) {
+
+    if (selectElem) {
         const selectedOption = selectElem.options[selectElem.selectedIndex];
         duration = selectedOption.value;
         basePrice = parseInt(selectedOption.getAttribute('data-price'));
@@ -1383,16 +1390,16 @@ function addDynamicService(btn, rawName) {
         // Fallback for any static items
         basePrice = parseInt(container.querySelector('.service-display-price').innerText);
     }
-    
+
     const cleaningModeSuffix = currentCleaningMode === 'deep' ? ' (Deep Clean)' : ' (Regular)';
     const cartItemId = rawName + (duration ? " (" + duration + ")" : "") + cleaningModeSuffix;
-    
+
     if (!cart[cartItemId]) {
         cart[cartItemId] = { rawName: rawName + (duration ? " (" + duration + ")" : ""), count: 1, price: basePrice, timeLimit: duration };
     } else {
         cart[cartItemId].count++;
     }
-    
+
     if (typeof showToast === "function") showToast("Success", rawName + " (" + duration + ") added to cart!", true);
     else alert(rawName + " (" + duration + ") added to cart!");
     updateCartUI();
@@ -1402,15 +1409,15 @@ function addDynamicService(btn, rawName) {
 function updateCountFromDynamicGrid(btn, rawName, change) {
     const container = btn.closest('.service-grid-item');
     const selectElem = container.querySelector('.service-duration-select');
-    
+
     let duration = '';
-    if(selectElem) {
+    if (selectElem) {
         duration = selectElem.options[selectElem.selectedIndex].value;
     }
-    
+
     const cleaningModeSuffix = currentCleaningMode === 'deep' ? ' (Deep Clean)' : ' (Regular)';
     const cartItemId = rawName + (duration ? " (" + duration + ")" : "") + cleaningModeSuffix;
-    
+
     if (cart[cartItemId]) {
         cart[cartItemId].count += change;
         if (cart[cartItemId].count <= 0) {
@@ -1423,7 +1430,7 @@ function updateCountFromDynamicGrid(btn, rawName, change) {
 
 function updateCountFromGrid(btn, rawName, change) {
     const cartItemId = rawName + (currentCleaningMode === 'deep' ? ' (Deep Clean)' : ' (Regular)');
-    
+
     if (cart[cartItemId]) {
         cart[cartItemId].count += change;
         if (cart[cartItemId].count <= 0) {
@@ -1440,33 +1447,33 @@ function syncGridCounters() {
         const rawName = item.getAttribute('data-name');
         const selectElem = item.querySelector('.service-duration-select');
         let duration = '';
-        if(selectElem) {
+        if (selectElem) {
             duration = selectElem.options[selectElem.selectedIndex].value;
         }
-        
+
         const suffix = duration ? " (" + duration + ")" : "";
         const cartItemId = rawName + suffix + (currentCleaningMode === 'deep' ? ' (Deep Clean)' : ' (Regular)');
-        
+
         const imgContainer = item.querySelector('.img-container');
-        if(!imgContainer) return;
-        
+        if (!imgContainer) return;
+
         const addBtn = imgContainer.querySelector('.add-btn-small');
         const counterPill = imgContainer.querySelector('.counter-pill-grid');
-        
+
         if (cart[cartItemId] && cart[cartItemId].count > 0) {
-            if(addBtn) addBtn.style.display = 'none';
-            if(counterPill) {
+            if (addBtn) addBtn.style.display = 'none';
+            if (counterPill) {
                 counterPill.style.display = 'flex';
                 counterPill.querySelector('span').innerText = cart[cartItemId].count;
                 // Update onclick for counter pill to use dynamic version
                 const minusBtn = counterPill.querySelector('button:first-child');
                 const plusBtn = counterPill.querySelector('button:last-child');
-                if(minusBtn) minusBtn.setAttribute('onclick', `updateCountFromDynamicGrid(this, '${rawName}', -1)`);
-                if(plusBtn) plusBtn.setAttribute('onclick', `updateCountFromDynamicGrid(this, '${rawName}', 1)`);
+                if (minusBtn) minusBtn.setAttribute('onclick', `updateCountFromDynamicGrid(this, '${rawName}', -1)`);
+                if (plusBtn) plusBtn.setAttribute('onclick', `updateCountFromDynamicGrid(this, '${rawName}', 1)`);
             }
         } else {
-            if(addBtn) addBtn.style.display = 'flex';
-            if(counterPill) counterPill.style.display = 'none';
+            if (addBtn) addBtn.style.display = 'flex';
+            if (counterPill) counterPill.style.display = 'none';
         }
     });
 }
@@ -1481,14 +1488,14 @@ function syncGridCounters() {
 
 // Ensure counters stay synced when cart updates from right panel
 const originalUpdateCartUI = updateCartUI;
-updateCartUI = function() {
+updateCartUI = function () {
     originalUpdateCartUI();
-    if(typeof syncGridCounters === 'function') syncGridCounters();
-        
+    if (typeof syncGridCounters === 'function') syncGridCounters();
+
     // Ensure floating cart button is only visible on the home view
     const floatingBtn = document.getElementById("floatingCartBtn");
     const homeView = document.getElementById("homeView");
-    if(floatingBtn && homeView && homeView.style.display === "none") {
+    if (floatingBtn && homeView && homeView.style.display === "none") {
         floatingBtn.style.display = "none";
     }
 }
@@ -1497,7 +1504,7 @@ updateCartUI = function() {
 document.addEventListener('DOMContentLoaded', () => {
     const cartSection = document.querySelector('.services-right');
     const floatingBtn = document.getElementById('floatingCartBtn');
-    
+
     if (cartSection && floatingBtn) {
         const observer = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting) {
@@ -1510,20 +1517,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 floatingBtn.style.pointerEvents = 'auto';
             }
         }, { threshold: 0.1 });
-        
+
         observer.observe(cartSection);
     }
-    
+
     // DYNAMIC OFFER DOTS
     const slider = document.getElementById("offersSlider");
     const dots = document.querySelectorAll(".offer-dot");
-    
+
     if (slider && dots.length > 0) {
         slider.addEventListener("scroll", () => {
             // Calculate active index based on scroll position
             const cardWidth = slider.scrollWidth / dots.length;
             const index = Math.round(slider.scrollLeft / cardWidth);
-            
+
             // Update dots styles
             dots.forEach((dot, i) => {
                 if (i === index) {
@@ -1540,16 +1547,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function scrollToCleaningMode() {
-    if(document.getElementById('homeView').style.display === 'none') {
+    if (document.getElementById('homeView').style.display === 'none') {
         const homeNavBtn = document.querySelector('.bottom-nav-item[onclick*="homeView"]');
         if (typeof switchView === 'function') {
             switchView('homeView', homeNavBtn);
         }
     }
-    
+
     setTimeout(() => {
         const section = document.getElementById('cleaningModeSection');
-        if(section) {
+        if (section) {
             section.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     }, 100);
@@ -1557,26 +1564,26 @@ function scrollToCleaningMode() {
 
 function bookFirstOrderOffer() {
     let userName = "";
-    
+
     // Attempt to get user name from currentUser variable or localStorage
     try {
         if (typeof currentUser !== 'undefined' && currentUser && currentUser.name) {
             userName = currentUser.name;
         } else {
             const localUser = JSON.parse(localStorage.getItem('bloorush_currentUser'));
-            if(localUser && localUser.name) {
+            if (localUser && localUser.name) {
                 userName = localUser.name;
             }
         }
-    } catch(e) {}
-    
+    } catch (e) { }
+
     let message = "";
     if (userName) {
         message = `Hi, I am ${userName}. This is my first booking Service. I would like to avail the ₹49 First Order offer!`;
     } else {
         message = `Hi! This is my first booking Service. I would like to avail the ₹49 First Order offer!`;
     }
-    
+
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/917843021334?text=${encodedMessage}`, '_blank');
 }
@@ -1589,7 +1596,7 @@ function promptAdminLogin(e) {
         const adminHTML = document.getElementById('adminPanelSection').outerHTML;
         document.body.innerHTML = adminHTML;
         document.getElementById('adminPanelSection').style.display = 'block';
-        
+
         // Load initial dashboard data
         loadAdminDashboard();
     } else if (pwd !== null) {
@@ -1598,7 +1605,7 @@ function promptAdminLogin(e) {
 }
 
 function exitAdmin() {
-    location.reload(); 
+    location.reload();
 }
 
 async function loadAdminDashboard() {
@@ -1607,13 +1614,13 @@ async function loadAdminDashboard() {
     document.getElementById('statRevenue').innerText = analytics.revenue;
     document.getElementById('statBookings').innerText = analytics.bookings;
     document.getElementById('statCouponsUsed').innerText = analytics.coupons;
-    
+
     // Render Charts
     renderAdminCharts(analytics);
-    
+
     // Users Table
     loadAdminUsers();
-    
+
     // Active Coupons
     loadAdminCoupons();
 }
@@ -1622,26 +1629,26 @@ let revenueChartInstance = null;
 let bookingsChartInstance = null;
 
 function renderAdminCharts(analytics) {
-    if(typeof Chart === 'undefined') return;
-    
+    if (typeof Chart === 'undefined') return;
+
     // Mock historical data leading up to current totals
     const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Today'];
     const revData = [0, 0, 0, 0, 0, 0, analytics.revenue];
     const bkgData = [0, 0, 0, 0, 0, 0, analytics.coupons];
-    
+
     const revCtx = document.getElementById('revenueChart');
-    if(revenueChartInstance) revenueChartInstance.destroy();
-    if(revCtx) {
+    if (revenueChartInstance) revenueChartInstance.destroy();
+    if (revCtx) {
         revenueChartInstance = new Chart(revCtx, {
             type: 'line',
-            data: { labels, datasets: [{ label: 'Revenue (₹)', data: revData, borderColor: '#38b6ff', tension: 0.3, fill: true, backgroundColor: 'rgba(56, 182, 255, 0.1)' }] },
+            data: { labels, datasets: [{ label: 'Revenue (₹)', data: revData, borderColor: '#004aad', tension: 0.3, fill: true, backgroundColor: 'rgba(56, 182, 255, 0.1)' }] },
             options: { responsive: true, maintainAspectRatio: false }
         });
     }
-    
+
     const bkgCtx = document.getElementById('bookingsChart');
-    if(bookingsChartInstance) bookingsChartInstance.destroy();
-    if(bkgCtx) {
+    if (bookingsChartInstance) bookingsChartInstance.destroy();
+    if (bkgCtx) {
         bookingsChartInstance = new Chart(bkgCtx, {
             type: 'bar',
             data: { labels, datasets: [{ label: 'Coupons Redeemed', data: bkgData, backgroundColor: '#ffc107' }] },
@@ -1655,7 +1662,7 @@ async function loadAdminUsers() {
     const tbody = document.getElementById('adminUsersTable');
     if (Object.keys(users).length > 0) {
         let html = '';
-        for(let phone in users) {
+        for (let phone in users) {
             let u = users[phone];
             let nameEscaped = u.name ? u.name.replace(/'/g, "\'") : 'Unknown';
             html += `<tr>
@@ -1686,9 +1693,9 @@ async function saveAdminUserEdit() {
     const phone = document.getElementById('editUserPhone').value;
     const name = document.getElementById('editUserName').value;
     const bookings = parseInt(document.getElementById('editUserBookings').value) || 0;
-    
+
     const users = await getFirestoreDoc('stats', 'users') || {};
-    if(users[phone]) {
+    if (users[phone]) {
         users[phone].name = name;
         users[phone].totalBookings = bookings;
         await setFirestoreDoc('stats', 'users', users);
@@ -1698,9 +1705,9 @@ async function saveAdminUserEdit() {
 }
 
 async function deleteAdminUser(phone) {
-    if(confirm("Are you sure you want to delete user " + phone + "?")) {
+    if (confirm("Are you sure you want to delete user " + phone + "?")) {
         const users = await getFirestoreDoc('stats', 'users') || {};
-        if(users[phone]) {
+        if (users[phone]) {
             delete users[phone];
             await setFirestoreDoc('stats', 'users', users);
             loadAdminUsers();
@@ -1716,24 +1723,24 @@ async function createAdvancedCoupon() {
     const expiry = document.getElementById('newCouponExpiry').value;
     const globalLimit = parseInt(document.getElementById('newCouponGlobalLimit').value) || 0;
     const userLimit = parseInt(document.getElementById('newCouponUserLimit').value) || 1;
-    
-    if(!code || !discount || !expiry) return alert("Please fill all fields.");
-    
+
+    if (!code || !discount || !expiry) return alert("Please fill all fields.");
+
     const couponData = {
         code, type, discount, expiry, globalLimit, userLimit,
         usedCount: 0,
         active: true
     };
-    
+
     await setFirestoreDoc('coupons', code, couponData);
-    
+
     // Track in index of coupons
     let couponList = await getFirestoreDoc('stats', 'couponList') || { codes: [] };
-    if(!couponList.codes.includes(code)) {
+    if (!couponList.codes.includes(code)) {
         couponList.codes.push(code);
         await setFirestoreDoc('stats', 'couponList', couponList);
     }
-    
+
     alert(`Coupon ${code} created successfully!`);
     loadAdminCoupons();
 }
@@ -1741,20 +1748,20 @@ async function createAdvancedCoupon() {
 async function loadAdminCoupons() {
     const container = document.getElementById('adminCouponsContainer');
     let couponList = await getFirestoreDoc('stats', 'couponList') || { codes: [] };
-    
-    if(couponList.codes.length === 0) {
+
+    if (couponList.codes.length === 0) {
         container.innerHTML = '<p class="text-muted">No active coupons.</p>';
         return;
     }
-    
+
     let html = '<div class="list-group">';
-    for(let code of couponList.codes) {
+    for (let code of couponList.codes) {
         let c = await getFirestoreDoc('coupons', code);
-        if(!c) continue;
+        if (!c) continue;
         let expired = new Date(c.expiry) < new Date() ? '<span class="badge badge-danger">Expired</span>' : '';
         let active = c.active ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-secondary">Disabled</span>';
         let val = c.type === 'flat' ? `₹${c.discount} OFF` : `${c.discount}% OFF`;
-        
+
         html += `
         <div class="list-group-item d-flex justify-content-between align-items-center mb-2" style="border-radius: 8px;">
             <div>
@@ -1772,7 +1779,7 @@ async function loadAdminCoupons() {
 
 async function toggleCoupon(code, status) {
     let c = await getFirestoreDoc('coupons', code);
-    if(c) {
+    if (c) {
         c.active = status;
         await setFirestoreDoc('coupons', code, c);
         loadAdminCoupons();
@@ -1781,17 +1788,17 @@ async function toggleCoupon(code, status) {
 
 async function loadAdminSlots() {
     const date = document.getElementById('adminSlotDate').value;
-    if(!date) return;
+    if (!date) return;
     const container = document.getElementById('adminSlotsContainer');
-    
+
     let slots = await getFirestoreDoc('slots', date) || {
         "10:00 AM - 12:00 PM": 2,
         "01:00 PM - 03:00 PM": 3,
         "04:00 PM - 06:00 PM": 1
     };
-    
+
     let html = '';
-    for(let time in slots) {
+    for (let time in slots) {
         html += `
         <div class="d-flex justify-content-between align-items-center mb-2">
             <span>${time}</span>
@@ -1803,14 +1810,14 @@ async function loadAdminSlots() {
 
 async function saveAdminSlots() {
     const date = document.getElementById('adminSlotDate').value;
-    if(!date) return alert("Select a date first.");
-    
+    if (!date) return alert("Select a date first.");
+
     const inputs = document.querySelectorAll('.slot-capacity-input');
     let data = {};
     inputs.forEach(inp => {
         data[inp.getAttribute('data-time')] = parseInt(inp.value);
     });
-    
+
     await setFirestoreDoc('slots', date, data);
     alert("Slot capacity saved live!");
 }
@@ -1818,28 +1825,28 @@ async function saveAdminSlots() {
 // --- PUBLIC COUPON ENGINE ---
 fetchPublicCoupons();
 let appliedCouponDiscount_unused;
-    appliedCouponDiscount = 0;
+appliedCouponDiscount = 0;
 let appliedCouponCode = "";
 
 async function fetchPublicCoupons() {
     const container = document.getElementById('publicCouponsList');
     const wrapper = document.getElementById('availableOffersContainer');
     let couponList = await getFirestoreDoc('stats', 'couponList') || { codes: [] };
-    
+
     let activeCoupons = [];
-    for(let code of couponList.codes) {
+    for (let code of couponList.codes) {
         let c = await getFirestoreDoc('coupons', code);
-        if(c && c.active && new Date(c.expiry) >= new Date() && (c.globalLimit === 0 || c.usedCount < c.globalLimit)) {
+        if (c && c.active && new Date(c.expiry) >= new Date() && (c.globalLimit === 0 || c.usedCount < c.globalLimit)) {
             activeCoupons.push(c);
         }
     }
-    
+
     wrapper.style.display = 'block';
-    if(activeCoupons.length === 0) {
+    if (activeCoupons.length === 0) {
         container.innerHTML = '<div class="text-muted text-center w-100 p-2"><small>No coupons available.</small></div>';
         return;
     }
-    
+
     wrapper.style.display = 'block';
     let html = '';
     activeCoupons.forEach(c => {
@@ -1855,27 +1862,27 @@ async function fetchPublicCoupons() {
 
 async function searchOSMAddress() {
     const query = document.getElementById('osmAddressInput').value.trim();
-    if(!query) return;
-    
+    if (!query) return;
+
     const resBox = document.getElementById('osmResults');
     resBox.innerHTML = '<div class="p-2 text-muted">Searching...</div>';
     resBox.style.display = 'block';
-    
+
     try {
         const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ', Nagpur')}`);
         const data = await response.json();
-        
+
         if (data.length === 0) {
             resBox.innerHTML = '<div class="p-2 text-danger">No results found.</div>';
             return;
         }
-        
+
         let html = '';
         data.slice(0, 5).forEach(place => {
             html += `<a href="#" class="list-group-item list-group-item-action py-2" onclick="selectOSMAddress('${place.display_name.replace(/'/g, "\'")}')" style="font-size: 0.85rem;">${place.display_name}</a>`;
         });
         resBox.innerHTML = html;
-    } catch(e) {
+    } catch (e) {
         resBox.innerHTML = '<div class="p-2 text-danger">Error fetching address.</div>';
     }
 }
@@ -1889,16 +1896,16 @@ async function applyCoupon() {
     const code = document.getElementById('couponInput').value.toUpperCase().trim();
     const msg = document.getElementById('couponMessage');
     const userPhone = document.getElementById('userPhone').value.trim(); // We need a phone to check per-user limits, assuming userPhone exists
-    
-    if(!code) {
+
+    if (!code) {
         msg.style.display = 'block';
         msg.className = "form-text text-danger";
         msg.innerText = "Please enter a code.";
         return;
     }
-    
+
     const c = await getFirestoreDoc('coupons', code);
-    
+
     if (!c || !c.active) {
         msg.style.display = 'block';
         msg.className = "form-text text-danger";
@@ -1906,7 +1913,7 @@ async function applyCoupon() {
         resetCoupon();
         return;
     }
-    
+
     if (new Date(c.expiry) < new Date()) {
         msg.style.display = 'block';
         msg.className = "form-text text-danger";
@@ -1914,7 +1921,7 @@ async function applyCoupon() {
         resetCoupon();
         return;
     }
-    
+
     if (c.globalLimit > 0 && c.usedCount >= c.globalLimit) {
         msg.style.display = 'block';
         msg.className = "form-text text-danger";
@@ -1922,7 +1929,7 @@ async function applyCoupon() {
         resetCoupon();
         return;
     }
-    
+
     // Check per user limit if phone is provided
     if (userPhone) {
         const userUsage = await getFirestoreDoc('coupon_usage', `${code}_${userPhone}`) || { count: 0 };
@@ -1934,14 +1941,14 @@ async function applyCoupon() {
             return;
         }
     }
-    
+
     // Calculate discount
     let rawTotal = 0;
     for (let item in cart) rawTotal += cart[item].count * cart[item].price;
-    
+
     appliedCouponDiscount = c.type === 'flat' ? c.discount : (rawTotal * (c.discount / 100));
     appliedCouponCode = c.code;
-    
+
     msg.style.display = 'block';
     msg.className = "form-text text-success";
     msg.innerText = `Coupon Applied! -₹${appliedCouponDiscount.toFixed(0)}`;
@@ -1958,40 +1965,40 @@ function resetCoupon() {
 function refreshSlotTotal() {
     let rawTotal = 0;
     for (let item in cart) rawTotal += cart[item].count * cart[item].price;
-    
+
     let finalAmount = rawTotal;
-    if (rawTotal >= 199) finalAmount -= 49; 
+    if (rawTotal >= 199) finalAmount -= 49;
     finalAmount -= appliedCouponDiscount;
-    
-    if(finalAmount < 0) finalAmount = 0;
-    
+
+    if (finalAmount < 0) finalAmount = 0;
+
     const el = document.getElementById('slotModalTotalAmount');
     if (el) el.innerText = finalAmount;
 }
 
 // Hook into date change to fetch live slots
 const bDate = document.getElementById('bookingDate');
-if(bDate) {
-    bDate.addEventListener('change', async function() {
+if (bDate) {
+    bDate.addEventListener('change', async function () {
         const date = this.value;
         const container = document.getElementById('dynamicSlotsContainer');
-        
-        if(!date) return;
-        
+
+        if (!date) return;
+
         let slots = await getFirestoreDoc('slots', date) || {
             "10:00 AM - 12:00 PM": 2,
             "01:00 PM - 03:00 PM": 3,
             "04:00 PM - 06:00 PM": 1
         };
-        
+
         let html = '';
-        for(let time in slots) {
+        for (let time in slots) {
             let capacity = slots[time];
             let isFull = capacity <= 0;
             let opacity = isFull ? '0.4' : '1';
             let ptr = isFull ? 'none' : 'auto';
             let label = isFull ? 'Full' : `${capacity} left`;
-            
+
             html += `
             <div class="slot-item border rounded p-2 text-center" 
                  style="cursor: pointer; opacity: ${opacity}; pointer-events: ${ptr}; flex: 1 1 30%; min-width: 100px; transition: 0.2s;"
@@ -2000,8 +2007,8 @@ if(bDate) {
                 <small class="text-muted">${label}</small>
             </div>`;
         }
-        
-        if(container) {
+
+        if (container) {
             container.innerHTML = html;
         }
     });
@@ -2009,15 +2016,15 @@ if(bDate) {
 
 // --- DATA TRACKING FUNCTIONS ---
 async function recordAnalyticsAndUser(name, phone, revenue) {
-    if(!phone) phone = "Guest_" + Math.floor(Math.random()*10000);
-    
+    if (!phone) phone = "Guest_" + Math.floor(Math.random() * 10000);
+
     try {
         // 1. Update Global Analytics
         let stats = await getFirestoreDoc('stats', 'global') || { revenue: 0, bookings: 0, coupons: 0 };
         stats.revenue = (stats.revenue || 0) + revenue;
         stats.bookings = (stats.bookings || 0) + 1;
         await setFirestoreDoc('stats', 'global', stats);
-        
+
         // 2. Update User Database
         let users = await getFirestoreDoc('stats', 'users') || {};
         if (!users[phone]) {
@@ -2026,9 +2033,9 @@ async function recordAnalyticsAndUser(name, phone, revenue) {
         users[phone].totalBookings += 1;
         users[phone].lastBooking = new Date().toISOString();
         await setFirestoreDoc('stats', 'users', users);
-        
+
         console.log("Analytics Successfully Saved!");
-    } catch(e) {
+    } catch (e) {
         console.error("Failed to save analytics:", e);
     }
 }
@@ -2036,20 +2043,68 @@ async function recordAnalyticsAndUser(name, phone, revenue) {
 async function recordCouponUsage(code, phone) {
     // Increment global coupon usage
     const c = await getFirestoreDoc('coupons', code);
-    if(c) {
+    if (c) {
         c.usedCount += 1;
         await setFirestoreDoc('coupons', code, c);
     }
-    
+
     // Increment global stats
     const stats = await getFirestoreDoc('stats', 'global') || { revenue: 0, bookings: 0, coupons: 0 };
     stats.coupons += 1;
     await setFirestoreDoc('stats', 'global', stats);
-    
+
     // Record per-user usage
-    if(phone) {
+    if (phone) {
         const userUsage = await getFirestoreDoc('coupon_usage', `${code}_${phone}`) || { count: 0 };
         userUsage.count += 1;
         await setFirestoreDoc('coupon_usage', `${code}_${phone}`, userUsage);
     }
 }
+
+
+// T&C Modal Logic
+function openTcTab(tabName) {
+    // Hide all tab contents
+    document.querySelectorAll('.tc-tab-content').forEach(el => el.style.display = 'none');
+
+    // Remove active class from all tabs
+    document.querySelectorAll('.tc-tab').forEach(el => {
+        el.classList.remove('active');
+        el.style.background = '#fff';
+        el.style.color = '#0F172A';
+    });
+
+    // Show selected tab content
+    document.getElementById('tab-' + tabName).style.display = 'block';
+
+    // Set active state on button
+    let activeBtn = document.getElementById('btn-' + tabName);
+    activeBtn.classList.add('active');
+    activeBtn.style.background = '#004aad';
+    activeBtn.style.color = '#fff';
+
+    // Update title
+    let titles = {
+        'privacy': 'Privacy Policy',
+        'terms': 'Terms & Conditions',
+        'refund': 'Cancellation & Refund Policy'
+    };
+    document.getElementById('tcModalTitle').innerText = titles[tabName];
+}
+
+function closeTcModal() {
+    document.getElementById('tcModal').style.display = 'none';
+}
+
+function acceptTcModal() {
+    localStorage.setItem('tc_accepted_v1', 'true');
+    closeTcModal();
+}
+
+// Show modal on load if not accepted
+document.addEventListener('DOMContentLoaded', () => {
+    if (!localStorage.getItem('tc_accepted_v1')) {
+        let tcModal = document.getElementById('tcModal');
+        if (tcModal) tcModal.style.display = 'block';
+    }
+});
