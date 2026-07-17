@@ -1545,3 +1545,22 @@ body {
         font-size: 1.5rem !important;
     }
 }
+
+/* --- iPad Air (820px) Scatter Fixes --- */
+@media (max-width: 992px) {
+    .banner-inner-2 {
+        padding: 20px !important;
+    }
+    .pro-card {
+        flex: 1 1 30% !important; /* Force them to stay side-by-side on tablet */
+        min-width: 0 !important; /* Prevent wrapping from 200px min-width */
+    }
+    .banner-1-text, .banner-1-img {
+        flex: 1 1 100% !important;
+        text-align: center !important;
+        min-width: 0 !important;
+    }
+    .banner-inner {
+        flex-direction: column !important;
+    }
+}
