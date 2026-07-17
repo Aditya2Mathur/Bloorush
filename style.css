@@ -1442,3 +1442,106 @@ body {
         transform: scale(0.9);
     }
 }
+
+/* --- ULTRA RESPONSIVE TWEAKS --- */
+@media (max-width: 992px) {
+    /* Tablet optimizations */
+    .banner-inner, .banner-inner-2 {
+        padding: 30px !important;
+    }
+    .banner-1-text h2 {
+        font-size: 2.2rem !important;
+    }
+    .how-card {
+        flex: 1 1 45% !important; /* 2 columns on tablet */
+    }
+}
+
+@media (max-width: 768px) {
+    /* Mobile core container fixes */
+    section {
+        padding: 15px !important;
+    }
+    body {
+        font-size: 14px; /* Base font size reduction */
+    }
+
+    /* Banners */
+    .banner-inner {
+        flex-direction: column !important;
+        text-align: center;
+        padding: 20px 15px !important;
+    }
+    .banner-1-text {
+        min-width: 100% !important;
+    }
+    .banner-1-text h2 {
+        font-size: 1.7rem !important;
+    }
+    .banner-inner img {
+        max-width: 200px !important; /* Make image slightly smaller on mobile */
+        margin: 0 auto;
+    }
+
+    /* Banner 2 / Pro cards */
+    .banner-inner-2 {
+        padding: 20px 15px !important;
+    }
+    .banner-inner-2 > div {
+        flex-direction: column;
+    }
+    .pro-card {
+        min-width: 100% !important;
+        margin-bottom: 15px;
+    }
+    .pro-card img {
+        height: 140px !important; /* Smaller image on mobile */
+    }
+
+    /* How it works */
+    .how-works-section {
+        padding: 30px 0 !important;
+    }
+    .how-card {
+        flex: 1 1 100% !important; /* 1 column on mobile */
+        min-width: 100% !important;
+        margin-bottom: 10px;
+    }
+
+    /* Area tags */
+    .area-tag {
+        font-size: 0.8rem !important;
+        padding: 5px 12px !important;
+        margin-bottom: 5px;
+    }
+
+    /* Services Grid */
+    .services-grid {
+        gap: 8px !important;
+        /* On very small phones, 1 column might be safer to prevent text overflow */
+    }
+    .service-grid-item {
+        padding: 10px !important;
+    }
+    .service-grid-item h6 {
+        font-size: 0.85rem !important;
+        line-height: 1.2 !important;
+    }
+    .service-grid-item .service-display-price {
+        font-size: 0.85rem !important;
+    }
+    .service-grid-item select {
+        font-size: 0.75rem !important;
+        padding: 2px 4px !important;
+    }
+}
+
+@media (max-width: 400px) {
+    /* Ultra small phones */
+    .services-grid {
+        grid-template-columns: repeat(1, 1fr) !important;
+    }
+    .banner-1-text h2 {
+        font-size: 1.5rem !important;
+    }
+}
