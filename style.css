@@ -1313,3 +1313,49 @@ body {
 .service-grid-item:hover .img-container img {
   transform: scale(1.08);
 }
+
+
+/* --- RESPONSIVENESS FIXES --- */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+.banner-inner {
+    padding: 40px;
+}
+.banner-inner-2 {
+    padding: 40px;
+}
+.responsive-width {
+    width: 80%;
+}
+
+@media (max-width: 992px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .services-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .banner-inner {
+        padding: 20px !important;
+    }
+    .banner-inner-2 {
+        padding: 20px !important;
+    }
+    .responsive-width {
+        width: 95% !important;
+    }
+    /* Make banner text smaller on mobile */
+    .banner-inner h2 {
+        font-size: 2rem !important;
+    }
+    /* Stack pro cards better */
+    .pro-card {
+        min-width: 100% !important;
+    }
+}
