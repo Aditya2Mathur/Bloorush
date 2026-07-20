@@ -1,0 +1,1882 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>BlooRush — House help at your door, booked on WhatsApp</title>
+<meta name="description" content="Instant house help in Nagpur. Utensils, mopping, dusting, bathroom, toilet & kitchen cleaning, plus daily & weekly plans. Fixed prices, verified helpers, book in 60 seconds on WhatsApp." />
+
+<!-- ============================================================== -->
+<!-- FOUNDER — SET THESE BEFORE GOING LIVE:                          -->
+<!--  1. WHATSAPP_NUMBER  (your business number, digits only)        -->
+<!--  2. ZONES            (replace with your real Nagpur clusters)   -->
+<!--  3. Footer legal links (privacy / terms)                        -->
+<!--  Draft boundary lists for TOILET, BATHROOM and DUSTING are      -->
+<!--  marked  // DRAFT  in the script — review before launch.        -->
+<!-- ============================================================== -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    /* Bloorush Blue brand system */
+    --primary:#38B6FF;--primary-hover:#0093E6;--primary-dark:#0077BD;--primary-light:#EBF7FF;--primary-tint:rgba(56,182,255,.08);
+    --accent:#FB923C;--accent-hover:#F97316;--accent-light:#FFF7ED;
+    --success:#22C55E;--success-tint:#F0FDF4;--warning:#F59E0B;--warning-tint:#FFFBEB;--error:#EF4444;--error-tint:#FEF2F2;
+    --bg-base:#FDF8F0;--bg-warm:#F8F4EC;--bg-card:#fff;
+    --text-main:#0F172A;--text-heading:#1E293B;--text-body:#334155;--text-secondary:#475569;--text-muted:#6B7280;--text-placeholder:#9CA3AF;
+    --border:rgba(56,182,255,.15);--border-strong:rgba(56,182,255,.3);--divider:#E2DDD5;
+    --shadow-sm:0 2px 4px rgba(15,23,42,.04);
+    --shadow-md:0 10px 25px -5px rgba(56,182,255,.1),0 8px 10px -6px rgba(56,182,255,.05);
+    --shadow-lg:0 20px 40px -15px rgba(15,23,42,.08);
+    --shadow-glow:0 4px 14px rgba(56,182,255,.4);
+    --radius-sm:8px;--radius-md:16px;--radius-lg:24px;--radius-full:9999px;
+
+    /* Back-compat: old variable names remapped to the new system so existing rules restyle automatically */
+    --ink:#0F172A;--brand:#38B6FF;--brand-deep:#0077BD;--teal:#38B6FF;--green:#22C55E;
+    --sun:#FB923C;--sun-deep:#F97316;--wa:#25D366;--wa-deep:#1EB458;
+    --bg:#FDF8F0;--surface:#fff;--line:rgba(56,182,255,.15);--muted:#6B7280;
+    --inc:#22C55E;--inc-bg:#F0FDF4;--exc:#9CA3AF;--exc-bg:#F5F5F4;
+    --r:16px;--app:460px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--text-main);
+    background:#EFE7DA;-webkit-font-smoothing:antialiased;line-height:1.6}
+  h1,h2,h3,h4,.disp{font-family:"Plus Jakarta Sans",sans-serif;letter-spacing:-.02em;line-height:1.15;margin:0;font-weight:700}
+  button{font-family:inherit;cursor:pointer}
+  a{color:inherit}
+  .muted{color:var(--muted)}
+  .app{max-width:var(--app);margin:0 auto;background:var(--bg);min-height:100vh;position:relative;overflow:hidden;
+    box-shadow:0 0 60px -10px rgba(15,23,42,.18);padding-bottom:100px}
+
+  header{position:sticky;top:0;z-index:40;background:rgba(253,248,240,.85);backdrop-filter:saturate(1.3) blur(12px);border-bottom:1px solid var(--border)}
+  .bar{display:flex;align-items:center;justify-content:space-between;padding:13px 18px}
+  .logo{font-family:"Plus Jakarta Sans";font-weight:700;font-size:22px;letter-spacing:-.02em;display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--text-main)}
+  .logo .drop{width:12px;height:12px;background:var(--primary);border-radius:50%;box-shadow:0 0 10px rgba(56,182,255,.7)}
+  .logo b{color:var(--primary)}
+  .loc{font-size:12.5px;font-weight:600;color:var(--brand);background:#fff;border:1px solid var(--line);padding:6px 11px;border-radius:999px;display:inline-flex;align-items:center;gap:5px}
+
+  .hero{position:relative;overflow:hidden;padding:26px 20px 70px;background:linear-gradient(to bottom,#EBF7FF 0%,#FDF8F0 55%,#FFFFFF 100%)}
+  .hero .bub{position:absolute;border-radius:50%;background:radial-gradient(circle at 32% 28%,rgba(56,182,255,.28),transparent 68%);pointer-events:none;animation:float 9s ease-in-out infinite}
+  .b1{width:150px;height:150px;top:-34px;right:-34px;opacity:.45}
+  .b2{width:74px;height:74px;top:150px;right:34px;opacity:.35;animation-delay:-3s}
+  .b3{width:44px;height:44px;top:96px;left:22px;opacity:.4;animation-delay:-5s}
+  .b4{width:220px;height:220px;bottom:-96px;left:-72px;opacity:.26;background:radial-gradient(circle at 40% 40%,rgba(21,179,192,.9),transparent 70%);animation-delay:-2s}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  .eyebrow{position:relative;z-index:2;display:inline-flex;align-items:center;gap:7px;background:var(--primary-light);border:1px solid var(--border-strong);color:var(--primary-dark);font-size:12px;font-weight:700;letter-spacing:.03em;padding:6px 12px;border-radius:999px}
+  .eyebrow .z{color:var(--accent)}
+  .hero h1{position:relative;z-index:2;color:var(--text-main);font-size:36px;font-weight:700;margin:16px 0 0;max-width:12ch}
+  .hero h1 .hl{color:var(--primary);position:relative;white-space:nowrap}
+  .hero h1 .hl::after{content:"";position:absolute;left:-2px;right:-2px;bottom:.02em;height:.5em;background:var(--primary);opacity:.16;border-radius:6px;z-index:-1}
+  .hero .sub{position:relative;z-index:2;color:var(--text-secondary);font-size:15.5px;margin:13px 0 0;max-width:32ch}
+  .hcta{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:22px;background:#fff;color:var(--ink);border:none;width:100%;padding:15px 18px;border-radius:16px;font-weight:700;font-size:16px;box-shadow:0 14px 30px -10px rgba(0,0,0,.4)}
+  .hcta .go{display:grid;place-items:center;width:36px;height:36px;border-radius:11px;background:var(--sun);color:#3a2000}
+  .hcta:active{transform:scale(.99)}
+
+  .trust{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 16px;margin-top:-52px;position:relative;z-index:5}
+  .tc{background:#fff;border-radius:16px;padding:13px 8px;text-align:center;box-shadow:0 10px 26px -12px rgba(6,35,46,.28);border:1px solid var(--line)}
+  .tc .ico{font-size:16px}
+  .tc .n{font-family:"Plus Jakarta Sans";font-weight:800;font-size:18px;margin-top:3px;line-height:1}
+  .tc .l{font-size:10.5px;color:var(--muted);margin-top:4px;line-height:1.25}
+
+  .sec{padding:26px 16px 6px}
+  .kick{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+  .kick.teal{color:var(--teal)}.kick.green{color:var(--green)}.kick.blue{color:var(--brand)}
+  .sec h2{font-size:24px;font-weight:800;margin:7px 0 3px}
+  .sec .sd{font-size:13.5px;color:var(--muted);margin:0 0 6px;max-width:44ch}
+
+  .pkg{position:relative;overflow:hidden;border-radius:24px;padding:20px;color:#fff;margin-top:14px;box-shadow:0 20px 44px -18px rgba(6,35,46,.5)}
+  .pkg.daily{background:linear-gradient(155deg,#0A3E52,#0E5E77 55%,#12909F)}
+  .pkg.wash{background:linear-gradient(155deg,#0B4A46,#12776B 55%,#1BA98C)}
+  .pkg .pb{position:absolute;border-radius:50%;background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.4),transparent 68%);pointer-events:none}
+  .pkg .pb1{width:150px;height:150px;top:-50px;right:-44px;opacity:.4}
+  .pkg .pb2{width:88px;height:88px;bottom:-32px;left:14%;opacity:.28}
+  .pkg .badge{position:relative;z-index:2;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.02em;padding:5px 11px;border-radius:999px}
+  .pkg.daily .badge{background:var(--sun);color:#3a2200}
+  .pkg.wash .badge{background:#EAFBF4;color:#0B4A46}
+  .pkg h3{position:relative;z-index:2;font-size:23px;font-weight:800;margin:12px 0 3px}
+  .pkg .ptag{position:relative;z-index:2;font-size:13px;max-width:32ch;line-height:1.45}
+  .pkg.daily .ptag{color:#BEE7EE}.pkg.wash .ptag{color:#C9F0E6}
+  .pkg .price{position:relative;z-index:2;display:flex;align-items:baseline;gap:8px;margin:14px 0 2px}
+  .pkg .price .now{font-family:"Plus Jakarta Sans";font-weight:800;font-size:32px;line-height:1}
+  .pkg .price .per{font-size:13px}
+  .pkg.daily .price .per{color:#BEE7EE}.pkg.wash .price .per{color:#C9F0E6}
+  .pkg .price .was{font-size:14px;color:rgba(255,255,255,.55);text-decoration:line-through}
+  .pkg .save{position:relative;z-index:2;display:inline-block;font-size:12px;font-weight:800;padding:3px 9px;border-radius:6px}
+  .pkg.daily .save{color:#0A3E52;background:#BFF0F5}.pkg.wash .save{color:#0B4A46;background:#8FEBCF}
+  .pkg .chips{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 4px}
+  .pkg .chip{font-size:11.5px;font-weight:600;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);padding:6px 10px;border-radius:999px}
+  .sellbl{position:relative;z-index:2;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin:16px 0 8px}
+  .pkg.wash .sellbl{color:#AEE6D8}
+  .units{position:relative;z-index:2;display:flex;gap:8px}
+  .ubtn{flex:1;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.1);color:#fff;border-radius:13px;padding:10px 6px;text-align:center;font-weight:700;font-size:13px;line-height:1.15;transition:.14s}
+  .ubtn small{display:block;font-weight:500;font-size:10px;opacity:.8;margin-top:2px}
+  .ubtn.on{background:#fff;color:#0B4A46;border-color:#fff}
+  .pcta{position:relative;z-index:2;width:100%;border:none;background:#fff;color:var(--ink);font-weight:700;font-size:15px;padding:14px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px}
+  .pcta:active{transform:scale(.99)}
+  .fineprint{position:relative;z-index:2;text-align:center;font-size:11px;margin-top:9px}
+  .pkg.wash .fineprint{color:#AEE6D8}.pkg.daily .fineprint{color:#BEE7EE}
+
+  #addonGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:14px}
+  #serviceGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+  #serviceGrid .svc{padding:0;min-height:140px}
+  #serviceGrid .svc-ico{width:100%;height:auto;aspect-ratio:4/3;border-radius:0;margin-bottom:0}
+  #serviceGrid .svc-ico svg{width:28px;height:28px}
+  #serviceGrid .svc-title{font-size:11.5px;margin:auto 8px 0;line-height:1.15;padding-top:8px}
+  #serviceGrid .svc-bottom{gap:4px;margin:4px 8px 8px;padding-top:0}
+  #serviceGrid .svc-price{font-size:10px;line-height:1.2}
+  #serviceGrid .svc-price b{display:block;font-size:12px}
+  #serviceGrid .svc-arrow{width:22px;height:22px;font-size:11px}
+  #addonGrid .svc{padding:0;min-height:110px;border-radius:12px}
+  #addonGrid .svc-ico{width:100%;height:auto;aspect-ratio:3/2;border-radius:0;margin-bottom:0}
+  #addonGrid .svc-ico svg{width:20px;height:20px}
+  #addonGrid .svc-title{font-size:9.5px;margin:auto 4px 0;line-height:1.15;text-align:center;padding-top:6px}
+  #addonGrid .svc-bottom{flex-direction:column;align-items:center;gap:3px;margin:4px 4px 6px;padding-top:0}
+  #addonGrid .svc-price{font-size:8.5px;line-height:1.1;text-align:center}
+  #addonGrid .svc-price b{display:block;font-size:10px;margin-top:1px}
+  #addonGrid .svc-arrow{width:18px;height:18px;font-size:9px}
+  #addonGrid .svc-badge{font-size:7px;padding:2px 4px;top:4px;right:4px}
+  .svc{position:relative;overflow:hidden;border-radius:16px;cursor:pointer;
+    border:1.5px solid var(--border);box-shadow:0 4px 16px rgba(15,23,42,.04);background:#fff;
+    display:flex;flex-direction:column;padding:0;
+    transition:transform .25s cubic-bezier(.4,0,.2,1),box-shadow .25s cubic-bezier(.4,0,.2,1),border-color .25s ease}
+  .svc.inbag{border-color:var(--primary);box-shadow:0 0 0 3px rgba(56,182,255,.22),0 8px 24px -10px rgba(15,23,42,.2)}
+  .svc:hover{transform:scale(1.03);box-shadow:0 10px 25px -5px rgba(56,182,255,.15)}
+  .svc-badge{position:absolute;top:8px;right:8px;font-size:8.5px;font-weight:800;padding:3px 8px;border-radius:999px;letter-spacing:.04em;text-transform:uppercase;z-index:2}
+  .svc-badge.new{background:var(--accent);color:#fff}
+  .svc-badge.addon{background:var(--primary-light);color:var(--primary-dark)}
+  .svc-ico{width:100%;height:85px;border-radius:0;background:var(--primary-light);display:grid;place-items:center;margin-bottom:0;flex-shrink:0;overflow:hidden}
+  .svc-ico svg{width:34px;height:34px;stroke:var(--primary);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .svc-ico img{width:100%;height:100%;object-fit:cover;display:block}
+  .svc-ico-sheet{width:100%;aspect-ratio:4/3;background:var(--primary-light);display:block;overflow:hidden}
+  .svc-ico-sheet img{width:100%;height:100%;object-fit:cover;display:block}
+  .svc-ico-sheet svg{width:56px;height:56px;stroke:var(--primary);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;margin:22% auto;display:block}
+  .svc-title{color:var(--text-main);font-size:13.5px;font-weight:700;line-height:1.2;margin:10px 12px 0}
+  .svc-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:6px;margin:auto 12px 12px;padding-top:8px}
+  .svc-price{font-size:12.5px;color:var(--text-secondary);font-weight:600}
+  .svc-price b{color:var(--text-main);font-weight:700}
+  .svc-arrow{width:26px;height:26px;border-radius:50%;background:var(--primary-light);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;transition:transform .2s ease,background .2s,color .2s}
+  .svc-arrow.inbag{background:var(--primary);color:#fff}
+  .svc:hover .svc-arrow{transform:scale(1.1)}
+
+  .steps{margin-top:6px}
+  .stp{display:flex;gap:13px;align-items:flex-start;padding:9px 0}
+  .stp .sn{flex:0 0 32px;height:32px;border-radius:10px;background:var(--brand);color:#fff;display:grid;place-items:center;font-family:"Plus Jakarta Sans";font-weight:800}
+  .stp h4{font-size:15.5px}
+  .stp p{margin:2px 0 0;font-size:13px;color:var(--muted)}
+
+  footer{background:var(--ink);color:#C7DCE4;margin-top:22px;padding:28px 18px}
+  footer .flogo{font-family:"Plus Jakarta Sans";font-weight:800;font-size:19px;color:#fff}
+  footer .zl{font-size:12.5px;margin:10px 0 14px;line-height:1.7}
+  footer .plug{font-size:12.5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:11px 13px}
+  footer .flinks{display:flex;flex-wrap:wrap;gap:14px;font-size:12.5px;padding-top:14px;margin-top:14px;border-top:1px solid rgba(255,255,255,.12)}
+  footer a{color:#9FC3D1;text-decoration:none}
+  footer .fine{font-size:11px;color:#6E93A2;margin-top:12px}
+
+  .bookbar{position:fixed;left:0;right:0;bottom:0;z-index:55;display:flex;justify-content:center;padding:0 12px calc(12px + env(safe-area-inset-bottom));transform:translateY(130%);transition:transform .3s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+  .bookbar.show{transform:translateY(0)}
+  .bookbar-in{width:100%;max-width:calc(var(--app) - 24px);background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 12px 40px rgba(6,35,46,.22);padding:11px 11px 11px 16px;display:flex;align-items:center;gap:12px;pointer-events:auto}
+  .bb-left{flex:1;min-width:0}
+  .bb-count{font-size:11.5px;color:var(--muted);font-weight:600}
+  .bb-total{font-family:"Plus Jakarta Sans";font-weight:800;font-size:21px;line-height:1.15}
+  .bb-msg{font-size:11px;color:var(--sun-deep);font-weight:600;margin-top:1px}
+  .bb-btn{flex:0 0 auto;border:none;background:var(--wa);color:#fff;font-weight:700;font-size:15px;padding:14px 20px;border-radius:14px;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 18px rgba(37,211,102,.34)}
+  .bb-btn:disabled{background:#CBD8DE;box-shadow:none}
+
+  .scrim{position:fixed;inset:0;background:rgba(6,35,46,.5);z-index:60;opacity:0;pointer-events:none;transition:opacity .22s}
+  .scrim.show{opacity:1;pointer-events:auto}
+  .sheet{position:fixed;left:50%;transform:translateX(-50%) translateY(101%);bottom:0;width:100%;max-width:var(--app);z-index:70;background:var(--bg);border-radius:26px 26px 0 0;transition:transform .3s cubic-bezier(.2,.8,.2,1);max-height:92vh;overflow-y:auto}
+  .sheet.show{transform:translateX(-50%) translateY(0)}
+  .sheet::-webkit-scrollbar{width:0}
+  .sheet-in{padding:6px 18px 26px}
+  .grab{width:38px;height:4px;border-radius:99px;background:#CBD9DF;margin:9px auto 8px}
+  .sh-head{display:flex;flex-direction:column;gap:12px;margin:-6px -18px 16px}
+  .sh-head h2{font-size:22px;padding:0 18px}
+  .sh-desc{font-size:13px;color:var(--muted);margin:2px 0 6px}
+  .tiers{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0 4px}
+  .tier{border:1px solid var(--line);background:#fff;border-radius:12px;padding:8px 11px;text-align:left;line-height:1.1;min-width:62px}
+  .tier .tl{display:block;font-size:12px;font-weight:600}
+  .tier .tp{display:block;font-size:14px;font-weight:800;margin-top:2px}
+  .tier .tm{display:block;font-size:10px;color:var(--muted);margin-top:1px}
+  .tier.on{background:var(--brand);border-color:var(--brand);color:#fff}
+  .tier.on .tm{color:rgba(255,255,255,.8)}
+  .block{border-radius:16px;padding:14px 15px;margin-top:12px}
+  .block.inc{background:var(--inc-bg)}.block.exc{background:var(--exc-bg)}
+  .block h4{font-size:13px;font-weight:700;margin:0 0 9px;text-transform:uppercase;letter-spacing:.03em}
+  .block.inc h4{color:var(--inc)}.block.exc h4{color:#6F8794}
+  .block ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+  .block li{display:flex;gap:9px;font-size:13.5px;line-height:1.35}
+  .block.exc li{color:#6F8794}
+  .mk{flex:0 0 17px;height:17px;border-radius:50%;display:grid;place-items:center;margin-top:1px}
+  .mk.y{background:#CFEEDD;color:var(--inc)}.mk.n{background:#E1E8EC;color:var(--exc)}
+  .mk svg{width:10px;height:10px}
+  .hiw{background:#fff;border:1px solid var(--line);border-radius:16px;padding:6px 14px;margin-top:12px}
+  .hiw .row{display:flex;gap:11px;align-items:flex-start;padding:8px 0}
+  .hiw .n{flex:0 0 26px;height:26px;border-radius:8px;background:var(--green);color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px;font-family:"Plus Jakarta Sans"}
+  .hiw .row b{font-size:14px;font-weight:600}
+  .hiw .row span{font-size:12.5px;color:var(--muted);display:block;margin-top:1px}
+  .specrow{display:flex;justify-content:space-between;font-size:13.5px;padding:9px 0;border-bottom:1px solid var(--line)}
+  .specrow span{color:var(--muted)}
+  .grouplbl{font-size:12px;font-weight:700;color:var(--muted);margin:14px 0 2px;text-transform:uppercase;letter-spacing:.04em}
+  .opt{border:1px solid var(--line);background:#fff;border-radius:12px;padding:11px 13px;font-size:13px;margin-top:8px;display:flex;gap:9px;align-items:center;cursor:pointer}
+  .opt.on{border-color:var(--brand);box-shadow:0 0 0 2px rgba(30,123,184,.12)}
+  .opt .tick{flex:0 0 18px;height:18px;border-radius:50%;background:#E1E8EC;color:#fff;display:grid;place-items:center;transition:.14s}
+  .opt.on .tick{background:var(--inc)}
+  .opt .tick svg{width:10px;height:10px}
+  .addonrow{display:flex;justify-content:space-between;font-size:13.5px;padding:8px 0;border-bottom:1px dashed var(--line)}
+  .note{background:#FFF6EC;border:1px solid #FBE3C6;border-radius:14px;padding:13px 14px;margin-top:14px}
+  .note h4{font-size:12.5px;font-weight:700;color:var(--sun-deep);margin:0 0 8px;text-transform:uppercase;letter-spacing:.03em}
+  .note ul{margin:0;padding-left:16px;display:flex;flex-direction:column;gap:6px}
+  .note li{font-size:12.5px;color:#7A5A33;line-height:1.4}
+
+  .field{margin-top:13px}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
+  .field .req{color:var(--sun-deep)}
+  .field input,.field select{width:100%;border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px 13px;font-size:15px;font-family:inherit;color:var(--ink)}
+  .field input:focus,.field select:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(30,123,184,.14)}
+  .chipsel{display:flex;flex-wrap:wrap;gap:8px}
+  .chipsel .c{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 14px;font-size:13.5px;font-weight:600}
+  .chipsel .c.on{border-color:var(--brand);background:var(--brand);color:#fff}
+  .line{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .line .ln{flex:1;min-width:0}
+  .line .ln b{font-size:14px;font-weight:600;display:block}
+  .line .ln span{font-size:12px;color:var(--muted)}
+  .line .lp{font-weight:700;font-size:14px;white-space:nowrap}
+  .line .rm{border:none;background:#F0E4E1;color:#C2543B;width:26px;height:26px;border-radius:8px;font-size:16px;line-height:1;display:grid;place-items:center}
+  .tot-line{display:flex;align-items:center;justify-content:space-between;padding:14px 0 2px}
+  .tot-line .tv{font-family:"Plus Jakarta Sans";font-weight:800;font-size:23px}
+
+  .sheet-cta{width:100%;border:none;color:#fff;font-weight:700;font-size:16px;padding:15px;border-radius:14px;margin-top:16px;display:flex;align-items:center;justify-content:center;gap:9px}
+  .sheet-cta.dark{background:var(--ink)}
+  .sheet-cta.wa{background:var(--wa);box-shadow:0 8px 20px -6px rgba(37,211,102,.5)}
+  .sheet-cta:disabled{background:#CBD8DE;box-shadow:none}
+  .sub-remove{width:100%;background:none;border:none;color:#C2543B;font-size:13px;font-weight:600;margin-top:10px;padding:6px}
+  .sheet-note{font-size:11.5px;color:var(--muted);text-align:center;margin-top:10px}
+
+  .pkg-actions{position:relative;z-index:2;display:flex;gap:9px;margin-top:16px}
+  .pkg-actions .pcta{margin-top:0;flex:1}
+  .pcta.ghost{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.32);color:#fff}
+
+  .dates{display:flex;gap:8px;overflow-x:auto;padding:2px 0 6px;-webkit-overflow-scrolling:touch}
+  .dates::-webkit-scrollbar{height:0}
+  .date{flex:0 0 auto;min-width:60px;border:1px solid var(--line);background:#fff;border-radius:13px;padding:9px 10px;text-align:center;line-height:1.15}
+  .date .dw{font-size:11px;color:var(--muted);font-weight:600}
+  .date .dd{font-size:15px;font-weight:800;font-family:"Plus Jakarta Sans";margin-top:2px}
+  .date.on{background:var(--brand);border-color:var(--brand);color:#fff}
+  .date.on .dw{color:rgba(255,255,255,.85)}
+  .slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:4px}
+  .slot{border:1px solid var(--line);background:#fff;border-radius:12px;padding:11px 6px;text-align:center;font-size:12.5px;font-weight:600}
+  .slot.on{background:var(--brand);border-color:var(--brand);color:#fff}
+  .slot.off{opacity:.4;text-decoration:line-through;background:#F2F5F7;cursor:not-allowed}
+  .slot-empty{grid-column:1/-1;font-size:12.5px;color:var(--muted);padding:10px 0;text-align:center}
+
+  .hero-alt{position:relative;z-index:2;display:block;margin:12px auto 0;background:none;border:none;color:#CDEEF3;font-size:13.5px;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+  .teaser{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 16px 0;background:#fff;border:1px solid var(--line);border-left:4px solid var(--sun);border-radius:14px;padding:12px 14px;box-shadow:0 8px 22px -14px rgba(6,35,46,.2);cursor:pointer}
+  .teaser-l{display:flex;flex-direction:column;gap:2px}
+  .teaser-badge{font-size:10px;font-weight:800;color:var(--sun-deep);letter-spacing:.04em}
+  .teaser-l b{font-size:14.5px}
+  .teaser-sub{font-size:11.5px;color:var(--muted)}
+
+  /* elderly-friendly additions */
+  .nav-header{background:#fff;padding:14px 16px 10px;display:flex;justify-content:center}
+  .nav-logo{font-family:"Plus Jakarta Sans",sans-serif;font-weight:800;font-size:56px;
+    letter-spacing:-0.04em;color:#38B6FF;line-height:1;text-decoration:none;display:block}
+  @media(max-width:380px){.nav-logo{font-size:50px}}
+  .logo-hero .big-logo{font-family:"Plus Jakarta Sans";font-weight:800;font-size:34px;letter-spacing:-.03em;color:var(--brand);display:flex;align-items:center;gap:8px}
+  .logo-hero .big-logo .drop{width:20px;height:24px;background:var(--brand);border-radius:0 60% 60% 60%;transform:rotate(-45deg);box-shadow:inset -3px -3px 0 rgba(21,179,192,.4)}
+  .logo-hero .tag{font-size:14px;color:var(--muted);margin-top:6px}
+
+  .carousel{position:relative;padding:12px 16px 4px;overflow:hidden}
+  .carousel-track{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;padding-bottom:6px}
+  .carousel-track::-webkit-scrollbar{height:0}
+  .feat{flex:0 0 82%;scroll-snap-align:center;border-radius:16px;padding:14px 16px;background:#fff;border:1px solid #EEEEEE;box-shadow:0 2px 8px -4px rgba(6,35,46,.08);color:var(--ink)}
+  .feat h3{font-size:18px;font-weight:800;margin:0 0 5px;line-height:1.2;color:var(--ink)}
+  .feat .fdesc{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.4}
+  .feat .fbtn.full{width:100%;border:none;background:var(--brand);color:#fff;font-weight:700;font-size:14px;padding:12px;border-radius:12px}
+  .dots{display:flex;justify-content:center;gap:6px;margin-top:8px}
+  .dots .d{width:6px;height:6px;border-radius:50%;background:#C7D6DD;transition:.2s}
+  .dots .d.on{background:var(--brand);width:18px;border-radius:99px}
+
+  /* flip cards */
+  .flip-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .flip{background:transparent;perspective:1000px;height:170px;cursor:pointer}
+  .flip-in{position:relative;width:100%;height:100%;transition:transform .55s cubic-bezier(.4,.7,.3,1);transform-style:preserve-3d}
+  .flip.on .flip-in{transform:rotateY(180deg)}
+  .flip-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;background:#fff;border:1px solid var(--line);padding:14px;box-shadow:0 8px 22px -14px rgba(6,35,46,.2);display:flex;flex-direction:column}
+  .flip-back{transform:rotateY(180deg);background:var(--ink);color:#fff;border-color:var(--ink);overflow-y:auto}
+  .flip-back::-webkit-scrollbar{width:0}
+  .flip-front .ftile{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:22px;margin-bottom:8px}
+  .flip-front h4{font-size:15.5px;font-weight:700;line-height:1.15}
+  .flip-front .fmeta{margin-top:auto;font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:5px}
+  .flip-back h5{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin:0 0 5px}
+  .flip-back h5.y{color:#8FEBCF}
+  .flip-back h5.n{color:#F9BE9D;margin-top:9px}
+  .flip-back ul{list-style:none;margin:0;padding:0;font-size:11.5px;line-height:1.4}
+  .flip-back ul li{padding:2px 0}
+  .flip-back .fback-cta{margin-top:auto;padding-top:8px;text-align:center;font-size:11px;color:#8FC3D1;font-weight:600}
+
+  /* instant service flip trio */
+  .instant-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .instant-grid .flip{height:180px}
+  .instant-grid .flip-front{align-items:center;justify-content:center;text-align:center;padding:10px}
+  .instant-grid .flip-front .bhk{font-family:"Plus Jakarta Sans";font-weight:800;font-size:22px}
+  .instant-grid .flip-front .ip{font-family:"Plus Jakarta Sans";font-weight:800;font-size:22px;color:var(--brand);margin-top:4px}
+  .instant-grid .flip-front .isv{font-size:10.5px;color:var(--muted);margin-top:4px;line-height:1.25}
+  .instant-grid .flip-back{padding:11px}
+  .instant-book{border:none;background:var(--ink);color:#fff;font-weight:800;font-size:12.5px;padding:9px 12px;border-radius:999px;margin-top:8px;width:100%;min-height:38px}
+  .instant-book.back{background:var(--wa);margin-top:auto}
+  .instant-info{border:none;background:none;color:var(--brand);font-weight:600;font-size:11px;margin-top:4px;padding:2px;text-decoration:underline}
+
+  /* chunkier tap targets everywhere */
+  .sheet-cta{min-height:44px}
+
+  /* real service zones as chips */
+  .zone-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .zc{background:#fff;border:1px solid var(--line);border-radius:999px;padding:9px 14px;font-size:13px;font-weight:600;color:var(--ink)}
+
+  /* footer socials */
+  .socials{display:flex;gap:12px;margin-top:14px}
+  .socials a{width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,.08);display:grid;place-items:center;color:#C7DCE4;text-decoration:none}
+  .socials a:hover{background:rgba(255,255,255,.14);color:#fff}
+  .support{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:11px 13px;margin-top:14px;font-size:13px}
+  .support a{color:#fff;font-weight:700;text-decoration:none}
+
+  .slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .slot{border:1px solid var(--line);background:#fff;border-radius:12px;padding:11px 6px;text-align:center;cursor:pointer;transition:.14s;min-height:52px}
+  .slot.on{background:var(--brand);border-color:var(--brand);color:#fff}
+  .slot.off{opacity:.5;background:#F5F7F9;cursor:not-allowed}
+  .slot-empty{grid-column:1/-1;font-size:12.5px;color:var(--muted);padding:14px 0;text-align:center}
+  .win-loading{font-size:12.5px;color:var(--muted);text-align:center;padding:14px 0}
+
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  :focus-visible{outline:3px solid var(--sun);outline-offset:2px;border-radius:6px}
+  .logo-img{height:26px;display:block}
+  .freq-add{margin:18px 0 4px}
+  .freq-title{font-size:14px;font-weight:800;margin:0 0 10px}
+  .freq-row{display:flex;align-items:center;gap:11px;padding:9px 0;border-top:1px solid var(--line)}
+  #legalTerms .lg-h{font-size:14.5px;font-weight:800;margin:18px 0 6px;color:var(--text-main)}
+  #legalTerms .lg-h2{font-size:13px;font-weight:800;margin:12px 0 4px;color:var(--text-main)}
+  #legalTerms p{margin:0 0 8px}
+  #legalTerms ul{margin:0 0 8px;padding-left:18px}
+  #legalTerms li{margin-bottom:5px}
+  #legalTerms .lg-i{list-style:none;padding-left:0}
+  #legalTerms .lg-b{list-style:disc}
+  #legalTerms .lg-s{list-style:circle;padding-left:30px}
+  .sheet-qty{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;
+    background:var(--primary-light);border:1px solid var(--border);border-radius:14px;padding:12px 14px}
+  .sheet-qty .sq-price{font-size:13px;color:var(--text-secondary)}
+  .sheet-qty .sq-price b{font-size:17px;color:var(--text-main);font-weight:800}
+  .freq-ic{width:38px;height:38px;border-radius:10px;background:var(--brand-light,#EBF7FF);display:grid;place-items:center;flex-shrink:0}
+  .freq-ic svg{width:20px;height:20px;stroke:var(--brand);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .freq-info{flex:1;display:flex;flex-direction:column}
+  .freq-info b{font-size:13.5px;font-weight:700}
+  .freq-info span{font-size:11.5px;color:var(--muted)}
+  .freq-btn{border:1.5px solid var(--brand);background:#fff;color:var(--brand);font-weight:700;font-size:12.5px;padding:7px 14px;border-radius:999px;flex-shrink:0}
+  .qty-step{display:inline-flex;align-items:center;gap:0;border:1.5px solid var(--brand);border-radius:999px;overflow:hidden;flex-shrink:0}
+  .qty-step button{border:none;background:var(--brand);color:#fff;font-weight:800;font-size:15px;width:28px;height:30px;line-height:1;display:grid;place-items:center}
+  .qty-step span{min-width:26px;text-align:center;font-weight:700;font-size:13.5px;color:var(--ink)}
+  .card-add{border:1.5px solid var(--brand);background:#fff;color:var(--brand);font-weight:700;font-size:12px;padding:5px 12px;border-radius:999px}
+  .card-step{transform:scale(.9);transform-origin:right}
+  .freq-btn.on{background:var(--brand);color:#fff}
+  .logo-img-link{display:inline-flex;background:var(--brand);padding:6px 12px;border-radius:10px}
+</style>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+<div class="app">
+
+  <header class="nav-header">
+    <a href="#top" class="nav-logo">bloorush</a>
+  </header>
+
+  <a id="top"></a>
+
+  <section class="carousel">
+    <div class="carousel-track" id="featTrack">
+      <div class="feat daily">
+        <h3>Daily Helper</h3>
+        <div class="fdesc">One dedicated pro, every day, same slot</div>
+        <button class="fbtn full" onclick="openPlan(false)">View details</button>
+      </div>
+      <div class="feat wash">
+        <h3>Washroom Weekly</h3>
+        <div class="fdesc">Toilet + bathroom cleaned every week</div>
+        <button class="fbtn full" onclick="openWash()">View details</button>
+      </div>
+    </div>
+    <div class="dots" id="featDots"></div>
+  </section>
+
+  <section class="sec" id="services">
+    <h2 style="text-align:center">What can we help you with today?</h2>
+    <p class="sd" style="text-align:center">Tap a service to choose a size and see what's included.</p>
+    <div id="serviceGrid"></div>
+  </section>
+
+  <section class="sec" id="addons">
+    <div class="kick teal">Quick add-ons</div>
+    <h2>Add to any booking</h2>
+    <p class="sd">Small jobs your helper handles while they're already there.</p>
+    <div id="addonGrid"></div>
+  </section>
+
+  <section class="sec" id="how">
+    <img src="https://i.ibb.co/DHq1H0v6/Whats-App-Image-2026-07-13-at-11-43-41-PM.jpg" alt="How BlooRush works: choose a service, pick a date and time, confirm on WhatsApp, and your professional arrives" loading="lazy" style="width:100%;height:auto;border-radius:16px;display:block">
+    <img src="https://i.ibb.co/WWqQM4f1/file-00000000468c72068761092ed1763791.png" alt="Trusted by 1500+ families in Nagpur, with trained and background-checked professionals" loading="lazy" style="width:100%;height:auto;border-radius:16px;display:block;margin-top:16px">
+  </section>
+
+  <section class="sec" id="areas">
+    <div class="kick blue">Service areas</div>
+    <h2>Serving these areas in Nagpur</h2>
+    <p class="sd">Not on the list? Message us — we're expanding fast.</p>
+    <div class="zone-chips">
+      <span class="zc">Narendra Nagar</span>
+      <span class="zc">Besa</span>
+      <span class="zc">Manish Nagar</span>
+      <span class="zc">Dharampeth</span>
+      <span class="zc">Ramdaspeth</span>
+      <span class="zc">Civil Lines</span>
+      <span class="zc">MIHAN</span>
+      <span class="zc">Ram Nagar</span>
+    </div>
+  </section>
+
+  <footer>
+    <div class="flogo">bloorush</div>
+    <div class="zl">Trusted house help · Nagpur</div>
+    <div class="support">Need help? <a href="tel:+918010687985">+91 80106 87985</a></div>
+    <div class="socials">
+      <a href="https://www.instagram.com/trybloorush" target="_blank" rel="noopener" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.3 2.2.4.5.2 1 .5 1.4.9.4.4.7.9.9 1.4.2.5.4 1.1.4 2.2.1 1.2.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.3 1.8-.4 2.2-.2.5-.5 1-.9 1.4-.4.4-.9.7-1.4.9-.5.2-1.1.4-2.2.4-1.2.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.3-2.2-.4-.5-.2-1-.5-1.4-.9-.4-.4-.7-.9-.9-1.4-.2-.5-.4-1.1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c.1-1.2.3-1.8.4-2.2.2-.5.5-1 .9-1.4.4-.4.9-.7 1.4-.9.5-.2 1.1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2M12 0C8.7 0 8.3 0 7.1.1 5.8.1 4.9.3 4.1.6c-.8.3-1.5.7-2.2 1.4C1.3 2.6.9 3.3.6 4.1.3 4.9.1 5.8.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.1 1.3.3 2.2.5 2.9.3.8.7 1.5 1.4 2.2.7.7 1.4 1.1 2.2 1.4.8.3 1.7.5 2.9.5C8.3 24 8.7 24 12 24s3.7 0 4.9-.1c1.3-.1 2.2-.3 2.9-.5.8-.3 1.5-.7 2.2-1.4.7-.7 1.1-1.4 1.4-2.2.3-.8.5-1.7.5-2.9.1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.1-1.3-.3-2.2-.5-2.9-.3-.8-.7-1.5-1.4-2.2-.7-.7-1.4-1.1-2.2-1.4-.8-.3-1.7-.5-2.9-.5C15.7 0 15.3 0 12 0zm0 5.8A6.2 6.2 0 1012 18.2 6.2 6.2 0 0012 5.8zm0 10.3A4 4 0 1112 8a4 4 0 010 8.1zm7.8-10.6a1.4 1.4 0 11-2.9 0 1.4 1.4 0 012.9 0z"/></svg></a>
+      <a href="https://www.linkedin.com/company/bloorush/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3v9zM6.5 8.3a1.75 1.75 0 110-3.5 1.75 1.75 0 010 3.5zM19 19h-3v-4.7c0-2.7-3-2.5-3 0V19h-3v-9h3v1.4c1.4-2.5 6-2.7 6 2.4V19z"/></svg></a>
+    </div>
+    <div class="flinks">
+      <a href="#" onclick="openLegal('privacy');return false;">Privacy policy</a><a href="#" onclick="openLegal('terms');return false;">Terms of service</a><a href="#" onclick="openLegal('refund');return false;">Cancellation &amp; Refund</a><a href="#" onclick="openAdminLogin();return false;">Admin</a>
+    </div>
+    <div class="fine">© <span id="yr"></span> Bloorush Ventures Private Limited · Nagpur, India · Prices in ₹, inclusive.</div>
+  </footer>
+</div>
+
+<div class="bookbar" id="bookbar">
+  <div class="bookbar-in">
+    <div class="bb-left">
+      <div class="bb-count" id="bbCount">No services yet</div>
+      <div class="bb-total" id="bbTotal">₹0</div>
+      <div class="bb-msg" id="bbMsg"></div>
+    </div>
+    <button class="bb-btn" id="bbBook" disabled>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15l-1.4 5 5.2-1.4A10 10 0 1012 2z"/></svg>Book</button>
+  </div>
+</div>
+
+<div class="scrim" id="scrim" onclick="closeSheets()"></div>
+
+<div class="sheet" id="svcSheet" role="dialog" aria-modal="true">
+  <div class="sheet-in">
+    <div class="grab"></div>
+    <div class="sh-head"><div class="svc-ico" id="shTile" style="margin-bottom:0"></div><div><h2 id="shName"></h2></div></div>
+    <p class="sh-desc" id="shDesc"></p>
+    <div class="tiers" id="shTiers"></div>
+    <div class="block inc"><h4>✓ What's included</h4><ul id="incList"></ul></div>
+    <div class="block exc"><h4>— What's not included</h4><ul id="excList"></ul></div>
+    <div id="freqAdd" class="freq-add"></div>
+    <button class="sheet-cta dark" id="svcAdd">Add to booking</button>
+    <button class="sub-remove" id="svcRemove" style="display:none">Remove from booking</button>
+  </div>
+</div>
+
+<div class="sheet" id="planSheet" role="dialog" aria-modal="true">
+  <div class="sheet-in">
+    <div class="grab"></div>
+    <div class="sh-head"><div class="tile" style="background:linear-gradient(150deg,#CDEBEF,#A7DDE4)">📅</div><div><h2>Daily Helper Plan</h2></div></div>
+    <p class="sh-desc">One trained, background-checked professional — same helper, every day.</p>
+    <div>
+      <div class="specrow"><b>Price</b><span>₹3,999/month · save ₹2,000</span></div>
+      <div class="specrow"><b>Duration</b><span>30 days · up to 2 leaves</span></div>
+      <div class="specrow"><b>Daily service</b><span>55–65 minutes</span></div>
+      <div class="specrow"><b>Arrival window</b><span>1-hour slot</span></div>
+    </div>
+    <div class="block inc"><h4>✓ What's included</h4><ul>
+      <li><span class="mk y">✓</span>One trained, dedicated professional</li>
+      <li><span class="mk y">✓</span>Verified, background-checked staff</li>
+      <li><span class="mk y">✓</span>Replacement professional if yours is absent</li>
+      <li><span class="mk y">✓</span>Standardised service quality</li>
+    </ul></div>
+    <div class="block exc"><h4>— What's not included</h4><ul>
+      <li><span class="mk n">✕</span>Deep cleaning (bathroom, kitchen)</li>
+      <li><span class="mk n">✕</span>Window &amp; fan cleaning</li>
+      <li><span class="mk n">✕</span>Heavy furniture movement</li>
+      <li><span class="mk n">✕</span>Post-renovation / construction cleaning</li>
+      <li><span class="mk n">✕</span>Tasks outside the chosen combo</li>
+      <li><span class="mk n">✕</span>Time beyond the booked duration</li>
+    </ul></div>
+    <div id="planComboWrap">
+      <div class="grouplbl">Choose your combo — 3 BHK</div>
+      <div class="opt" data-combo="3BHK: Mop & Sweep (30) + Utensils (25)"><span class="tick">✓</span>Mopping &amp; Sweeping (30) + Utensils (25)</div>
+      <div class="opt" data-combo="3BHK: Mop & Sweep (30) + Dusting (35)"><span class="tick">✓</span>Mopping &amp; Sweeping (30) + Dusting (35)</div>
+      <div class="opt" data-combo="3BHK: Utensils (25) + Dusting (35)"><span class="tick">✓</span>Utensils (25) + Dusting (35)</div>
+      <div class="grouplbl">Choose your combo — 2 BHK</div>
+      <div class="opt" data-combo="2BHK: Mop & Sweep (25) + Utensils (25) + Dusting (10)"><span class="tick">✓</span>Mop &amp; Sweep (25) + Utensils (25) + Dusting (10)</div>
+      <div class="opt" data-combo="2BHK: Mop & Sweep (25) + Dusting (35)"><span class="tick">✓</span>Mop &amp; Sweep (25) + Dusting (35)</div>
+      <div class="opt" data-combo="2BHK: Utensils (25) + Dusting (35)"><span class="tick">✓</span>Utensils (25) + Dusting (35)</div>
+    </div>
+    <div class="note"><h4>ℹ️ Good to know</h4><ul>
+      <li>Arrival may vary within the 1-hour window for operational reasons.</li>
+      <li>A replacement pro is assigned whenever your helper is unavailable.</li>
+      <li>Any harassment or inappropriate behaviour toward a Bloorush professional may lead to immediate suspension of service.</li>
+    </ul></div>
+    <div class="field"><label>Your area / locality <span class="req">*</span></label><select id="planZone"><option value="">Select your area…</option></select></div>
+    <button class="sheet-cta wa" id="planCTA" disabled>Book Daily Plan on WhatsApp</button>
+  </div>
+</div>
+
+<div class="sheet" id="washSheet" role="dialog" aria-modal="true">
+  <div class="sheet-in">
+    <div class="grab"></div>
+    <div class="sh-head"><div class="tile" style="background:linear-gradient(150deg,#CFEDE6,#A7DED0)">🚿</div><div><h2>Washroom Weekly</h2></div></div>
+    <p class="sh-desc">A weekly maintenance clean of your toilet and bathroom — the two jobs nobody wants to do.</p>
+
+    <div class="grouplbl">How many washrooms + bathrooms?</div>
+    <div class="units" id="washUnits" style="margin:6px 0 14px">
+      <button class="ubtn on" data-u="1" style="background:var(--brand);color:#fff;border-color:var(--brand)">1 + 1<small style="opacity:.8">wash + bath</small></button>
+      <button class="ubtn" data-u="2" style="background:#fff;color:var(--ink);border-color:var(--line)">2 + 2<small style="opacity:.7">wash + bath</small></button>
+      <button class="ubtn" data-u="3" style="background:#fff;color:var(--ink);border-color:var(--line)">3 + 3<small style="opacity:.7">wash + bath</small></button>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:baseline;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:6px">
+      <div><span id="washPrice" style="font-family:'Plus Jakarta Sans';font-weight:800;font-size:24px">₹999</span><span style="font-size:13px;color:var(--muted)">/month · 4 visits</span></div>
+      <span id="washSave" style="font-size:12px;font-weight:800;color:#0B4A46;background:#8FEBCF;padding:3px 9px;border-radius:6px">Save ₹153</span>
+    </div>
+
+    <div class="specrow"><b>Your plan</b><span id="washSummary">1 washroom · ₹999/month</span></div>
+    <div class="hiw">
+      <div class="row"><div class="n">1</div><div><b>Pick washrooms &amp; a weekday</b><span>Choose your day and a 1-hour slot — locked for the month.</span></div></div>
+      <div class="row"><div class="n">2</div><div><b>One dedicated helper</b><span>The same background-checked pro, every week.</span></div></div>
+      <div class="row"><div class="n">3</div><div><b>Pay monthly, stay flexible</b><span>Prepaid for 4 visits. Pause or cancel with 7 days' notice.</span></div></div>
+    </div>
+    <div class="block inc"><h4>✓ Included every visit</h4><ul>
+      <li><span class="mk y">✓</span>Scrub toilet bowl — inside, rim &amp; under-rim — seat, lid &amp; cistern</li>
+      <li><span class="mk y">✓</span>Clean &amp; sanitise washbasin, taps &amp; mirror</li>
+      <li><span class="mk y">✓</span>Clean floor &amp; accessible wall tiles</li>
+      <li><span class="mk y">✓</span>Wipe shower area &amp; accessible fittings</li>
+      <li><span class="mk y">✓</span>Remove soap residue, dust &amp; light stains</li>
+      <li><span class="mk y">✓</span>Disinfect all cleaned surfaces</li>
+    </ul></div>
+    <div class="block exc"><h4>— Not included (book a deep clean)</h4><ul>
+      <li><span class="mk n">✕</span>Heavy hard-water / lime-scale &amp; acid descaling</li>
+      <li><span class="mk n">✕</span>Grout deep-scrubbing &amp; tile restoration</li>
+      <li><span class="mk n">✕</span>Mould / fungus chemical treatment</li>
+      <li><span class="mk n">✕</span>Plumbing, unclogging or panel dismantling</li>
+      <li><span class="mk n">✕</span>Ladder-height or unsafe-access cleaning</li>
+    </ul></div>
+    <div class="note"><h4>ℹ️ Good to know</h4><ul>
+      <li>This is a weekly <b>maintenance</b> clean — a one-time deep clean is available separately for built-up scaling.</li>
+      <li>Reschedule a visit with 24 hours' notice.</li>
+      <li>Same helper each week wherever possible; a verified replacement covers any absence.</li>
+    </ul></div>
+    <div class="field"><label>Your area / locality <span class="req">*</span></label><select id="washZone"><option value="">Select your area…</option></select></div>
+    <button class="sheet-cta wa" id="washCTA" disabled>Start Washroom Weekly on WhatsApp</button>
+  </div>
+</div>
+
+<div class="sheet" id="checkoutSheet" role="dialog" aria-modal="true">
+  <div class="sheet-in">
+    <div class="grab"></div>
+    <h2>Your booking</h2>
+    <p class="sh-desc">Review, add your area, and confirm on WhatsApp.</p>
+    <div id="cartLines"></div>
+    <div class="tot-line"><span style="font-weight:600">Total</span><span class="tv" id="coTotal">₹0</span></div>
+    <div class="field"><label for="coZone">Your area / locality <span class="req">*</span></label><select id="coZone"><option value="">Select your area…</option></select></div>
+    <div class="field" style="margin-top:16px">
+      <div style="font-size:12.5px;color:var(--muted);margin-bottom:7px;line-height:1.4">📍 Use your current location so we auto-fill your address and our helper reaches your exact door.</div>
+      <button type="button" id="coLocBtn" style="width:100%;border:none;background:var(--wa);color:#fff;font-weight:700;font-size:14px;padding:13px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 6px 16px -6px rgba(37,211,102,.4);min-height:44px">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 00-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg>
+        Use current location
+      </button>
+      <div id="coLocStatus" style="font-size:11.5px;color:var(--muted);margin-top:6px;text-align:center"></div>
+    </div>
+    <div class="field"><label for="coFlat">Flat / floor no. <span class="req">*</span></label><input id="coFlat" type="text" placeholder="e.g. B-402, 4th floor" autocomplete="address-line2"/></div>
+    <div class="field"><label for="coAddress">Building / street</label><input id="coAddress" type="text" placeholder="e.g. Sunrise Apartments, Ring Rd" autocomplete="street-address"/></div>
+    <div class="field"><label>Choose a date</label><div class="dates" id="coDates"></div></div>
+    <div class="field"><label>Choose a time slot <span class="req">*</span></label><div class="windows" id="coWindows"></div></div>
+    <div class="field"><label for="coName">Your name</label><input id="coName" type="text" placeholder="Optional — helps us greet you" autocomplete="name"/></div>
+    <div class="field"><label for="coPhone">Mobile number <span class="req">*</span></label><input id="coPhone" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit number" autocomplete="tel"/></div>
+    <div class="field">
+      <label for="coCoupon">Have a coupon?</label>
+      <div style="display:flex;gap:8px">
+        <input id="coCoupon" type="text" placeholder="Enter code" style="flex:1;text-transform:uppercase" autocomplete="off"/>
+        <button type="button" id="coApplyCoupon" style="border:none;background:var(--brand);color:#fff;font-weight:700;font-size:13.5px;padding:0 18px;border-radius:12px">Apply</button>
+      </div>
+      <div id="coCouponMsg" style="font-size:12px;margin-top:6px"></div>
+    </div>
+    <div id="coSummary" style="background:#F7FBFD;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:12px;font-size:13.5px;display:none">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="color:var(--muted)">Subtotal</span><span id="coSubtotal"></span></div>
+      <div id="coDiscountRow" style="display:none;justify-content:space-between;margin-bottom:4px;color:#1FA463"><span id="coDiscountLabel">Discount</span><span id="coDiscountAmt"></span></div>
+      <div style="display:flex;justify-content:space-between;font-weight:800;font-size:15px;border-top:1px solid var(--line);padding-top:6px;margin-top:6px"><span>Total payable</span><span id="coPayable"></span></div>
+    </div>
+    <button class="sheet-cta" id="coConfirm" style="background:var(--primary);color:#fff" disabled>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>Pay &amp; confirm booking</button>
+    <p class="sheet-note">Secure payment via Razorpay. Your booking is confirmed on WhatsApp right after.</p>
+  </div>
+</div>
+
+<!-- ============== MANDATORY TERMS & CONDITIONS GATE (first visit) ============== -->
+<div id="consentBackdrop" style="display:none;position:fixed;inset:0;background:rgba(6,35,46,.55);z-index:90"></div>
+<div id="consentPopup" style="display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:calc(100% - 32px);max-width:380px;background:#fff;border-radius:18px;box-shadow:0 24px 60px rgba(6,35,46,.35);padding:22px 20px;z-index:91;font-size:13.5px;line-height:1.5">
+  <div style="font-size:17px;font-weight:800;margin-bottom:8px">Welcome to Bloorush 🫧</div>
+  <div style="color:var(--muted);margin-bottom:16px">Before you book, please accept our <a href="#" onclick="openLegal('terms');return false;" style="color:var(--brand);font-weight:700">Terms &amp; Conditions</a> and <a href="#" onclick="openLegal('privacy');return false;" style="color:var(--brand);font-weight:700">Privacy Policy</a>. You'll need to accept once to continue.</div>
+  <button onclick="acceptConsent()" style="width:100%;border:none;background:var(--wa);color:#fff;font-weight:700;font-size:14.5px;padding:13px;border-radius:12px;min-height:46px">I Accept &amp; Continue</button>
+</div>
+
+<!-- ============== LEGAL (Privacy / Terms / Cancellation & Refund) ============== -->
+<div class="scrim" id="legalScrim" onclick="closeLegal()"></div>
+<div class="sheet" id="legalSheet" role="dialog" aria-modal="true" style="max-height:90vh">
+  <div class="sheet-in" style="position:relative">
+    <button onclick="closeLegal()" aria-label="Close" style="position:absolute;top:2px;right:0;border:none;background:#F0E4E1;color:#C2543B;width:30px;height:30px;border-radius:10px;font-size:16px;line-height:1;display:grid;place-items:center">✕</button>
+    <div class="grab"></div>
+    <h2 id="legalTitle">Privacy Policy</h2>
+    <p class="sh-desc" style="margin-bottom:12px">Bloorush Ventures Private Limited · Effective July 2, 2026</p>
+
+    <div class="chipsel" id="legalTabs" style="margin-bottom:14px">
+      <button class="c on" data-tab="privacy">Privacy</button>
+      <button class="c" data-tab="terms">Terms</button>
+      <button class="c" data-tab="refund">Cancellation &amp; Refund</button>
+    </div>
+
+    <div id="legalPrivacy" style="font-size:13.5px;line-height:1.6;color:var(--ink)">
+      <p><b>Information we collect:</b> Name, mobile number, email address, service address, live location (when required), booking history, payment information, and service-related photos.</p>
+      <p><b>How we use it:</b> Bookings, customer support, reminders, promotions, feedback, and business records.</p>
+      <p><b>Sharing:</b> Shared only with the assigned Bloorush Professional to deliver the service. We do not sell or rent personal information.</p>
+      <p><b>Payments:</b> UPI and Cash.</p>
+      <p><b>Data retention:</b> Retained for business records and future bookings.</p>
+      <p><b>Your rights:</b> You may request access, correction, or deletion of your personal information.</p>
+      <p><b>Contact:</b> <a href="mailto:letsbuild@bloorush.com" style="color:var(--brand)">letsbuild@bloorush.com</a> · <a href="https://bloorush.co.in" style="color:var(--brand)">bloorush.co.in</a></p>
+    </div>
+
+    <div id="legalTerms" style="font-size:13.5px;line-height:1.6;color:var(--ink);display:none">
+<p>Effective Date: __________ Last Updated: __________ These terms and conditions ("Terms") govern the use of services made available on or through (website domain) or the "BLOORUSH" mobile app (collectively, the "Platform", and together with the services made available on or through the Platform, the "Services"). These Terms also include our privacy policy, available at on the website and the app ("Privacy Policy"), and any guidelines, additional, or supplemental terms, policies, and disclaimers made available or issued by us from time to time ("Additional Terms"). Privacy Policy and Additional Terms form an integral part of these Terms. These Terms form a legally binding agreement between Bloorush Ventures Private Limited a company incorporated under the Companies Act, 2013 (hereinafter referred to as "Company", "we", "us", or "our"), and you, a user of the Services, or any legal entity that books Pro Services (defined below) on behalf of end-users (hereinafter referred to as "you" or "Customer"). By using the Services, you represent and warrant that you have full legal capacity and authority to agree to and bind yourself to these Terms. Where you access or use the Services on behalf of another person or entity, you confirm that you are duly authorized to accept these Terms on their behalf. Please read these Terms carefully. By accessing or using the Platform, you are agreeing to these Terms and concluding a legally binding contract with the Company. You may not use the Services if you do not accept the Terms or are unable to be bound by the Terms. Your use of the Platform is at your own risk, including the risk that you might be exposed to content that is objectionable, or otherwise inappropriate. In order to use the Services, you must first agree to the Terms. You can accept the Terms by:</p>
+<ul class="lg-i"><li>(a) Clicking to accept or agree to the Terms as may be applicable from time to time, where it is made available to you by the Company in the user interface for any particular Service; or</li><li>(b) Actually using the Services. In this case, you understand and agree that the Company will treat your use of the Services as acceptance of the Terms from that point onwards. By using the Services, you agree that you have read, understood, and are bound by these Terms, as amended from time to time, and that you will comply with the requirements listed here. These Terms expressly supersede any prior written agreements with you. If you do not agree to these Terms, or comply with the requirements listed here, please do not use the Services.</li></ul>
+<h4 class="lg-h">1. Definitions</h4>
+<p>For the purposes of these Terms:</p>
+<ul class="lg-b"><li>"Company", "BLOORUSH", "Platform", "we", "our" or "us" means BLOORUSH VENTURES PRIVATE LIMITED.</li><li>"Customer" means any person using the Platform to request or receive services.</li><li>"Service Partner" means any gig worker, cleaning professional, housekeeping professional, technician or other service provider registered on the Platform who does not fall within the definition of employee of the Company.</li><li>"ProServices" or "Services" means cleaning and related services provided by third-party professionals offered through the Platform.</li><li>"Booking" means a service request placed by a Customer.</li><li>"Platform" means the Company's website, mobile application, software systems and associated services.</li></ul>
+<h4 class="lg-h">2. Nature Of Platform</h4>
+<ul class="lg-i"><li>(a) BLOORUSH operates a technology-enabled marketplace that connects Customers with independent Service Partners.</li><li>(b) The Company does not directly provide cleaning services unless expressly stated otherwise.</li><li>(c) Service Partners are independent contractors and are not employees, agents, representatives, partners or joint venture partners of the Company.</li><li>(d) The Company facilitates bookings, payments, customer support and service quality management.</li><li>(e) Nothing contained herein shall be construed as creating an employment relationship between the Company and any Service Partner.</li></ul>
+<h4 class="lg-h">3. Eligibility</h4>
+<ul class="lg-i"><li>(a) You confirm that you are at least 18 years old and have the legal capacity to understand, accept, and comply with these Terms.</li><li>(b) You are in compliance with all laws and regulations of India when you access and use the Services. You agree to use the Services only in compliance with these Terms and applicable law, and in a manner that does not violate our legal rights or those of any third party(ies) or the rights of any Professionals providing Pro Services.</li><li>(c) You agree to provide accurate information which would enable the Company to provide Services in an efficient manner.</li><li>(d) The Company reserves the right to suspend or terminate accounts where eligibility requirements are not met.</li></ul>
+<h4 class="lg-h">4. Account Registration</h4>
+<ul class="lg-i"><li>(a) To avail the Services, you will be required to create an account on the Platform (hereinafter referred to as "Account"). For this Account, you may be required to furnish certain details, including but not limited to your name, e-mail address, and phone number and such other information or documentation as may be required for identity verification, fraud prevention, or compliance with applicable law.</li><li>(b) You warrant that all information furnished in connection with your Account is and shall remain accurate and true. You agree to promptly update your details on the Platform in the event of any change to or modification of this information.</li><li>(c) You are solely responsible for maintaining the security and confidentiality of your Account and agree to immediately notify us of any disclosure or unauthorised use of your Account or any other breach of security with respect to your Account.</li><li>(d) You are responsible for all actions carried out through your Account, whether undertaken by you or by any third party using your login credentials. We shall not be liable for any unauthorised access to your Account unless such unauthorised access arises due to our gross negligence or willful misconduct.</li><li>(e) You agree to receive communications from us regarding: (i) requests for payments, (ii) information about us and the Services, (iii) promotional offers and services from us and our third-party partners, and (iv) any other matter in relation to the Services in accordance with applicable law and the Privacy Policy.</li></ul>
+<h4 class="lg-h">5. Booking Of Services</h4>
+<ul class="lg-i"><li>(a) The Platform allows you to place requests for Pro Services based on availability and time slots displayed at the time of booking. To make a booking, you should follow the instructions on the Platform and provide necessary information. We use reasonable efforts to enable you to find a Professional who is able to provide that Service at the requested time. If we are unable to find a Professional for the specific time slot, we will contact you to find an alternative time to reschedule, or intimate you when the Professional is available to provide the Service or cancel the booking. The allocation or matching of Professionals may be facilitated through automated or algorithmic systems.</li><li>(b) Once you place a request, we will provide confirmation of the booking via SMS, email or a push notification. Once your booking has been confirmed, you will be required to make the payment in accordance with these Terms or as indicated on the Platform. Once a Professional has been identified for the requested Pro Services, you shall receive confirmation in-app or via SMS, email or a push notification containing details of the Professional including, where available, relevant information such as name, ratings, experience, or other marketplace-related details to enable informed decision-making.</li><li>(c) Bookings that are cancelled before confirmation on the Platform will not be charged. Our cancellation policy, available at Cancellation Policy, sets out applicable cancellation fees.</li><li>(d) If a booked Professional becomes unavailable, the Company may, where possible, arrange an alternative Professional or assist with rescheduling or cancellation and you acknowledge that availability of a replacement Professional is not guaranteed.</li><li>(e) You acknowledge that certain Pro Services may require the availability of utilities, equipment, consumables, or access at the service location, and the Professional's ability to perform the Pro Services may be affected if such requirements are not met. The Company may in such circumstances update assigned Professionals or revise pricing components prior to service commencement, subject to informing you and obtaining confirmation where required and such revisions may be based on actual service requirements or marketplace conditions.</li><li>(f) You agree to ensure that the Professional is provided with timely and adequate access to the service location and all necessary conditions required for the performance of the Pro Services. This includes, without limitation:</li></ul>
+<ul class="lg-s"><li>obtaining and facilitating entry permissions, security clearances, or gate passes (including at gated communities or commercial premises);</li><li>ensuring availability of functional lifts, parking space, or reasonable access for movement of equipment, where applicable;</li><li>informing in advance of any conditions that may affect service delivery, including the presence of pets, restricted access areas, or safety hazards; and</li><li>ensuring that there are no undue delays at the service location, including delays caused by building management, security procedures, or access restrictions.</li></ul>
+<ul class="lg-i"><li>(g) You acknowledge that any failure to comply with the above may result in delays, inability to perform the Pro Services, additional charges, or cancellation or rescheduling of the booking, and the Company and/or the Professional shall not be liable for any such delay or non-performance attributable to such conditions.</li><li>(h) Any time estimates, schedules, or service durations displayed on the Platform for a booking are indicative only and may vary based on on-ground conditions and do not constitute a guarantee of completion timelines.</li></ul>
+<h4 class="lg-h">6. Payment Terms</h4>
+<ul class="lg-i"><li>(a) The Company reserves the right to collect from you for the different Services provided by it and/or Pro Services provided by the professional, which you may avail and/or for any other facilities you may opt for, from time to time, on or via the Platform in accordance with applicable law and as disclosed on the Platform at the time of booking.</li><li>(b) In respect of Pro Services that you seek to avail through the Platform, you shall be required to pay the Company the amount indicated at the time of booking (hereinafter referred to as "Fees"). The Fees may include amounts towards (a) the Pro Services you avail, (b) a convenience fee for facilitating the booking, (c) out-of-pocket expenses incurred by the Professional, (d) expenses arising out of the purchase of goods required or utilised for the performance of the Pro Service, and (e) any other charges, including a safety fee, warranty fee, insurance fee, or Professional welfare fee or similar charges as may be disclosed on the Platform. The Fees shall be different for one time service, bundled service packages, scheduled-based plans (daily, weekly or monthly), or other service offerings as may be made available on the Platform from time to time.</li><li>(c) All Fees are subject to applicable taxes.</li><li>(d) The Company shall notify you of the applicable Fees, taxes, and payment methods at the time of booking. Typically, you may make payments for Pro Services through credit cards, debit cards, net banking, wallets, or UPI or such other means as may be made available on the Platform.</li><li>(e) The Company duly raises the tax invoice/ debit note/ credit note in accordance with the regulatory requirement of the GST legislation, in case you may require the tax invoice please reach out to us on . We shall provide you with a copy of the same within 5 to 7 business working days.</li><li>(f) All Fees for Pro Services are facilitated by the Company on behalf of the relevant Professional. Payment made by you to the Company for Pro Services shall be deemed to be made directly to the Professional to the extent of their revenue. The Company facilitates payment of amounts to Professionals in accordance with separate arrangements between the Company and such Professionals.</li><li>(g) The Company reserves the right to amend the Fees at any time at its discretion acting reasonably and in good faith. A change in Fees shall not impact any bookings that have been confirmed before the publication of the revised Fees on the Platform.</li><li>(h) Payments made for confirmed bookings are generally non-refundable, except where a refund is required under applicable law or expressly approved by the Company.</li><li>(i) The Company may cancel bookings due to safety concerns; operational issues; force majeure events; and fraud prevention measures.</li><li>(j) You acknowledge that prices may vary based on location, demand, or other market conditions, and higher charges may apply during peak periods. The Company will use reasonable efforts to inform you of the Fees that may apply. However, by using Pro Services or Services, you will be responsible for the Fees incurred under your Account regardless of your awareness of such Fees and such pricing may be determined dynamically based on marketplace conditions or through automated systems.</li><li>(k) Subject to applicable law, the Company reserves the right to withhold, delay, or adjust payments payable in connection with any Pro Services where it reasonably believes that (a) a refund, chargeback, or customer claim may arise, (b) there has been suspected fraud, misuse, or violation of these Terms, or (c) such withholding is required to comply with applicable law or contractual obligations. The Company may also set off any amounts payable to you against any amounts owed by you to the Company.</li><li>(l) In the event of any chargeback, payment reversal, or disputed transaction, the Company reserves the right to recover the applicable amount and associated costs from you.</li><li>(m) We may use a third-party payment processor ("Payment Processor") to bill you through your selected mode of payment. The processing of payments will be subject to the terms and policies of such Payment Processor in addition to these Terms. We shall not be liable for any error of the Payment Processor. In the event of any unsuccessful payment, the money debited shall be credited in accordance with the terms of the Payment Processor.</li><li>(n) You agree that all payments for Services and Pro Services shall be made solely through the payment mechanisms made available on the Platform. You shall not, directly or indirectly, make any payment or settle any charges with a Professional outside the Platform. The Company shall not be liable for any services, disputes, losses, or damages arising from or in connection with any payments made directly to a Professional outside the Platform, and such transactions shall be undertaken entirely at your own risk.</li><li>(o) The Platform may enable you to maintain a prepaid balance for the purpose of availing Services ("Prepaid Balance"). The Prepaid Balance represents an advance payment made by you for Services to be availed on the Platform and is maintained as a customer ledger balance with the Company. The Prepaid Balance may be used solely for booking and payment of Services available on the Platform and shall not be used for any payments to third parties outside the Platform. The Prepaid Balance shall be non- transferable, non-interest bearing, and shall not be redeemable for cash, transferable to any third party, or withdrawn to any bank account, except where required under applicable law. The prepaid balance shall remain valid for a period of 1 (One) Year from the date of loading or such other period as may be specified on the Platform, after which</li></ul>
+<p>any unused balance may expire and may be forfeited and shall not be available for use or refund, subject to applicable law.</p>
+<h4 class="lg-h">7. Customer Obligations</h4>
+<ul class="lg-i"><li>(a) The Company strictly prohibits discrimination against Professionals on the basis of race, religion, caste, national origin, disability, sexual orientation, sex, marital status, gender identity, age, or any other characteristic protected under applicable law. Prohibited discrimination includes, without limitation, refusing to accept or engage Pro Services based on any such characteristic.</li><li>(b) You agree to treat all Professionals with courtesy, dignity, and respect, and to provide a safe, clean, and appropriate location for the performance of the Pro Services. Professionals shall be entitled to refuse to perform Pro Services if such conditions are not provided or if you engage in conduct that is discourteous, disrespectful, abusive, threatening, or otherwise inappropriate. The Company reserves the right, in its sole and discretion acting reasonably and in good faith, to suspend, restrict, or terminate your access to the Services or Pro Services if your conduct toward any Professional is deemed discourteous, disrespectful, abusive, inappropriate, or unlawful.</li><li>(c) You acknowledge and agree that you shall be solely responsible and liable for any discrimination against Professionals and for any failure, whether intentional or unintentional, to provide a safe, clean, and appropriate location for the performance of Pro Services. You further agree to promptly and fully disclose to the Company and the relevant Professional any information that may reasonably affect the Professional's ability to perform the Pro Services or that may impact the Professional's health, safety, or well-being.</li><li>(d) The Company reserves the right to restrict access to refunds, promotions, or Services where it identifies a pattern of excessive, abusive, or bad-faith complaints, cancellations, or refund requests or misuse of the Platform.</li><li>(e) You agree that if a Professional engages in conduct that is discourteous, disrespectful, abusive, inappropriate, or unlawful or unreasonable, you shall report such conduct to the Company at (EMAIL) as soon as reasonably practicable, and in any event within forty-eight (48) hours of the occurrence of such conduct.</li><li>(f) You represent and warrant that all information, documentation, material, or data provided by you in connection with the Services and/or Pro Services is complete, accurate, true, and not misleading as of the date you agree to these Terms, and that such information shall remain complete, accurate, and true for so long as you continue to avail the Services and/or Pro Services. You agree to promptly notify the Company of any changes to such information during the term of these Terms. The Company shall not be responsible or liable for any loss or damage suffered or incurred by you as a result of any incorrect, incomplete, inaccurate, misleading, or undisclosed information or material facts provided by you and such information may be used by the Company in accordance with the Privacy Policy and applicable law.</li><li>(g) You agree to provide all reasonable cooperation and assistance to the Company in the defence of any claim, demand, investigation, or proceeding arising out of or relating to</li></ul>
+<p>any breach of your obligations, representations, warranties, or covenants under these Terms.</p>
+<ul class="lg-i"><li>(h) The Company and Professionals shall not be responsible for delays, defects, or failures in Pro Services arising from interference, obstruction, or instructions provided by the you or any third party at the service location or due to conditions at the service location not disclosed at the time of booking.</li><li>(i) The Company shall not be responsible for pre-existing defects, damage, or wear and tear at the service location, including fragile or deteriorated surfaces, fittings, or equipment except where caused by gross negligence, fraud, wilful misconduct or due to any statutory liability.</li><li>(j) You are responsible for securing valuables, fragile items, and sensitive equipment prior to commencement of Pro Services. The Company and Professionals shall not be responsible for loss or damage to such items except as required under applicable law.</li><li>(k) In relation to the Customer Review, you represent and warrant that:</li></ul>
+<ul class="lg-s"><li>you own all intellectual property rights in the Customer Review or have obtained all necessary rights, licences, consents, and permissions to submit such Customer Review and to grant the licences set out under these Terms;</li><li>you are solely responsible for all activities conducted through your Account on the Platform and for all Customer Review submitted, posted, or transmitted by you;</li><li>the Customer Review does not and shall not violate any obligation, restriction, or responsibility imposed on you under any other agreement;</li><li>the Customer Review does not and shall not infringe, violate, or misappropriate any intellectual property right, proprietary right, right of publicity, or right of privacy of any person or entity;</li><li>the Customer Review does not and shall not contain viruses, malware, corrupted data, or any other harmful, disruptive, or destructive code or material;</li><li>the Customer Review does not and shall not violate any applicable law or any third- party rights; and</li><li>the Customer Review: (A) does not belong to any other person to which you do not have lawful rights; (B) does not undermine national security, public order, or any interest protected under applicable Indian law, does not threaten friendly relations with foreign states, public order, or cause incitement to the commission of any cognisable offence, prevent investigation of any offence, or insult another nation; (C) is not defamatory, grossly harmful, blasphemous, pedophilic, invasive of another's privacy, discriminatory on the basis of gender, racially or ethnically objectionable, disparaging, hateful, violent, obscene, pornographic, unlawful, harmful to children, or relating to or encouraging money laundering or gambling; and (D) is not otherwise offensive, objectionable, or likely to restrict or inhibit any person from using or enjoying the Services.</li></ul>
+<ul class="lg-i"><li>(l) You agree not to use the Services except as expressly permitted under these Terms. Without limiting the foregoing, you shall not host, display, upload, modify, publish, transmit, store, update, or share any information that:</li></ul>
+<ul class="lg-s"><li>infringes any intellectual property or proprietary rights, including copyrights, patents, trademarks, or trade secrets;</li><li>belongs to another person and to which you do not have any lawful right;</li><li>is obscene, pornographic, pedophilic, invasive of privacy (including bodily privacy), insulting or harassing on the basis of gender, racially or ethnically objectionable, or relates to or encourages money laundering or gambling, or promotes enmity between groups based on religion or caste with intent to incite violence;</li><li>is harmful to a child;</li><li>impersonates any person or entity;</li><li>threatens the unity, integrity, defence, security, or sovereignty of India, friendly relations with foreign states, public order, or incites the commission of any cognisable offence, prevents investigation of any offence, or insults another nation;</li><li>contains software viruses or any code, files, or programs designed to disrupt, damage, or limit the functionality of any computer resource; or</li><li>is patently false or misleading and is published with the intent to deceive, harass, or cause financial gain or injury to any person, entity, or agency.</li></ul>
+<ul class="lg-i"><li>(m) You shall not engage in any activity that interferes with, disrupts, or adversely affects the functioning of the Services. You shall not attempt to gain unauthorised access to any portion of the Services, the Platform, any related systems or networks, or any of the Company's servers, whether through hacking, password mining, or any other unlawful or illegitimate means.</li><li>(n) You shall not, directly or indirectly, solicit, induce, influence, engage, approach, accept, or encourage the solicitation or approach of any Professional from whom you have availed Pro Services to terminate or cease their association with the Platform or to provide services similar to the Pro Services outside the Platform without booking such Pro Services through your Account within 12 months of your last booking. You acknowledge and agree that this restriction is reasonable, fair, and necessary to protect the privacy, security, and legitimate business interests of the Company and Professionals, and that any breach of this clause may result in suspension or termination of your access to the Services and Pro Services.</li></ul>
+<h4 class="lg-h">8. Limited Liability</h4>
+<p>IN NO EVENT SHALL THE COMPANY, ITS OFFICERS, DIRECTORS, AND EMPLOYEES, OR ITS CONTRACTORS, AGENTS, LICENSORS, PARTNERS, OR SUPPLIERS, BE LIABLE TO YOU FOR ANY DIRECT, SPECIAL, INDIRECT, INCIDENTAL, CONSEQUENTIAL, PUNITIVE, RELIANCE, OR EXEMPLARY DAMAGES (INCLUDING WITHOUT LIMITATION, LOST BUSINESS OPPORTUNITIES, LOST REVENUES, OR LOSS OF ANTICIPATED PROFITS OR ANY OTHER PECUNIARY OR NON-PECUNIARY LOSS OR DAMAGE OF ANY NATURE WHATSOEVER), EVEN IF THE COMPANY OR AN AUTHORISED REPRESENTATIVE HAD BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, ARISING OUT OF, OR RELATING TO (A) THESE TERMS, (B) THE SERVICES OR THE PRO SERVICES, (C) YOUR USE OR INABILITY TO USE THE SERVICES OR THE PRO SERVICES, OR (D) ANY OTHER INTERACTIONS WITH ANOTHER USER OF THE</p>
+<p>SERVICES EXCEPT TO THE EXTENT SUCH LIABILITY CANNOT BE EXCLUDED OR LIMITED UNDER APPLICABLE LAW. OUR LIABILITY SHALL BE LIMITED TO THE AMOUNT OF FEES WE RECEIVE IN RESPECT OF A PARTICULAR BOOKING MADE ON THE PLATFORM, OR (B) INR 6,000 (RUPEES SIX THOUSAND) IN THE AGGREGATE.</p>
+<h4 class="lg-h">9. Indemnity</h4>
+<p>You agree to indemnify, defend (at the Company's option), and hold harmless the Company, its parent companies, subsidiaries, affiliates, and each of their respective officers, directors, employees, agents, and representatives from and against any and all claims, demands, actions, suits, proceedings, losses, liabilities, damages, judgments, settlements, penalties, and expenses (including reasonable attorneys' fees and costs) arising out of or relating to:</p>
+<ul class="lg-i"><li>(a) your access to or use of the Services or Pro Services;</li><li>(b) your violation or alleged violation of these Terms; or</li><li>(c) any access to or use of your Account or the Services or Pro Services by any third party, whether or not authorised by you.</li></ul>
+<h4 class="lg-h">10. Disclaimers And Warranties</h4>
+<ul class="lg-i"><li>(a) THE SERVICES ARE PROVIDED ON AN "AS IS" BASIS WITHOUT WARRANTY OF ANY KIND, EXPRESS, IMPLIED, STATUTORY OR OTHERWISE, INCLUDING WITHOUT LIMITATION THE IMPLIED WARRANTIES OF TITLE, NON-INFRINGEMENT, MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE. WITHOUT LIMITING THE FOREGOING, WE MAKE NO WARRANTY THAT THE SERVICES WILL MEET YOUR REQUIREMENTS OR EXPECTATIONS.</li><li>(b) NO ADVICE OR INFORMATION, WHETHER ORAL OR WRITTEN, OBTAINED BY YOU FROM US SHALL CREATE ANY WARRANTY THAT IS NOT EXPRESSLY STATED IN THE TERMS.</li><li>(c) YOU ACKNOWLEDGE THAT THE COMPANY PRIMARILY ACTS AS A TECHNOLOGY PLATFORM FACILITATING BOOKINGS WHILE ALSO PROVIDING OPERATIONAL SUPPORT, CUSTOMER SUPPORT, PAYMENT FACILITATION AND PLATFORM MANAGEMENT AND DOES NOT ITSELF PERFORM OR GUARANTEE ANY PRO SERVICES. WE ARE NOT LIABLE OR RESPONSIBLE FOR FULFILMENT OF ANY BOOKINGS, FOR THE PERFORMANCE OF THE PRO SERVICES BY ANY PROFESSIONAL, OR FOR ANY ACTS OR OMISSIONS OF THE PROFESSIONALS DURING THEIR PROVISION OF THE PRO SERVICES INCLUDING ANY DAMAGE THEY MAY CAUSE TO PROPERTY. BY BOOKING PRO SERVICES THROUGH THE PLATFORM, YOU ARE ENTERING INTO A CONTRACT WITH THE RELEVANT PROFESSIONAL FOR THE PROVISION OF THOSE SERVICES, AND WE ACCEPT NO RESPONSIBILITY OR LIABILITY, NOR DO WE MAKE ANY WARRANTY, REPRESENTATION, OR GUARANTEE IN RESPECT OF THE PROFESSIONAL'S PERFORMANCE UNDER THAT CONTRACT.</li><li>(d) THE COMPANY DOES NOT GUARANTEE ANY SPECIFIC OUTCOME, RESULT, OR LEVEL OF SATISFACTION ARISING FROM THE PRO SERVICES. ANY EXPECTATIONS REGARDING QUALITY, TIMELINES, OR RESULTS ARE SOLELY BETWEEN THE CUSTOMER AND THE PROFESSIONAL PROVIDING THE PRO SERVICES EXCEPT WHERE CAUSED BY GROSS NEGLIGENCE, FRAUD, WILFUL MISCONDUCT OR DUE TO ANY STATUTORY LIABILITY.</li><li>(e) YOU HEREBY ACCEPT FULL RESPONSIBILITY FOR ANY CONSEQUENCES THAT MAY ARISE FROM YOUR USE OF THE SERVICES AND PRO SERVICES, AND EXPRESSLY AGREE AND ACKNOWLEDGE THAT WE SHALL HAVE ABSOLUTELY NO LIABILITY IN THIS REGARD.</li><li>(f) TO THE FULLEST EXTENT PERMISSIBLE BY LAW, WE, OUR AFFILIATES, AND OUR RELATED PARTIES, EACH DISCLAIM ALL LIABILITY FOR ANY LOSS OR DAMAGE ARISING OUT OF, OR DUE TO: (I) YOUR USE OF, INABILITY TO USE, OR AVAILABILITY OR UNAVAILABILITY OF THE SERVICES OR THE PRO SERVICES; (II) THE OCCURRENCE OR EXISTENCE OF ANY DEFECT, INTERRUPTION, OR DELAYS, IN THE OPERATION OR TRANSMISSION OF INFORMATION TO, FROM, OR THROUGH THE SERVICES, COMMUNICATIONS FAILURE, THEFT, DESTRUCTION, OR UNAUTHORISED ACCESS TO OUR RECORDS, PROGRAMMES, SERVICES, SERVERS, OR OTHER INFRASTRUCTURE RELATING TO THE SERVICES; (III) THE FAILURE OF THE SERVICES TO REMAIN OPERATIONAL FOR ANY PERIOD OF TIME; AND (IV) THE LOSS OF ANY CUSTOMER REVIEW AND ANY OTHER DATA IN CONNECTION WITH YOUR USE OF THE SERVICES.</li><li>(g) NOTHING IN THESE TERMS WILL EXCLUDE OR LIMIT ANY WARRANTY IMPLIED BY LAW THAT IT WOULD BE UNLAWFUL TO EXCLUDE OR LIMIT.</li><li>(h) YOU ACKNOWLEDGE THAT ANY DESCRIPTIONS, ESTIMATES, OR PROMOTIONAL MATERIALS RELATING TO THE SERVICES ARE INDICATIVE ONLY AND DO NOT CONSTITUTE BINDING REPRESENTATIONS OR GUARANTEES. THE COMPANY SHALL NOT BE RESPONSIBLE FOR ANY DAMAGE TO PROPERTY ARISING FROM OR DURING THE PERFORMANCE OF PRO SERVICES, EXCEPT WHERE CAUSED BY GROSS NEGLIGENCE, FRAUD, WILFUL MISCONDUCT OR DUE TO ANY STATUTORY LIABILITY.</li></ul>
+<h4 class="lg-h">11. Third Party Services</h4>
+<ul class="lg-i"><li>(a) The Platform may include or make available services, content, documents, information, or links that are owned, licensed, or provided by third parties ("Third-Party Services"). You acknowledge and agree that Third Party Services are provided solely by the relevant third-party and that the Company does not control, endorse, or assume responsibility for such Third-Party Services. Your access to and use of Third-Party Services is entirely at your own risk.</li><li>(b) The Company makes no representations or warranties, whether express or implied, and expressly disclaims all liability arising from or relating to Third Party Services, including with respect to their availability, accuracy, completeness, legality, quality, or fitness for any purpose. Your use of any Third Party Services shall be governed solely</li></ul>
+<p>by the terms and conditions and privacy policies of the applicable third parties. All intellectual property rights in and to Third Party Services remain the exclusive property of the respective third parties.</p>
+<h4 class="lg-h">12. Intellectual Property</h4>
+<ul class="lg-i"><li>(a) All rights, title and interest in and to the Services, including all intellectual property rights subsisting in or arising out of the Services, are owned by or validly licensed to the Company excluding any intellectual property rights in Pro Services or materials independently owned or provided by Professionals or third parties. Subject to your compliance with these Terms, the Company grants you a limited, non-exclusive, non- transferable, non-sublicensable, and revocable licence to access and use the Services solely in accordance with these Terms and any written instructions issued by the Company from time to time. All rights not expressly granted under these Terms are expressly reserved by the Company and its licensors.</li><li>(b) From time to time, the Company may request that you provide suggestions, comments, bug reports, or other feedback relating to the Services ("Feedback"). You agree that the Company shall have the unrestricted, perpetual, irrevocable, worldwide, transferable, sublicensable, and royalty-free right to use, reproduce, modify, adapt, publish, display, distribute, and otherwise exploit such Feedback for any purpose, without any obligation of attribution, compensation, or prior approval, and without any restriction arising from intellectual property or other proprietary rights. And that the license to the same is being granted to the Company without any dispute and fee required.</li><li>(c) Except as expressly provided under these Terms, nothing herein shall be construed as granting, by implication, estoppel, or otherwise, any right, title, or license in or to any intellectual property rights of the Company or any third party including any Professionals.</li></ul>
+<h4 class="lg-h">13. Privacy</h4>
+<p>Use of the Platform shall be governed by the Company's Privacy Policy. By using the Platform, customers consent to collection and processing of information in accordance with the Privacy Policy available on the website and the Platform.</p>
+<h4 class="lg-h">14. Prohibited Activities</h4>
+<p>Users shall not:</p>
+<ul class="lg-b"><li>hack the Platform;</li><li>reverse engineer software;</li><li>upload malicious code;</li><li>interfere with platform operations;</li><li>engage in fraudulent transactions;</li><li>impersonate another person.</li></ul>
+<h4 class="lg-h">15. Suspension And Termination</h4>
+<ul class="lg-i"><li>(a) These Terms shall remain in effect unless terminated in accordance with the terms hereunder.</li><li>(b) We may restrict, deactivate, or terminate your access to, or use of, the Services, or any portion thereof, immediately and at any point at our discretion acting reasonably and in good faith, (A) if you violate or breach any of the obligations, responsibilities, or covenants under these Terms, (B) you do not, or are likely not to qualify under applicable law, or the standards and policies of the Company or its affiliates, to access and use the Services, or (C) for any legitimate business, legal, or regulatory reason subject to applicable law and, where feasible, providing reasonable notice or an opportunity to remedy such breach.</li><li>(c) You may terminate these Terms, at any time, for any reason by sending a notice to the Company at (EMAIL).</li><li>(d) Upon termination of these Terms: (a) the Account will expire; (b) the Services will "time-out"; and (c) these Terms shall terminate, except for those clauses that are expressly, or by implication, intended to survive termination or expiry.</li><li>(e) The Company may temporarily suspend access to the Services or Pro Services, in whole or in part, while it investigates any suspected breach of these Terms, customer complaints, safety concerns, or legal or regulatory issues. Such suspension shall not constitute termination and may be lifted at the Company's discretion.</li><li>(f) Clauses relating to intellectual property, disclaimers, limitation of liability, indemnity, governing law, dispute resolution, and any other provisions which by their nature are intended to survive, shall survive termination or expiry of these Terms.</li></ul>
+<h4 class="lg-h">16. Dispute Resolution And Governing Law</h4>
+<ul class="lg-i"><li>(a) Any dispute arising out of or relating to these Terms shall first be attempted to be resolved amicably. Failing amicable resolution, disputes shall be referred to arbitration under the Arbitration and Conciliation Act, 1996. The arbitration shall be conducted by a sole arbitrator. The seat of arbitration shall be Nagpur, Maharashtra. The language of proceedings shall be English or Hindi. The arbitrator shall be appointed by the Company in consultation with the opposite party.</li><li>(b) These Terms shall be governed by and construed in accordance with the laws of India. Subject to arbitration provisions, courts located in Nagpur, Maharashtra shall have exclusive jurisdiction.</li></ul>
+<h4 class="lg-h">17. Grievance Redressal</h4>
+<ul class="lg-i"><li>(a) Customer Care Channels</li></ul>
+<ul class="lg-s"><li>For any booking-related issue, you may first reach out to us via chat support on the app for real-time resolution.</li><li>You may also write to us at (email) and we will strive to resolve your grievance within the timelines prescribed under applicable laws. For a complaint raised via email, you will receive a unique ticket number to track its status.</li></ul>
+<ul class="lg-i"><li>(b) Grievance Officer In case you do not receive a satisfactory response from the channels above, you can escalate the matter to our Grievance Officer by giving the reference of the ticket number.</li></ul>
+<p>Name: Email Address: Contact Number: Time: Monday - Friday (9:00 am to 6:00 pm)</p>
+<ul class="lg-i"><li>(c) In compliance with The Information Technology Act, 2000 and the rules made thereunder, as well as The Consumer Protection Act 2019, and the rules made thereunder, the grievance redressal mechanism, including the contact details of the Grievance Officer are provided above and shall be updated from time to time in accordance with applicable law.</li></ul>
+<h4 class="lg-h">18. Miscellaneous Provisions</h4>
+<h5 class="lg-h2">18.1 Electronic Records</h5>
+<p>Records generated, stored, or maintained by the Company's systems, including platform logs, transaction histories, communications, and timestamps, shall be deemed accurate and may be relied upon by the Company for all purposes, including dispute resolution, investigations, and legal proceedings.</p>
+<h5 class="lg-h2">18.2 Changes to Terms</h5>
+<p>The Company may vary or amend or change or update these Terms, from time to time entirely at its own discretion. You shall be responsible for checking these Terms from time to time and ensuring continued compliance with these Terms. Your use of the Platform after any such amendment or change in the Terms shall be deemed as your express acceptance to such amended/changed terms and you also agree to be bound by such changed/amended Terms provided that such changes are not materially adverse to you without reasonable notice, where required under applicable law.</p>
+<h5 class="lg-h2">18.3 Modification to the Services</h5>
+<p>The Company reserves the right, at any time and in its discretion acting reasonably and in good faith, to add to, modify, suspend, or discontinue, whether temporarily or permanently, the Services or any part thereof, with or without notice subject to applicable law. To the fullest extent permitted by applicable law, the Company shall not be liable for any addition, modification, suspension, or discontinuation of the Services.</p>
+<h5 class="lg-h2">18.4 Relationship</h5>
+<p>Nothing in these Terms shall be deemed to create any partnership, joint venture, or fiduciary relationship between the Company and any Customer or Professional.</p>
+<h5 class="lg-h2">18.5 Severability</h5>
+<p>If any provision of these Terms is held by a court or other authority of competent jurisdiction to be invalid, unlawful, or unenforceable, such provision shall be severed to the minimum extent necessary, and the remaining provisions shall remain in full force and effect. Where any provision would be valid or enforceable if part of it were deleted, such provision shall apply with the necessary modification to make it lawful and enforceable.</p>
+<h5 class="lg-h2">18.6 Assignment</h5>
+<p>You may not assign, transfer, license, or otherwise dispose of any of your rights, obligations, or covenants under these Terms, or your Account, without the prior written consent of the Company. The Company may freely assign or transfer these Terms, in whole or in part, to any affiliate, subsidiary, parent company, successor, or any third party in connection with any merger, acquisition, financing, restructuring, or transfer of business or assets, without requiring further consent from the Customer.</p>
+<h5 class="lg-h2">18.7 Notices</h5>
+<p>All legal notices, requests, demands, or determinations addressed to the Company under these Terms shall be sent in writing to (email), or to such other contact details as the Company may notify from time to time.</p>
+<h5 class="lg-h2">18.8 Third Party Rights</h5>
+<p>Except as expressly provided in these Terms, no third party shall have any right to enforce or rely upon any provision of these Terms.</p>
+<h5 class="lg-h2">18.9 Waiver</h5>
+<p>Any failure or delay by the Company in enforcing its rights under these Terms shall not operate as a waiver of such rights, nor shall any single or partial exercise of any right preclude further exercise of that or any other right.</p>
+<h5 class="lg-h2">18.10 Entire Agreement</h5>
+<p>These Terms, the Privacy Policy and Additional Terms (as and when issued) constitute the entire agreement between you and the Company with respect to the Services and supersede all prior or contemporaneous communications, representations, or agreements, whether oral or written.</p>
+<h5 class="lg-h2">18.11 Force Majeure</h5>
+<p>The Company shall not be liable for any failure or delay in the performance of its obligations under these Terms where such failure or delay results from events beyond its reasonable control, including, without limitation, acts of God, strikes or labour disputes, failure of utility services or telecommunications networks, war, terrorism, riot, civil commotion, pandemic or epidemic, malicious damage, or compliance with any applicable law, regulation, order, or direction of any governmental authority. Force Majeure events shall also include failures or delays caused by third- party service providers, Professionals, payment processors, logistics partners, or technology infrastructure providers, to the extent such failures are beyond the Company's and the Service Provider's reasonable control. CONTACT DETAILS</p>
+<p>Registered Office: P. No. 28, Santaji Colony, Daley Out, Narendra Nagar, Nagpur, Maharashtra –</p>
+<p>Email:</p>
+<p>Customer Support:</p>
+<p>Grievance Officer:</p>
+<p>By using the Platform, you acknowledge that you have read, understood and agreed to these Terms and Conditions.</p>
+</div>
+
+    <div id="legalRefund" style="font-size:13.5px;line-height:1.6;color:var(--ink);display:none">
+      <ul style="padding-left:18px;display:flex;flex-direction:column;gap:8px;margin:0">
+        <li>Full refund if cancelled before the Professional starts traveling.</li>
+        <li>No refund after the Professional reaches the location.</li>
+        <li>10-minute wait for customer no-show.</li>
+        <li>Service complaints may result in a re-service, partial refund, or full refund after review.</li>
+        <li>Wrong service bookings may be rescheduled with any applicable price difference.</li>
+        <li>Missed subscription visits are considered used.</li>
+        <li>Bloorush cancellations due to operational reasons receive a free reschedule.</li>
+        <li>If no Professional is available, a full refund will be issued.</li>
+        <li>Subscription cancellations within 24 hours receive a full refund only if no service has been used.</li>
+        <li>Eligible refunds are processed within 5–7 business days.</li>
+      </ul>
+      <p style="margin-top:14px"><b>Contact:</b> <a href="mailto:letsbuild@bloorush.com" style="color:var(--brand)">letsbuild@bloorush.com</a></p>
+    </div>
+
+    <button class="sub-remove" onclick="closeLegal()">Close</button>
+  </div>
+</div>
+
+<!-- ============== ADMIN PANEL (password-gated, Firestore-backed) ============== -->
+<!-- Change ADMIN_PASSWORD in the script below before going live. This is a simple
+     client-side lock, not real security — fine while the business is small; upgrade
+     to Firebase Auth when it matters more. -->
+<div class="scrim" id="adminScrim" onclick="closeAdmin()"></div>
+<div class="sheet" id="adminPassSheet" role="dialog" aria-modal="true">
+  <div class="sheet-in">
+    <div class="grab"></div>
+    <h2>Admin login</h2>
+    <p class="sh-desc">Enter the admin password to manage slot availability.</p>
+    <div class="field"><input id="adminPassInput" type="password" placeholder="Password" autocomplete="off"/></div>
+    <div id="adminPassError" style="color:#C2543B;font-size:12.5px;display:none;margin-top:4px">Incorrect password.</div>
+    <button class="sheet-cta dark" id="adminPassSubmit">Log in</button>
+  </div>
+</div>
+
+<div class="sheet" id="adminPanel" role="dialog" aria-modal="true" style="max-height:94vh">
+  <div class="sheet-in">
+    <div class="grab"></div>
+    <h2>Slot admin</h2>
+    <p class="sh-desc">Pick a date and window, edit capacity, save. Changes go live immediately for customers.</p>
+
+    <div class="field"><label>Date</label><div class="dates" id="adminDates"></div></div>
+    <div class="field"><label>Time slot</label>
+      <div class="chipsel" id="adminWindowTabs" style="flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px"></div>
+    </div>
+
+    <button class="pcta ghost" id="adminGenWeek" style="background:#EAF7F0;color:#1E9E7A;border:1px solid #cdeee0;margin:8px 0 4px">Generate next 7 days (fills missing slots at default cap)</button>
+
+    <div id="adminZoneRows" style="margin-top:10px"></div>
+
+    <button class="sheet-cta dark" id="adminRefresh" style="margin-top:14px">Refresh from database</button>
+
+    <div style="border-top:2px solid var(--line);margin:22px 0 0;padding-top:18px">
+      <h3 style="font-size:16px;font-weight:800;margin-bottom:4px">🎟 Coupons</h3>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Create and manage discount codes. Saved on this device.</p>
+      <div id="adminCouponList"></div>
+      <button class="pcta ghost" id="adminAddCoupon" style="background:#EAF7F0;color:#1E9E7A;border:1px solid #cdeee0;width:100%;margin-top:6px">+ New coupon</button>
+    </div>
+
+    <button class="sub-remove" onclick="closeAdmin()">Close admin panel</button>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+  import {
+    getFirestore, collection, doc, getDocs, setDoc, updateDoc, increment, deleteDoc
+  } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAkzYkqUHmBQZ8xTnVOhgAkWehDY7FECKY",
+    authDomain: "bloorush-fd322.firebaseapp.com",
+    projectId: "bloorush-fd322",
+    storageBucket: "bloorush-fd322.firebasestorage.app",
+    messagingSenderId: "402152339216",
+    appId: "1:402152339216:web:dcc7f0b2778e56a7c91795"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  function slotDocId(date, win, zone){
+    return `${date}_${win}_${zone}`.replace(/\s+/g,"_");
+  }
+
+  async function fbLoadSlots(){
+    const snap = await getDocs(collection(db,"slots"));
+    const out = {};
+    snap.forEach(d=>{
+      const v = d.data();
+      out[`${v.date}|${v.window}|${v.zone}`] = { total:v.total||0, reserved:v.reserved||0, confirmed:v.confirmed||0 };
+    });
+    return out;
+  }
+
+  async function fbSaveSlot(date, win, zone, total, reserved, confirmed){
+    const id = slotDocId(date,win,zone);
+    await setDoc(doc(db,"slots",id), { date, window: win, zone, total:+total||0, reserved:+reserved||0, confirmed:+confirmed||0 });
+  }
+
+  async function fbIncrementConfirmed(date, win, zone){
+    const id = slotDocId(date,win,zone);
+    try{
+      await updateDoc(doc(db,"slots",id), { confirmed: increment(1) });
+    }catch(e){
+      // doc doesn't exist yet — create it with default capacity
+      await setDoc(doc(db,"slots",id), { date, window: win, zone, total:2, reserved:0, confirmed:1 });
+    }
+  }
+
+  async function fbEnsureWeek(dates, windows, zones, defaultCap){
+    const snap = await getDocs(collection(db,"slots"));
+    const existing = new Set();
+    snap.forEach(d=>existing.add(d.id));
+    const writes=[];
+    for(const date of dates) for(const win of windows) for(const zone of zones){
+      const id = slotDocId(date,win,zone);
+      if(!existing.has(id)){
+        writes.push(setDoc(doc(db,"slots",id), {date, window:win, zone, total:defaultCap, reserved:0, confirmed:0}));
+      }
+    }
+    await Promise.all(writes);
+    return writes.length;
+  }
+
+  async function fbLoadCoupons(){
+    const snap = await getDocs(collection(db,"coupons"));
+    const out = [];
+    snap.forEach(d=>{ out.push({ id:d.id, ...d.data() }); });
+    return out;
+  }
+  async function fbSaveCoupon(c){
+    // doc id = coupon code (uppercased, spaces stripped) so codes are unique
+    const id = String(c.code).toUpperCase().replace(/\s+/g,"_");
+    await setDoc(doc(db,"coupons",id), {
+      code:c.code, type:c.type, value:c.value||0, minOrder:c.minOrder||0,
+      maxDiscount:c.maxDiscount||0, expiry:c.expiry||"", usageLimit:(c.usageLimit==null?null:c.usageLimit),
+      active:!!c.active, used:c.used||0
+    });
+    return id;
+  }
+  async function fbDeleteCoupon(id){ await deleteDoc(doc(db,"coupons",id)); }
+
+  async function fbSaveBooking(b){
+    const id = (b.paymentId || "cash") + "_" + Date.now();
+    await setDoc(doc(db,"bookings",id), { ...b, createdAt: new Date().toISOString() });
+    return id;
+  }
+
+  window.bloorushFB = { fbLoadSlots, fbSaveSlot, fbIncrementConfirmed, fbEnsureWeek, slotDocId, fbLoadCoupons, fbSaveCoupon, fbDeleteCoupon, fbSaveBooking };
+
+</script>
+
+<script>
+const cart = {};   // must be declared before any card rendering — cardHTML reads cart[id]
+const addonQty = {};   // addonQty[id] = n — declared here so cardHTML can read it during first render
+let sheetSvc=null, sheetTier=0;
+
+/* ================= FOUNDER CONFIG ================= */
+/* ── Razorpay ── swap this one line to switch test <-> live.
+   Key ID is public by design. NEVER put the Key Secret in this file. */
+const RAZORPAY_KEY = "rzp_live_TEV62mxqLGCRaj";
+const WHATSAPP_NUMBER = "918010687985";           // BlooRush business WhatsApp
+const ZONES = [
+  "Narendra Nagar","Besa","Manish Nagar","Dharampeth",
+  "Ramdaspeth","Civil Lines","MIHAN","Ram Nagar",
+  "Other (I'll share location in chat)"
+];
+const MIN_ORDER = 0;          // no minimum — removed per founder decision (treat sub-floor orders as CAC, monitor repeat rate)
+const REQUIRE_PRIMARY = false; // window & fan can now be booked standalone
+/* ================================================== */
+
+const CHECK='<svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const CROSS='<svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>';
+
+const SERVICES = {
+  utensils:{name:"Utensils cleaning",sheetImg:"https://i.ibb.co/PvJkfG7j/Whats-App-Image-2026-07-13-at-10-37-39-PM.jpg",icon:"🍽️",tile:"util",desc:"Dishes, vessels & kitchen sink",
+    tiers:[["30 min",89,"30 min"],["45 min",129,"45 min"],["60 min",179,"60 min"],["90 min",239,"90 min"],["120 min",299,"120 min"]],
+    inc:["Wash daily-used utensils","Plates, bowls, glasses, cups, spoons & cutlery","Cooking vessels & pans used for regular cooking","Clean the kitchen sink after washing"],
+    exc:["Removing heavily burnt food residue","Deep cleaning appliances (microwave, oven, mixer)","Silver or brass polishing","Commercial or bulk utensil cleaning","Cleaning outside the kitchen area"]},
+  mopsweep:{name:"Mopping & sweeping",sheetImg:"https://i.ibb.co/1yZWBZJ/Whats-App-Image-2026-07-13-at-10-09-49-PM.jpg",icon:"🧹",tile:"mop",desc:"Full-home floors",
+    tiers:[["1 BHK",99,"15 min"],["2 BHK",119,"25 min"],["3 BHK",139,"40 min"],["4 BHK",179,"55 min"]],
+    inc:["Sweep & mop all accessible floor areas","Kitchen, living room, bedrooms & bathroom floors","Under tables, chairs & sofas (without moving them)","Corners and edges","Collect dust & dispose in household bin","Uses your mop, bucket & cleaning solution"],
+    exc:["Moving heavy furniture or appliances","Scrubbing stubborn stains or paint marks","Acid wash, chemical or floor/marble polishing","Lofts, storage spaces, terraces, gardens or parking","Water extraction or flood cleanup","Post-renovation debris"]},
+  dusting:{name:"Dusting",sheetImg:"https://i.ibb.co/MkCLgktk/Whats-App-Image-2026-07-13-at-10-28-40-PM.jpg",icon:"🪶",tile:"dust",desc:"Surfaces, shelves & furniture",img:"https://i.ibb.co/v4rPWm4N/Whats-App-Image-2026-07-13-at-3-51-50-PM-1.jpg",
+    tiers:[["1 BHK",99,"30 min"],["2 BHK",129,"40 min"],["3 BHK",179,"60 min"],["4 BHK",229,"80 min"]],
+    inc:["Dust & wipe accessible surfaces, shelves & furniture tops","TV units, tables, chairs & showcase exteriors","Window sills & ledges (accessible)","Decorative items & photo frames","Skirting, switchboards & door frames (accessible)","Spot-wipe fingerprints from surfaces"],
+    exc:["Moving heavy furniture or appliances","Dusting above safe reach / needing a ladder","Inside cupboards, drawers or showcases","Wet cleaning, polishing or stain removal","Wall & ceiling dusting / cobweb removal at height","Fragile antique or high-value item handling"]},
+  toiletbath:{name:"Toilet & bathroom",sheetImg:"https://i.ibb.co/4Rsxnpn8/Whats-App-Image-2026-07-13-at-10-48-53-PM.jpg",icon:"🚽",tile:"toilet",desc:"Single or combined · sanitised",
+    tiers:[["Single toilet",99,"30 min"],["Single bathroom",99,"30 min"],["Combined (toilet + bathroom)",159,"30 min"],["2 combined",318,"60 min"],["3 combined",477,"90 min"]],
+    inc:["Scrub toilet bowl — inside, rim & under the rim","Clean seat, lid, cistern & flush fittings","Clean floor & accessible wall tiles","Clean washbasin, taps & mirror","Wipe shower area & accessible fittings","Sanitise & disinfect all cleaned surfaces"],
+    exc:["Heavy hard-water / lime-scale removal needing acid (book deep clean)","Grout / tile deep-scrubbing & restoration","Unclogging, plumbing or drainage repairs","Dismantling flush tank, panels or fittings","Mould / fungus chemical treatment","Cleaning above safe reach or needing a ladder","Removing paint, cement or renovation residue"]},
+  kitchen:{name:"Kitchen cleaning",sheetImg:"https://i.ibb.co/LX2P5wQw/Whats-App-Image-2026-07-13-at-10-51-06-PM.jpg",icon:"🍳",tile:"kitchen",desc:"Surfaces, stovetop, sink & floor",new:true,
+    tiers:[["1 kitchen",399,"~60 min"]],
+    inc:["Clean countertop","Wipe stovetop","Clean sink","Wipe cabinet exteriors","Wipe chimney exterior","Clean backsplash","Sweep & mop kitchen floor"],
+    exc:["Inside cabinets","Chimney deep cleaning","Inside appliances (fridge, microwave, oven, dishwasher)","Heavy grease or burnt-stain removal","Drain unclogging","Pest control","Appliance repair","Moving heavy appliances","Post-renovation cleaning","Wall & ceiling cleaning","Utensil cleaning — book separately"]},
+  deeptoilet:{name:"Deep toilet & bathroom clean",qty:true,sheetImg:"https://i.ibb.co/tT50zm8m/Whats-App-Image-2026-07-13-at-11-00-09-PM.jpg",icon:"✨",tile:"toilet",desc:"Chemical descaling · monthly reset",new:true,
+    tiers:[["1 unit",199,"30 min"]],
+    inc:["Chemical deep-clean of toilet bowl — inside, rim, under-rim","Descaling of hard-water & lime-scale stains","Deep-clean of seat, lid, cistern & flush fittings","Tile & floor deep-scrub with chemicals","Wash basin, taps & mirror with descaler","Full sanitisation & disinfection"],
+    exc:["Not a weekly service — book Washroom Weekly for regular maintenance","Grout restoration or tile replacement","Plumbing, unclogging or panel dismantling","Deep mould / fungus treatment beyond surface","Ladder-height or unsafe-access cleaning","Removing paint, cement or renovation residue"]},
+  ironing:{name:"Ironing service",icon:"👔",tile:"util",desc:"Wrinkle-free, neatly pressed clothes",new:true,
+    tiers:[["15–18 clothes",179,"60 min"],["25–32 clothes",259,"90 min"],["35–42 clothes",339,"120 min"]],
+    inc:["Ironing of daily-wear clothes","Shirts, t-shirts, pants & jeans","Kurtas & simple sarees","Kids' clothes","Folding after ironing","Organised stacking"],
+    exc:["Dry cleaning","Stain removal","Washing of clothes","Heavy wedding dresses","Delicate designer garments needing steam pressing","Curtains & large linens","Industrial / commercial ironing","You provide: working iron, board/flat table, electricity & clean dry clothes"]},
+  packing:{name:"Packing & unpacking",icon:"📦",tile:"util",desc:"Shifting, moving & home organising help",new:true,
+    tiers:[["Small room / studio",199,"60 min"],["1 BHK",349,"90 min"],["2 BHK",449,"120 min"],["3 BHK (packing partner)",799,"240 min"]],
+    inc:["Packing household items into boxes","Kitchen utensils packing","Clothes packing","Books & documents packing","Basic fragile wrapping (your material)","Unpacking boxes & arranging on shelves","Basic home organisation"],
+    exc:["Transportation or moving vehicle","Loading / unloading trucks","Furniture dismantling or assembly","Electrical or plumbing work","Heavy safes or appliances","Professional-grade fragile packing material","Disposal of packing waste","You provide: boxes, tape, bubble wrap, paper, marker & rope/film if needed"]}
+};
+const ADDONS = {
+  window:{name:"Window cleaning",icon:"🪟",tile:"window",desc:"Glass, frames & sills",addon:true,
+    tiers:[["1 unit",59,"15 min"],["2 units",119,"30 min"],["3 units",179,"50 min"]],
+    inc:["Clean interior window glass","Wipe frames & tracks (accessible only)","Clean window sills","Remove normal dust & fingerprints"],
+    exc:["Exterior high-rise window cleaning","Windows needing unsafe access or climbing","Removing paint, cement or adhesive","Glass polishing or scratch removal","Dismantling window panels"]},
+  fan:{name:"Fan cleaning",icon:"🌀",tile:"fan",desc:"Blades & housing",addon:true,
+    tiers:[["1 unit",59,"15 min"],["2 units",119,"30 min"],["3 units",179,"50 min"]],
+    inc:["Wipe reachable ceiling fans","Clean fan blades and fan body","Wipe wall-mounted & table fans","Remove normal dust buildup"],
+    exc:["Dismantling fans","Electrical repairs or maintenance","Fans needing ladders or unsafe access","Grease or heavy grime needing chemicals"]},
+  balcony:{name:"Balcony cleaning",icon:"🪴",tile:"mop",desc:"Sweep, mop, wipe railings",addon:true,new:true,
+    tiers:[["1 balcony",99,"20 min"]],
+    inc:["Sweeping & mopping of balcony floor","Cleaning & wiping of balcony railings/grills","Cleaning & wiping of balcony parapet wall","Dusting of light, accessible balcony furniture"],
+    exc:["Balcony walls or ceiling","Watering plants or gardening","Terrace, roof or exterior building walls","Moving heavy furniture or large plant pots"]},
+  fridge:{name:"Fridge cleaning",icon:"🧊",tile:"kitchen",desc:"Interior + exterior · one fridge",addon:true,new:true,
+    tiers:[["Single door",149,"45 min"],["Double door",199,"60 min"],["3 door",249,"90 min"]],
+    inc:["Cleans one refrigerator only","Remove food, place safely aside","Discard expired items (as instructed)","Clean shelves, trays, drawers, compartments","Wipe interior walls, door panels, rubber lining","Clean fridge exterior — front & sides","Dry surfaces before restocking","Replace food items neatly"],
+    exc:["Moving or lifting the fridge","Cleaning back panel or condenser coils","Repair or servicing","Defrosting beyond service time","Deep stain removal from long-term neglect","Special chemicals or deodorisers","Food organisation, labelling or diet sorting","Garbage disposal outside the home","Deep freezer cleaning","Meat handling (hygiene policy)"]}
+};
+const ALL = {...SERVICES, ...ADDONS};
+const rupee = n => "₹"+n.toLocaleString("en-IN");
+
+/* Clean line-icon set (stroke uses currentColor via CSS) */
+const SVG_ICONS = {
+  utensils:'<img src="https://i.ibb.co/DHts69Sv/Whats-App-Image-2026-07-13-at-3-51-48-PM.jpg" alt="Utensils">',
+  mopsweep:'<img src="https://i.ibb.co/qM01ThTm/Whats-App-Image-2026-07-13-at-3-51-50-PM.jpg" alt="Mopping">',
+  dusting:'<img src="https://i.ibb.co/v4rPWm4N/Whats-App-Image-2026-07-13-at-3-51-50-PM-1.jpg" alt="Dusting">',
+  toiletbath:'<img src="https://i.ibb.co/VpCVZYMP/Whats-App-Image-2026-07-13-at-9-52-24-PM.jpg" alt="Toilet & bathroom">',
+  kitchen:'<img src="https://i.ibb.co/Y79LtB5z/Whats-App-Image-2026-07-13-at-9-57-05-PM.jpg" alt="Kitchen cleaning">',
+  deeptoilet:'<img src="https://i.ibb.co/7twSMkj1/Whats-App-Image-2026-07-13-at-9-34-21-PM.jpg" alt="Deep toilet & bathroom clean">',
+  window:'<img src="https://i.ibb.co/d0HBVK0m/Whats-App-Image-2026-07-13-at-9-41-43-PM.jpg" alt="Window cleaning">',
+  fan:'<img src="https://i.ibb.co/Q3kMczV7/Whats-App-Image-2026-07-13-at-9-40-11-PM.jpg" alt="Fan cleaning">',
+  balcony:'<img src="https://i.ibb.co/FqzRbpzQ/Whats-App-Image-2026-07-13-at-3-51-52-PM.jpg" alt="Balcony cleaning">',
+  fridge:'<img src="https://i.ibb.co/BV6dWqhX/Whats-App-Image-2026-07-13-at-9-33-44-PM.jpg" alt="Fridge cleaning">',
+  toilet:'<svg viewBox="0 0 24 24"><path d="M6 4v7a5 5 0 005 5h0a5 5 0 005-5V4M6 8h10M11 16v5M8 21h6"/></svg>',
+  bathroom:'<svg viewBox="0 0 24 24"><path d="M4 12h16v3a4 4 0 01-4 4H8a4 4 0 01-4-4v-3zM6 12V6a2 2 0 012-2h1M7 21l-1 2M18 21l1 2"/></svg>',
+  ironing:'<svg viewBox="0 0 24 24"><path d="M3 15h13a5 5 0 015 5H3v-5zM3 15l2-5h9a5 5 0 015 5M9 7V4h7"/></svg>',
+  packing:'<svg viewBox="0 0 24 24"><path d="M3 8l9-5 9 5v8l-9 5-9-5V8zM3 8l9 5 9-5M12 13v8"/></svg>'
+};
+const GENERIC_ICON='<svg viewBox="0 0 24 24"><path d="M4 20h16M6 20V9l6-5 6 5v11M10 20v-5h4v5"/></svg>';
+function svcIcon(id){ return SVG_ICONS[id] || GENERIC_ICON; }
+const SVG_ICONS_LINE = {
+  utensils:'<svg viewBox="0 0 24 24"><path d="M4 3v7a2 2 0 002 2h0a2 2 0 002-2V3M6 12v9M17 3c-1.5 0-3 1.5-3 5s1.5 4 3 4 3-.5 3-4-1.5-5-3-5zM17 16v5"/></svg>',
+  mopsweep:'<svg viewBox="0 0 24 24"><path d="M12 2v8M8 10h8l-1 4H9l-1-4zM9 14l-1 8M15 14l1 8M12 14v8"/></svg>',
+  dusting:'<svg viewBox="0 0 24 24"><path d="M15 3l6 6M13 5l6 6-8 8-6 1 1-6 7-7zM4 20h6"/></svg>',
+  toilet:'<svg viewBox="0 0 24 24"><path d="M6 4v7a5 5 0 005 5h0a5 5 0 005-5V4M6 8h10M11 16v5M8 21h6"/></svg>',
+  toiletbath:'<svg viewBox="0 0 24 24"><path d="M6 4v7a5 5 0 005 5h0a5 5 0 005-5V4M6 8h10M11 16v5M8 21h6"/></svg>',
+  bathroom:'<svg viewBox="0 0 24 24"><path d="M4 12h16v3a4 4 0 01-4 4H8a4 4 0 01-4-4v-3zM6 12V6a2 2 0 012-2h1M7 21l-1 2M18 21l1 2"/></svg>',
+  kitchen:'<svg viewBox="0 0 24 24"><path d="M4 8h16v10a2 2 0 01-2 2H6a2 2 0 01-2-2V8zM4 8V6a2 2 0 012-2h12a2 2 0 012 2v2M9 12v4M15 12v4"/></svg>',
+  deeptoilet:'<svg viewBox="0 0 24 24"><path d="M12 2l2 4-2 2-2-2 2-4zM6 10v5a6 6 0 006 6h0a6 6 0 006-6v-5H6zM6 13h12"/></svg>',
+  window:'<svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM12 4v16M4 12h16"/></svg>',
+  fan:'<svg viewBox="0 0 24 24"><path d="M12 12a3 3 0 013-3c2 0 4 1 4 3s-3 3-4 3M12 12a3 3 0 01-3 3c-2 0-4-1-4-3s3-3 4-3M12 12a3 3 0 01.5-2.5C13 8 13 6 12 5s-3 1-3.5 2M12 12v.01"/></svg>',
+  balcony:'<svg viewBox="0 0 24 24"><path d="M3 21h18M5 21v-8h14v8M7 13V9M12 13V9M17 13V9M4 9h16l-2-4H6L4 9z"/></svg>',
+  fridge:'<svg viewBox="0 0 24 24"><path d="M6 2h12a1 1 0 011 1v18a1 1 0 01-1 1H6a1 1 0 01-1-1V3a1 1 0 011-1zM5 10h14M9 5v2M9 13v3"/></svg>',
+  ironing:'<svg viewBox="0 0 24 24"><path d="M3 15h13a5 5 0 015 5H3v-5zM3 15l2-5h9a5 5 0 015 5M9 7V4h7"/></svg>',
+  packing:'<svg viewBox="0 0 24 24"><path d="M3 8l9-5 9 5v8l-9 5-9-5V8zM3 8l9 5 9-5M12 13v8"/></svg>'
+};
+function lineIcon(id){ return SVG_ICONS_LINE[id] || GENERIC_ICON; }
+
+
+function cardHTML(id,s){
+  const from = Math.min(...s.tiers.map(t=>t[1]));
+  const badge = s.new?'<span class="svc-badge new">✨ New</span>':(s.addon?'<span class="svc-badge addon">Add-on</span>':'');
+  if(isQty(s)){
+    const q=addonQty[id]||0;
+    const bottom = q>0
+      ? `<div class="qty-step card-step" onclick="event.stopPropagation()">
+           <button data-cardqty="${id}" data-dir="-1">−</button><span>${q}</span><button data-cardqty="${id}" data-dir="1">+</button>
+         </div>`
+      : `<button class="card-add" data-cardqty="${id}" data-dir="1" onclick="event.stopPropagation()">+ Add</button>`;
+    return `<div class="svc ${q>0?'inbag':''}" id="card-${id}" onclick="openSvc('${id}')">
+      ${badge}
+      <div class="svc-ico">${svcIcon(id)}</div>
+      <h3 class="svc-title">${s.name}</h3>
+      <div class="svc-bottom">
+        <span class="svc-price">${rupee(from)} each</span>
+        ${bottom}
+      </div>
+    </div>`;
+  }
+  const inCart = cart[id]!==undefined;
+  const visual = s.img ? `<div class="svc-ico svc-photo"><img src="${s.img}" alt="${s.name}" loading="lazy"/></div>` : `<div class="svc-ico">${svcIcon(id)}</div>`;
+  return `<div class="svc ${inCart?'inbag':''}" id="card-${id}" onclick="openSvc('${id}')">
+    ${badge}
+    ${visual}
+    <h3 class="svc-title">${s.name}</h3>
+    <div class="svc-bottom">
+      <span class="svc-price">from <b>${rupee(from)}</b></span>
+      <span class="svc-arrow ${inCart?'inbag':''}">${inCart?'✓':'→'}</span>
+    </div>
+  </div>`;
+}
+function renderAddonGrid(){
+  document.getElementById("addonGrid").innerHTML = Object.entries(ADDONS).map(([id,s])=>cardHTML(id,s)).join("");
+  document.querySelectorAll("#addonGrid [data-cardqty]").forEach(btn=>btn.addEventListener("click",e=>{
+    e.stopPropagation();
+    const aid=btn.dataset.cardqty, dir=+btn.dataset.dir;
+    setAddonQty(aid,(addonQty[aid]||0)+dir);
+    renderAddonGrid();
+  }));
+}
+function renderServiceGrid(){
+  document.getElementById("serviceGrid").innerHTML = Object.entries(SERVICES).map(([id,s])=>cardHTML(id,s)).join("");
+  document.querySelectorAll("#serviceGrid [data-cardqty]").forEach(btn=>btn.addEventListener("click",e=>{
+    e.stopPropagation();
+    setAddonQty(btn.dataset.cardqty,(addonQty[btn.dataset.cardqty]||0)+(+btn.dataset.dir));
+    renderServiceGrid();
+  }));
+}
+renderServiceGrid();
+renderAddonGrid();
+
+/* Featured carousel autoplay */
+(function carousel(){
+  const track = document.getElementById("featTrack");
+  const dotsEl = document.getElementById("featDots");
+  const slides = track.children.length;
+  for(let i=0;i<slides;i++){ const d=document.createElement("div"); d.className="d"+(i===0?" on":""); dotsEl.appendChild(d); }
+  let i=0;
+  function go(n){
+    i = (n+slides)%slides;
+    track.scrollTo({left: track.clientWidth * i * 0.9, behavior:"smooth"});
+    [...dotsEl.children].forEach((d,k)=>d.classList.toggle("on",k===i));
+  }
+  let timer = setInterval(()=>go(i+1), 4500);
+  track.addEventListener("touchstart",()=>clearInterval(timer),{passive:true});
+  track.addEventListener("scroll",()=>{
+    const w = track.clientWidth * 0.9;
+    const idx = Math.round(track.scrollLeft / w);
+    if(idx!==i){ i=idx; [...dotsEl.children].forEach((d,k)=>d.classList.toggle("on",k===i)); }
+  });
+})();
+
+["coZone","planZone","washZone"].forEach(sel=>{
+  const el=document.getElementById(sel);
+  ZONES.forEach(z=>{const o=document.createElement("option");o.value=z;o.textContent=z;el.appendChild(o);});
+});
+document.getElementById("yr").textContent = new Date().getFullYear();
+
+
+function syncSheetCTA(id){
+  const s=ALL[id];
+  if(isQty(s)){
+    const q=addonQty[id]||0;
+    document.getElementById("svcAdd").textContent = q>0?"Done":"Add to booking";
+    document.getElementById("svcRemove").style.display = q>0?"block":"none";
+    return;
+  }
+  const inCart = cart[id]!==undefined;
+  document.getElementById("svcAdd").textContent = inCart?"Update booking":"Add to booking";
+  document.getElementById("svcRemove").style.display = inCart?"block":"none";
+}
+function renderSheetQty(id){
+  const q=addonQty[id]||0, unit=addonUnitPrice(id);
+  document.getElementById("shTiers").innerHTML =
+    `<div class="sheet-qty">
+       <div class="sq-price"><b>${rupee(unit)}</b> per unit</div>
+       <div class="qty-step">
+         <button type="button" data-sheetqty="-1">\u2212</button><span>${q}</span><button type="button" data-sheetqty="1">+</button>
+       </div>
+     </div>`;
+  document.querySelectorAll("#shTiers [data-sheetqty]").forEach(b=>b.addEventListener("click",()=>{
+    setAddonQty(id,(addonQty[id]||0)+(+b.dataset.sheetqty));
+    renderSheetQty(id); syncSheetCTA(id); renderAddonGrid(); render();
+  }));
+}
+
+function openSvc(id){
+  const s=ALL[id]; sheetSvc=id;
+  sheetTier = (cart[id]!==undefined)?cart[id]:0;
+  document.getElementById("shTile").className="svc-ico-sheet";
+  document.getElementById("shTile").style.marginBottom="0";
+  document.getElementById("shTile").innerHTML = s.sheetImg ? `<img src="${s.sheetImg}" alt="${s.name}">` : svcIcon(id);
+  document.getElementById("shName").textContent=s.name;
+  document.getElementById("shDesc").textContent=s.desc;
+  if(isQty(s)){ renderSheetQty(id); }
+  else{
+    document.getElementById("shTiers").innerHTML=s.tiers.map((t,i)=>
+      `<button class="tier ${i===sheetTier?'on':''}" data-i="${i}"><span class="tl">${t[0]}</span><span class="tp">${rupee(t[1])}</span><span class="tm">${t[2]}</span></button>`).join("");
+  }
+  document.getElementById("incList").innerHTML=s.inc.map(x=>`<li><span class="mk y">${CHECK}</span>${x}</li>`).join("");
+  document.getElementById("excList").innerHTML=s.exc.map(x=>`<li><span class="mk n">${CROSS}</span>${x}</li>`).join("");
+  syncSheetCTA(id);
+  renderFreqAdd(id);
+  openSheet("svcSheet");
+}
+function stepperHTML(aid){
+  const q=addonQty[aid]||0, up=addonUnitPrice(aid);
+  if(q===0) return `<button class="freq-btn" data-addqty="${aid}" data-dir="1">+ Add</button>`;
+  return `<div class="qty-step">
+    <button data-addqty="${aid}" data-dir="-1">−</button>
+    <span>${q}</span>
+    <button data-addqty="${aid}" data-dir="1">+</button>
+  </div>`;
+}
+function renderFreqAdd(currentId){
+  const box=document.getElementById("freqAdd");
+  const ids=Object.keys(ADDONS).filter(a=>a!==currentId);
+  if(!ids.length){ box.innerHTML=""; return; }
+  box.innerHTML=`<h4 class="freq-title">Frequently added</h4>`+ids.map(aid=>{
+    const a=ADDONS[aid], up=addonUnitPrice(aid);
+    return `<div class="freq-row">
+      <div class="freq-ic">${lineIcon(aid)}</div>
+      <div class="freq-info"><b>${a.name}</b><span>${rupee(up)} each</span></div>
+      ${stepperHTML(aid)}
+    </div>`;
+  }).join("");
+  box.querySelectorAll("[data-addqty]").forEach(btn=>btn.addEventListener("click",()=>{
+    const aid=btn.dataset.addqty, dir=+btn.dataset.dir;
+    setAddonQty(aid,(addonQty[aid]||0)+dir);
+    renderFreqAdd(currentId);
+  }));
+}
+document.getElementById("shTiers").addEventListener("click",e=>{
+  const t=e.target.closest(".tier"); if(!t)return;
+  sheetTier=+t.dataset.i;
+  document.querySelectorAll("#shTiers .tier").forEach(x=>x.classList.remove("on")); t.classList.add("on");
+});
+document.getElementById("svcAdd").addEventListener("click",()=>{
+  const s=ALL[sheetSvc];
+  if(isQty(s)){ if(!(addonQty[sheetSvc]>0)) setAddonQty(sheetSvc,1); renderAddonGrid(); renderServiceGrid(); render(); closeSheets(); return; }
+  cart[sheetSvc]=sheetTier; syncCard(sheetSvc); render(); closeSheets();
+});
+document.getElementById("svcRemove").addEventListener("click",()=>{
+  const s=ALL[sheetSvc];
+  if(isQty(s)){ setAddonQty(sheetSvc,0); renderAddonGrid(); renderServiceGrid(); render(); closeSheets(); return; }
+  delete cart[sheetSvc]; syncCard(sheetSvc); render(); closeSheets();
+});
+
+function syncCard(id){
+  const inbag = ADDONS[id] ? (addonQty[id]>0) : (cart[id]!==undefined);
+  const card=document.getElementById("card-"+id);
+  if(card){
+    card.classList.toggle("inbag",inbag);
+    const arrow=card.querySelector(".svc-arrow");
+    if(arrow){ arrow.textContent=inbag?"✓":"→"; arrow.classList.toggle("inbag",inbag); }
+  }
+}
+
+/* ===== ADD-ON QUANTITY MODEL (Zomato-style) =====
+   Add-ons use quantity × per-unit price instead of tiers.
+   Kept separate from `cart` (which stays tier-based for services).
+   `addonQty` is declared up top (near `cart`) so first render can read it. */
+function isQty(s){ return !!(s.addon || s.qty); }   // add-ons + any service priced per unit
+function addonUnitPrice(id){ return Math.min(...ALL[id].tiers.map(t=>t[1])); }  // base tier = per-unit
+function setAddonQty(id,n){
+  n=Math.max(0,n);
+  if(n===0) delete addonQty[id]; else addonQty[id]=n;
+  syncCard(id); render();
+  if(document.getElementById("addonGrid")) renderAddonGrid();
+}
+
+function totals(){
+  let sum=0,count=0,hasPrimary=false;
+  for(const [id,ti] of Object.entries(cart)){ sum+=ALL[id].tiers[ti][1]; count++; if(!ALL[id].addon) hasPrimary=true; }
+  for(const [id,q] of Object.entries(addonQty)){ sum+=addonUnitPrice(id)*q; count++; if(!ALL[id].addon) hasPrimary=true; }
+  return {sum,count,hasPrimary};
+}
+function blocker(){
+  const {sum,count,hasPrimary}=totals();
+  if(count===0) return {ok:false,msg:""};
+  if(REQUIRE_PRIMARY && !hasPrimary) return {ok:false,msg:"Add a main service — add-ons can't be booked alone."};
+  if(sum<MIN_ORDER) return {ok:false,msg:`Minimum booking ${rupee(MIN_ORDER)} — add ${rupee(MIN_ORDER-sum)} more.`};
+  return {ok:true,msg:""};
+}
+function render(){
+  const {sum,count}=totals(); const b=blocker();
+  document.getElementById("bbCount").textContent = count===0?"No services yet":count+" service"+(count>1?"s":"");
+  document.getElementById("bbTotal").textContent = rupee(sum);
+  document.getElementById("bbMsg").textContent = b.msg;
+  document.getElementById("bbBook").disabled = !b.ok;
+  document.getElementById("bookbar").classList.toggle("show",count>0);
+  document.getElementById("coTotal").textContent = rupee(sum);
+  if(typeof refreshCheckoutSummary==="function") refreshCheckoutSummary();
+  updateConfirm();
+}
+
+/* ---- capacity-aware window picker (reads Firestore) ----
+   Slot data lives in Firestore collection "slots", doc id = `${date}_${window}_${zone}`.
+   Firebase module script (below, before </body>) exposes window.bloorushFB with
+   fbLoadSlots / fbSaveSlot / fbIncrementConfirmed / fbEnsureWeek. */
+const DEFAULT_CAPACITY = 2;               // fallback / new-slot default
+const DAYS_AHEAD = 7;
+const LEAD_MIN = 90;                      // no bookings within 90 min of slot start
+const OPEN_HOUR = 8;                      // operating hours: 8 AM – 8 PM
+const CLOSE_HOUR = 20;
+const DOW=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+function hourLabel12(h){
+  const ap = h>=12 ? "PM" : "AM";
+  const h12 = h%12 || 12;
+  return `${h12}:00 ${ap}`;
+}
+function slotRangeLabel(h){
+  const ap1 = h>=12 ? "PM" : "AM";
+  const ap2 = (h+1)>=12 && (h+1)<24 ? "PM" : "AM";
+  const h12 = h%12 || 12, h12n = (h+1)%12 || 12;
+  return ap1===ap2 ? `${h12}–${h12n} ${ap1}` : `${h12} ${ap1} – ${h12n} ${ap2}`;
+}
+// Build the WINDOWS array from operating hours — id is `HH:00` (24hr), label is 12hr.
+const WINDOWS = [];
+for(let h=OPEN_HOUR; h<CLOSE_HOUR; h++){
+  WINDOWS.push({ id: (h<10?"0"+h:h)+":00", label: hourLabel12(h), sub: slotRangeLabel(h), startH: h });
+}
+
+let SLOTS = {};   // key: `${date}|${window}|${zone}` -> {total,reserved,confirmed}
+let slotsLoaded = false;
+
+function ymd(d){ return d.toISOString().slice(0,10); }
+function slotKey(date,win,zone){ return `${ymd(date)}|${win}|${zone}`; }
+function availableFor(date,win,zone){
+  const row = SLOTS[slotKey(date,win,zone)];
+  if(!row) return DEFAULT_CAPACITY;   // no row = untouched slot, default cap applies
+  return Math.max(0, row.total - row.reserved - row.confirmed);
+}
+
+async function waitForFB(fnName){
+  let tries=0;
+  while(tries<100){
+    if(window.bloorushFB && (!fnName || typeof window.bloorushFB[fnName]==="function")) return window.bloorushFB;
+    await new Promise(r=>setTimeout(r,50)); tries++;
+  }
+  return window.bloorushFB;
+}
+
+async function loadSlots(){
+  try{
+    const fb = await waitForFB();
+    if(!fb){ slotsLoaded=true; return; }
+    SLOTS = await fb.fbLoadSlots();
+    slotsLoaded = true;
+  }catch(e){ console.warn("Firestore slots unreachable, using default capacity",e); slotsLoaded=true; }
+}
+
+function makeWindowPicker(datesId,winsId,getZone,onChange){
+  const datesEl=document.getElementById(datesId), winsEl=document.getElementById(winsId);
+  let selDate=null, selWin=null;
+  const dayIdx=d=>{const t=new Date();t.setHours(0,0,0,0);return Math.round((d-t)/86400000);};
+  function buildDates(){
+    datesEl.innerHTML="";
+    const now=new Date();
+    for(let i=0;i<DAYS_AHEAD;i++){
+      const d=new Date(); d.setDate(now.getDate()+i); d.setHours(0,0,0,0);
+      const b=document.createElement("button"); b.type="button"; b.className="date"; b.dataset.i=i;
+      const wd=i===0?"Today":(i===1?"Tomorrow":DOW[d.getDay()]);
+      b.innerHTML=`<div class="dw">${wd}</div><div class="dd">${d.getDate()} ${MON[d.getMonth()]}</div>`;
+      b.onclick=()=>{selDate=d;selWin=null;markDates();renderWindows();onChange&&onChange();};
+      datesEl.appendChild(b);
+    }
+  }
+  function markDates(){ [...datesEl.children].forEach(c=>c.classList.toggle("on", selDate && +c.dataset.i===dayIdx(selDate))); }
+  function renderWindows(){
+    const zone = getZone();
+    if(!zone){ winsEl.innerHTML='<div class="win-loading">Pick your area first to see availability.</div>'; return; }
+    if(!selDate){ winsEl.innerHTML='<div class="win-loading">Pick a date to see time slots.</div>'; return; }
+    if(!slotsLoaded){ winsEl.innerHTML='<div class="win-loading">Checking availability…</div>'; return; }
+    const now=new Date(), isToday = dayIdx(selDate)===0;
+    winsEl.innerHTML = "";
+    winsEl.className = "slots";       // switch to grid layout
+    let anyOpen = false;
+    for(const w of WINDOWS){
+      const winStart = new Date(selDate); winStart.setHours(w.startH,0,0,0);
+      const passed = isToday && (winStart.getTime() < now.getTime() + LEAD_MIN*60000);
+      const avail = availableFor(selDate, w.id, zone);
+      const full = avail<=0;
+      const disabled = passed || full;
+      const btn=document.createElement("button");
+      btn.type="button";
+      btn.className="slot"+(disabled?" off":"")+(selWin===w.id?" on":"");
+      btn.innerHTML = `<b style="display:block;font-size:13px">${w.label}</b><span style="display:block;font-size:10.5px;opacity:.75;margin-top:2px">${full?"Full":(passed?"Passed":avail+" left")}</span>`;
+      if(!disabled){ anyOpen = true; btn.onclick=()=>{ selWin=w.id; renderWindows(); onChange&&onChange(); }; }
+      else btn.disabled=true;
+      winsEl.appendChild(btn);
+    }
+    if(!anyOpen){
+      winsEl.innerHTML = '<div class="slot-empty" style="grid-column:1/-1">No slots left today — please pick another date.</div>';
+    }
+  }
+  buildDates(); renderWindows();
+  return {
+    value(){
+      if(!selDate||!selWin) return null;
+      const w = WINDOWS.find(x=>x.id===selWin);
+      return { label: `${DOW[selDate.getDay()]} ${selDate.getDate()} ${MON[selDate.getMonth()]}, ${w.sub}`, date: ymd(selDate), window: selWin };
+    },
+    refresh: renderWindows
+  };
+}
+
+const coPicker = makeWindowPicker("coDates","coWindows", ()=>document.getElementById("coZone").value, ()=>updateConfirm());
+loadSlots().then(()=>coPicker.refresh());
+syncCouponCache();
+document.getElementById("coZone").addEventListener("change",()=>{ coPicker.refresh(); updateConfirm(); });
+document.getElementById("bbBook").addEventListener("click",()=>{ if(!requireConsent())return; if(!blocker().ok)return; renderLines(); refreshCheckoutSummary(); openSheet("checkoutSheet"); });
+function renderLines(){
+  const svcLines = Object.entries(cart).map(([id,ti])=>{
+    const s=ALL[id],t=s.tiers[ti];
+    return `<div class="line"><div class="ln"><b>${s.name}${s.addon?' · add-on':''}</b><span>${t[0]} · ${t[2]}</span></div><div class="lp">${rupee(t[1])}</div><button class="rm" data-rm="${id}">×</button></div>`;
+  });
+  const addonLines = Object.entries(addonQty).map(([id,q])=>{
+    const s=ALL[id],up=addonUnitPrice(id);
+    return `<div class="line"><div class="ln"><b>${s.name}${s.addon?' · add-on':''}</b><span>${rupee(up)} × ${q}</span></div><div class="lp">${rupee(up*q)}</div><button class="rm" data-rmaddon="${id}">×</button></div>`;
+  });
+  document.getElementById("cartLines").innerHTML = svcLines.concat(addonLines).join("") || '<p class="muted" style="padding:12px 0">Your booking is empty.</p>';
+}
+document.getElementById("cartLines").addEventListener("click",e=>{
+  const b=e.target.closest("[data-rm]");
+  const a=e.target.closest("[data-rmaddon]");
+  if(b){ delete cart[b.dataset.rm]; syncCard(b.dataset.rm); render(); renderLines(); }
+  else if(a){ setAddonQty(a.dataset.rmaddon,0); renderLines(); }
+});
+function updateConfirm(){ document.getElementById("coConfirm").disabled = !(blocker().ok && document.getElementById("coZone").value && coPicker.value()); }
+
+let coLocationPin = null;      // {lat,lng} if GPS captured
+let coManualPinURL = "";       // manual Google Maps link fallback
+
+document.getElementById("coLocBtn").addEventListener("click", ()=>{
+  const status = document.getElementById("coLocStatus");
+  if(!navigator.geolocation){ showManualFallback(status,"Location not supported here"); return; }
+  status.style.color = "";
+  status.textContent = "Getting your location…";
+  navigator.geolocation.getCurrentPosition(
+    async pos=>{
+      coLocationPin = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+      coManualPinURL = "";
+      status.textContent = "Fetching your address…";
+      try{
+        const r = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${coLocationPin.lat}&lon=${coLocationPin.lng}&zoom=18&addressdetails=1`, { headers:{ "Accept":"application/json" } });
+        const data = await r.json();
+        if(data && data.display_name){
+          const addrField = document.getElementById("coAddress");
+          // only auto-fill if empty, so we never overwrite what they typed
+          if(!addrField.value.trim()) addrField.value = data.display_name;
+          status.textContent = "✓ Address filled — edit it if needed";
+        } else {
+          status.textContent = "✓ Location captured (address lookup unavailable — please type it)";
+        }
+        status.style.color = "#1FA463";
+        updateConfirm();
+      }catch(e){
+        status.textContent = "✓ Location captured (couldn't fetch address — please type it)";
+        status.style.color = "#1FA463";
+      }
+    },
+    err=>{ showManualFallback(status,"Location denied — no problem, type your address below"); },
+    { timeout: 10000, enableHighAccuracy:true }
+  );
+});
+
+function showManualFallback(status,msg){
+  status.innerHTML = msg;
+  status.style.color = "var(--muted)";
+}
+
+function buildBookingPayload(){
+  const zone=document.getElementById("coZone").value;
+  const flat=document.getElementById("coFlat").value.trim();
+  const address=document.getElementById("coAddress").value.trim();
+  const name=document.getElementById("coName").value.trim();
+  const phone=document.getElementById("coPhone").value.replace(/\D/g,"");
+  const slot=coPicker.value();
+  const items=[];
+  for(const [id,ti] of Object.entries(cart)){const s=ALL[id],t=s.tiers[ti];
+    items.push({id,name:s.name,option:t[0],qty:1,price:t[1],addon:!!s.addon});}
+  for(const [id,q] of Object.entries(addonQty)){const s=ALL[id],up=addonUnitPrice(id);
+    items.push({id,name:s.name,option:"per unit",qty:q,price:up*q,addon:!!s.addon});}
+  const sub=totals().sum;
+  const discount=appliedCoupon?appliedCoupon.discount:0;
+  return {zone,flat,address,name,phone,slot,items,sub,discount,payable:sub-discount,
+          coupon:appliedCoupon?appliedCoupon.code:null,
+          pin:coLocationPin?`${coLocationPin.lat},${coLocationPin.lng}`:(coManualPinURL||null)};
+}
+
+function whatsappText(b,paymentId){
+  const L=["\ud83e\udee7 *BlooRush booking*","","\ud83d\udccd *Zone:* "+b.zone];
+  L.push("\ud83c\udfe0 "+b.flat+(b.address?", "+b.address:""));
+  if(b.name)L.push("\ud83d\udc64 "+b.name);
+  if(b.phone)L.push("\ud83d\udcf1 "+b.phone);
+  if(coLocationPin)L.push("\ud83d\udccc Live location: https://www.google.com/maps?q="+b.pin);
+  else if(coManualPinURL)L.push("\ud83d\udccc Location pin: "+b.pin);
+  if(b.slot)L.push("\ud83d\uddd3 "+b.slot.label);
+  L.push("","*Services:*");
+  b.items.forEach(it=>L.push(`\u2022 ${it.name}${it.qty>1?" \u00d7"+it.qty:" ("+it.option+")"}${it.addon?" [add-on]":""} \u2014 ${rupee(it.price)}`));
+  if(b.discount>0){
+    L.push("","*Subtotal: "+rupee(b.sub)+"*");
+    L.push("\ud83c\udfab Coupon *"+b.coupon+"*: \u2212"+rupee(b.discount));
+  }
+  L.push("","*Paid online: "+rupee(b.payable)+"* \u2705");
+  L.push("Payment ID: "+paymentId);
+  return L.join("\n");
+}
+
+async function finishBooking(b,paymentId){
+  // record the booking first — this is the only permanent record we get
+  try{
+    const fb=await waitForFB("fbSaveBooking");
+    if(fb && fb.fbSaveBooking) await fb.fbSaveBooking({
+      paymentId, phone:b.phone, name:b.name||null, zone:b.zone, flat:b.flat,
+      address:b.address||null, pin:b.pin, slotDate:b.slot?b.slot.date:null,
+      slotWindow:b.slot?b.slot.window:null, items:b.items, subtotal:b.sub,
+      discount:b.discount, coupon:b.coupon, payable:b.payable, status:"paid"
+    });
+  }catch(e){ console.warn("Could not record booking",e); }
+
+  window.open("https://wa.me/"+WHATSAPP_NUMBER+"?text="+encodeURIComponent(whatsappText(b,paymentId)),"_blank");
+
+  if(b.slot && window.bloorushFB){
+    window.bloorushFB.fbIncrementConfirmed(b.slot.date, b.slot.window, b.zone)
+      .then(()=>{ loadSlots().then(()=>coPicker.refresh()); })
+      .catch(e=>console.warn("Could not update slot capacity",e));
+  }
+}
+
+document.getElementById("coConfirm").addEventListener("click",()=>{
+  if(!requireConsent())return;
+  const zone=document.getElementById("coZone").value;
+  if(!blocker().ok||!zone)return;
+  const flat=document.getElementById("coFlat").value.trim();
+  if(!flat){ document.getElementById("coFlat").focus(); return; }
+  const phoneEl=document.getElementById("coPhone");
+  const phone=phoneEl.value.replace(/\D/g,"");
+  if(phone.length!==10){ phoneEl.focus(); phoneEl.style.borderColor="#C2543B"; return; }
+  phoneEl.style.borderColor="";
+
+  const b=buildBookingPayload();
+  if(b.payable<=0) return;
+
+  if(typeof Razorpay==="undefined"){
+    alert("Payment could not load. Please check your connection and try again.");
+    return;
+  }
+
+  const btn=document.getElementById("coConfirm");
+  btn.disabled=true;
+
+  const rzp=new Razorpay({
+    key: RAZORPAY_KEY,
+    amount: Math.round(b.payable*100),   // paise
+    currency: "INR",
+    name: "BlooRush",
+    description: b.items.map(i=>i.name).join(", ").slice(0,120),
+    prefill: { name: b.name||"", contact: b.phone },
+    notes: { zone: b.zone, flat: b.flat, slot: b.slot?b.slot.label:"" },
+    theme: { color: "#38B6FF" },
+    modal: { ondismiss: ()=>{ btn.disabled=false; } },
+    handler: function(resp){
+      btn.disabled=false;
+      finishBooking(b, resp.razorpay_payment_id);
+    }
+  });
+  rzp.on("payment.failed", function(resp){
+    btn.disabled=false;
+    alert("Payment failed: "+((resp.error&&resp.error.description)||"please try again"));
+  });
+  rzp.open();
+});
+
+
+/* ===== COUPON SYSTEM (Firestore-backed, cross-device) ===== */
+let appliedCoupon = null;   // {code, discount}
+let COUPON_CACHE = [];      // synced from Firestore; validateCoupon reads this
+async function syncCouponCache(){
+  try{
+    const fb = await waitForFB("fbLoadCoupons");
+    if(!fb || typeof fb.fbLoadCoupons!=="function"){ COUPON_CACHE=[]; return COUPON_CACHE; }
+    COUPON_CACHE = await fb.fbLoadCoupons();
+  }catch(e){ console.warn("Could not load coupons",e); COUPON_CACHE=[]; }
+  return COUPON_CACHE;
+}
+function loadCoupons(){ return COUPON_CACHE; }   // sync read from cache
+function validateCoupon(code, subtotal){
+  const c = loadCoupons().find(x=>x.code.toUpperCase()===code.toUpperCase());
+  if(!c) return {ok:false, msg:"Invalid coupon code."};
+  if(!c.active) return {ok:false, msg:"This coupon is not active."};
+  if(c.expiry && new Date(c.expiry) < new Date(new Date().toDateString())) return {ok:false, msg:"This coupon has expired."};
+  if(c.usageLimit!=null && c.used!=null && c.used>=c.usageLimit) return {ok:false, msg:"This coupon has reached its usage limit."};
+  if(c.minOrder && subtotal < c.minOrder) return {ok:false, msg:`Add ${rupee(c.minOrder-subtotal)} more to use this coupon (min ${rupee(c.minOrder)}).`};
+  let discount = c.type==="percent" ? Math.round(subtotal * c.value/100) : c.value;
+  if(c.maxDiscount && discount > c.maxDiscount) discount = c.maxDiscount;
+  if(discount > subtotal) discount = subtotal;
+  return {ok:true, discount, coupon:c};
+}
+function refreshCheckoutSummary(){
+  const sub = totals().sum;
+  const box=document.getElementById("coSummary");
+  if(sub<=0){ box.style.display="none"; return; }
+  box.style.display="block";
+  document.getElementById("coSubtotal").textContent=rupee(sub);
+  const dRow=document.getElementById("coDiscountRow");
+  if(appliedCoupon){
+    // re-validate against current subtotal (cart may have changed)
+    const v=validateCoupon(appliedCoupon.code, sub);
+    if(v.ok){
+      appliedCoupon.discount=v.discount;
+      dRow.style.display="flex";
+      document.getElementById("coDiscountLabel").textContent="Coupon "+appliedCoupon.code;
+      document.getElementById("coDiscountAmt").textContent="−"+rupee(v.discount);
+      document.getElementById("coPayable").textContent=rupee(sub-v.discount);
+      return;
+    } else { appliedCoupon=null; document.getElementById("coCouponMsg").textContent=v.msg; document.getElementById("coCouponMsg").style.color="#C2543B"; }
+  }
+  dRow.style.display="none";
+  document.getElementById("coPayable").textContent=rupee(sub);
+}
+document.getElementById("coApplyCoupon").addEventListener("click",async()=>{
+  const code=document.getElementById("coCoupon").value.trim();
+  const msg=document.getElementById("coCouponMsg");
+  if(!code){ msg.textContent="Enter a coupon code."; msg.style.color="#C2543B"; return; }
+  msg.textContent="Checking…"; msg.style.color="var(--muted)";
+  await syncCouponCache();
+  const v=validateCoupon(code, totals().sum);
+  if(v.ok){
+    appliedCoupon={code:v.coupon.code, discount:v.discount};
+    msg.textContent=`✓ Coupon applied — you save ${rupee(v.discount)}`; msg.style.color="#1FA463";
+  } else {
+    appliedCoupon=null; msg.textContent=v.msg; msg.style.color="#C2543B";
+  }
+  refreshCheckoutSummary();
+});
+
+const WASH_PERVISIT={1:288,2:578,3:868}, WASH_PRICE={1:999,2:1999,3:2999};
+let washUnit=1;
+function washLabel(n){ return `${n} Washroom${n>1?"s":""} + ${n} Bathroom${n>1?"s":""}`; }
+function washUpdate(){
+  const m=WASH_PRICE[washUnit], alc=WASH_PERVISIT[washUnit]*4;
+  document.getElementById("washPrice").textContent=rupee(m);
+  document.getElementById("washSave").textContent="Save "+rupee(alc-m);
+  document.getElementById("washSummary").textContent=`${washLabel(washUnit)} · ${rupee(m)}/month · 4 visits`;
+}
+document.getElementById("washUnits").addEventListener("click",e=>{
+  const b=e.target.closest(".ubtn"); if(!b)return;
+  document.querySelectorAll("#washUnits .ubtn").forEach(x=>x.classList.remove("on")); b.classList.add("on");
+  washUnit=+b.dataset.u; washUpdate();
+});
+function openPlan(scroll){ openSheet("planSheet"); if(scroll){ setTimeout(()=>document.getElementById("planComboWrap").scrollIntoView({behavior:"smooth",block:"start"}),280); } }
+function openWash(){ washUpdate(); openSheet("washSheet"); }
+
+let planCombo="";
+function planReady(){ document.getElementById("planCTA").disabled=!(planCombo && document.getElementById("planZone").value); }
+document.getElementById("planSheet").addEventListener("click",e=>{
+  const o=e.target.closest(".opt"); if(!o)return;
+  document.querySelectorAll("#planSheet .opt").forEach(x=>x.classList.remove("on")); o.classList.add("on"); planCombo=o.dataset.combo; planReady();
+});
+document.getElementById("planZone").addEventListener("change",planReady);
+document.getElementById("washZone").addEventListener("change",function(){ document.getElementById("washCTA").disabled=!this.value; });
+document.getElementById("planCTA").addEventListener("click",()=>{
+  const zone=document.getElementById("planZone").value; if(!zone)return;
+  const L=["🫧 *BlooRush — Daily Plan*","","📍 *Zone:* "+zone,"Plan: Daily (₹3,999/month)"];
+  if(planCombo)L.push("Combo: "+planCombo);
+  window.open("https://wa.me/"+WHATSAPP_NUMBER+"?text="+encodeURIComponent(L.join("\n")),"_blank");
+});
+document.getElementById("washCTA").addEventListener("click",()=>{
+  const zone=document.getElementById("washZone").value; if(!zone)return;
+  const L=["🫧 *BlooRush — Washroom Weekly*","","📍 *Zone:* "+zone,
+    washLabel(washUnit),`Plan: ${rupee(WASH_PRICE[washUnit])}/month · 4 weekly visits`];
+  window.open("https://wa.me/"+WHATSAPP_NUMBER+"?text="+encodeURIComponent(L.join("\n")),"_blank");
+});
+
+function openSheet(id){ document.getElementById("scrim").classList.add("show"); document.getElementById(id).classList.add("show"); document.body.style.overflow="hidden"; }
+function closeSheets(){ document.getElementById("scrim").classList.remove("show"); document.querySelectorAll(".sheet").forEach(s=>s.classList.remove("show")); document.body.style.overflow=""; }
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeSheets(); });
+
+washUpdate(); render();
+
+/* Small privacy consent popup — first visit only */
+let bloorushConsented = localStorage.getItem("bloorush_consent")==="1";
+if(!bloorushConsented){
+  setTimeout(()=>{
+    document.getElementById("consentBackdrop").style.display="block";
+    document.getElementById("consentPopup").style.display="block";
+  }, 400);
+}
+function acceptConsent(){
+  localStorage.setItem("bloorush_consent","1");
+  bloorushConsented = true;
+  document.getElementById("consentBackdrop").style.display="none";
+  document.getElementById("consentPopup").style.display="none";
+}
+// Gate: any booking action requires consent first. Returns true if allowed.
+function requireConsent(){
+  if(bloorushConsented) return true;
+  document.getElementById("consentBackdrop").style.display="block";
+  document.getElementById("consentPopup").style.display="block";
+  return false;
+}
+
+/* ================= LEGAL SHEET ================= */
+function openLegal(tab){
+  document.getElementById("legalScrim").classList.add("show");
+  document.getElementById("legalSheet").classList.add("show");
+  document.body.style.overflow="hidden";
+  setLegalTab(tab||"privacy");
+}
+function closeLegal(){
+  document.getElementById("legalScrim").classList.remove("show");
+  document.getElementById("legalSheet").classList.remove("show");
+  document.body.style.overflow="";
+}
+function setLegalTab(tab){
+  document.querySelectorAll("#legalTabs .c").forEach(c=>c.classList.toggle("on", c.dataset.tab===tab));
+  document.getElementById("legalPrivacy").style.display = tab==="privacy" ? "block":"none";
+  document.getElementById("legalTerms").style.display   = tab==="terms"   ? "block":"none";
+  document.getElementById("legalRefund").style.display  = tab==="refund"  ? "block":"none";
+  const titles = {privacy:"Privacy Policy", terms:"Terms & Conditions", refund:"Cancellation & Refund Policy"};
+  document.getElementById("legalTitle").textContent = titles[tab];
+}
+document.getElementById("legalTabs").addEventListener("click", e=>{
+  const c = e.target.closest(".c"); if(!c) return;
+  setLegalTab(c.dataset.tab);
+});
+
+/* ================= ADMIN PANEL ================= */
+const ADMIN_PASSWORD = "bloorush2026";   // <-- Guru: change this before sharing with your team
+let adminWinSel = WINDOWS[0].id;   // first hourly slot by default
+let adminDateSel = null;
+
+function openAdminLogin(){
+  document.getElementById("adminScrim").classList.add("show");
+  document.getElementById("adminPassSheet").classList.add("show");
+  document.getElementById("adminPassInput").value="";
+  document.getElementById("adminPassError").style.display="none";
+  document.body.style.overflow="hidden";
+}
+function closeAdmin(){
+  document.getElementById("adminScrim").classList.remove("show");
+  document.getElementById("adminPassSheet").classList.remove("show");
+  document.getElementById("adminPanel").classList.remove("show");
+  document.body.style.overflow="";
+}
+document.getElementById("adminPassSubmit").addEventListener("click", tryAdminLogin);
+document.getElementById("adminPassInput").addEventListener("keydown", e=>{ if(e.key==="Enter") tryAdminLogin(); });
+function tryAdminLogin(){
+  const val = document.getElementById("adminPassInput").value;
+  if(val === ADMIN_PASSWORD){
+    document.getElementById("adminPassSheet").classList.remove("show");
+    document.getElementById("adminPanel").classList.add("show");
+    // build the hourly slot tab strip
+    const tabsEl = document.getElementById("adminWindowTabs");
+    tabsEl.innerHTML = WINDOWS.map((w,i)=>`<button class="c${w.id===adminWinSel?" on":""}" data-w="${w.id}" style="white-space:nowrap">${w.label}</button>`).join("");
+    buildAdminDates();
+    renderAdminRows();
+    renderCouponAdmin();
+  } else {
+    document.getElementById("adminPassError").style.display="block";
+  }
+}
+
+function buildAdminDates(){
+  const el = document.getElementById("adminDates");
+  el.innerHTML = "";
+  const now = new Date();
+  for(let i=0;i<14;i++){
+    const d = new Date(); d.setDate(now.getDate()+i); d.setHours(0,0,0,0);
+    const b = document.createElement("button"); b.type="button"; b.className="date"+(i===0?" on":"");
+    const wd = i===0?"Today":(i===1?"Tomorrow":DOW[d.getDay()]);
+    b.innerHTML = `<div class="dw">${wd}</div><div class="dd">${d.getDate()} ${MON[d.getMonth()]}</div>`;
+    b.onclick = ()=>{ [...el.children].forEach(c=>c.classList.remove("on")); b.classList.add("on"); adminDateSel=ymd(d); renderAdminRows(); };
+    if(i===0) adminDateSel = ymd(d);
+    el.appendChild(b);
+  }
+}
+document.getElementById("adminWindowTabs").addEventListener("click", e=>{
+  const c = e.target.closest(".c"); if(!c) return;
+  document.querySelectorAll("#adminWindowTabs .c").forEach(x=>x.classList.remove("on")); c.classList.add("on");
+  adminWinSel = c.dataset.w; renderAdminRows();
+});
+
+function renderAdminRows(){
+  const wrap = document.getElementById("adminZoneRows");
+  wrap.innerHTML = ZONES.filter(z=>!z.startsWith("Other")).map(zone=>{
+    const row = SLOTS[`${adminDateSel}|${adminWinSel}|${zone}`] || {total:DEFAULT_CAPACITY,reserved:0,confirmed:0};
+    const avail = Math.max(0, row.total - row.reserved - row.confirmed);
+    const zid = zone.replace(/\s+/g,"_");
+    return `<div style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <b style="font-size:14px">${zone}</b>
+        <span style="font-size:12px;font-weight:700;color:${avail>0?'#1FA463':'#C2543B'}">${avail} available</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+        <div><label style="font-size:10.5px;color:var(--muted);display:block;margin-bottom:3px">Total</label>
+          <input type="number" min="0" id="adm-total-${zid}" value="${row.total}" style="width:100%;border:1px solid var(--line);border-radius:8px;padding:7px;font-size:14px"/></div>
+        <div><label style="font-size:10.5px;color:var(--muted);display:block;margin-bottom:3px">Reserved</label>
+          <input type="number" min="0" id="adm-reserved-${zid}" value="${row.reserved}" style="width:100%;border:1px solid var(--line);border-radius:8px;padding:7px;font-size:14px"/></div>
+        <div><label style="font-size:10.5px;color:var(--muted);display:block;margin-bottom:3px">Confirmed</label>
+          <input type="number" min="0" id="adm-confirmed-${zid}" value="${row.confirmed}" style="width:100%;border:1px solid var(--line);border-radius:8px;padding:7px;font-size:14px"/></div>
+      </div>
+      <button data-zone="${zone}" class="admin-save-row" style="width:100%;margin-top:8px;border:none;background:var(--ink);color:#fff;font-weight:700;font-size:13px;padding:9px;border-radius:10px">Save ${zone}</button>
+    </div>`;
+  }).join("");
+  wrap.querySelectorAll(".admin-save-row").forEach(btn=>{
+    btn.addEventListener("click", async ()=>{
+      const zone = btn.dataset.zone, zid = zone.replace(/\s+/g,"_");
+      const total = document.getElementById(`adm-total-${zid}`).value;
+      const reserved = document.getElementById(`adm-reserved-${zid}`).value;
+      const confirmed = document.getElementById(`adm-confirmed-${zid}`).value;
+      btn.textContent = "Saving…"; btn.disabled = true;
+      try{
+        await window.bloorushFB.fbSaveSlot(adminDateSel, adminWinSel, zone, total, reserved, confirmed);
+        SLOTS[`${adminDateSel}|${adminWinSel}|${zone}`] = {total:+total,reserved:+reserved,confirmed:+confirmed};
+        btn.textContent = "Saved ✓";
+        setTimeout(()=>{ btn.textContent = "Save "+zone; btn.disabled=false; },1200);
+      }catch(e){ btn.textContent="Error — retry"; btn.disabled=false; console.error(e); }
+    });
+  });
+}
+
+document.getElementById("adminGenWeek").addEventListener("click", async ()=>{
+  const btn = document.getElementById("adminGenWeek");
+  btn.textContent = "Generating…";
+  const dates=[]; const now=new Date();
+  for(let i=0;i<DAYS_AHEAD;i++){ const d=new Date(); d.setDate(now.getDate()+i); dates.push(ymd(d)); }
+  const created = await window.bloorushFB.fbEnsureWeek(dates, WINDOWS.map(w=>w.id), ZONES.filter(z=>!z.startsWith("Other")), DEFAULT_CAPACITY);
+  SLOTS = await window.bloorushFB.fbLoadSlots();
+  renderAdminRows();
+  btn.textContent = `Generated ${created} new slots ✓`;
+  setTimeout(()=>{ btn.textContent="Generate next 7 days (fills missing slots at default cap)"; },2000);
+});
+
+document.getElementById("adminRefresh").addEventListener("click", async ()=>{
+  const btn = document.getElementById("adminRefresh");
+  btn.textContent = "Refreshing…";
+  SLOTS = await window.bloorushFB.fbLoadSlots();
+  renderAdminRows();
+  btn.textContent = "Refresh from database";
+});
+
+/* ===== COUPON ADMIN (Firestore-backed CRUD) ===== */
+function couponErr(e){
+  const msg=String((e&&(e.code||e.message))||e);
+  if(msg.includes("permission-denied")||msg.includes("Missing or insufficient permissions"))
+    return "Firestore blocked this write.\n\nFix: Firebase Console > Firestore > Rules, add:\n\nmatch /coupons/{doc} {\n  allow read, write: if true;\n}\n\nthen press Publish.";
+  if(msg.includes("unavailable")||msg.includes("network"))
+    return "Could not reach Firestore. Check your connection and try again.";
+  return "Could not save: "+msg;
+}
+
+async function renderCouponAdmin(){
+  const wrap = document.getElementById("adminCouponList");
+  wrap.innerHTML='<div style="font-size:12.5px;color:var(--muted);padding:8px 0">Loading coupons…</div>';
+  await syncCouponCache();
+  const list = COUPON_CACHE;
+  if(!list.length){ wrap.innerHTML='<div style="font-size:12.5px;color:var(--muted);padding:8px 0">No coupons yet.</div>'; return; }
+  wrap.innerHTML = list.map((c,i)=>`
+    <div style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <b style="font-size:14px;letter-spacing:.03em">${c.code}</b>
+        <span style="font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;background:${c.active?'#E7F7EE':'#F0E4E1'};color:${c.active?'#1B7A4B':'#C2543B'}">${c.active?'Active':'Disabled'}</span>
+      </div>
+      <div style="font-size:11.5px;color:var(--muted);margin-top:4px">
+        ${c.type==='percent'?c.value+'% off':'₹'+c.value+' off'}${c.maxDiscount?' · max ₹'+c.maxDiscount:''}${c.minOrder?' · min ₹'+c.minOrder:''}${c.expiry?' · till '+c.expiry:''}${c.usageLimit!=null?' · limit '+c.usageLimit:''}
+      </div>
+      <div style="display:flex;gap:6px;margin-top:9px">
+        <button data-cedit="${i}" style="flex:1;border:1px solid var(--line);background:#fff;font-size:12px;font-weight:600;padding:7px;border-radius:8px">Edit</button>
+        <button data-ctoggle="${i}" style="flex:1;border:1px solid var(--line);background:#fff;font-size:12px;font-weight:600;padding:7px;border-radius:8px">${c.active?'Disable':'Enable'}</button>
+        <button data-cdel="${i}" style="flex:0 0 auto;border:1px solid #F0D0C8;background:#FCF1EE;color:#C2543B;font-size:12px;font-weight:600;padding:7px 12px;border-radius:8px">Delete</button>
+      </div>
+    </div>`).join("");
+  wrap.querySelectorAll("[data-cedit]").forEach(b=>b.onclick=()=>couponForm(+b.dataset.cedit));
+  wrap.querySelectorAll("[data-ctoggle]").forEach(b=>b.onclick=async()=>{
+    const c=COUPON_CACHE[+b.dataset.ctoggle]; const prev=c.active; c.active=!c.active;
+    b.disabled=true; b.textContent="…";
+    try{ const fb=await waitForFB("fbSaveCoupon"); await fb.fbSaveCoupon(c); await renderCouponAdmin(); }
+    catch(e){ c.active=prev; console.error(e); alert(couponErr(e)); await renderCouponAdmin(); }
+  });
+  wrap.querySelectorAll("[data-cdel]").forEach(b=>b.onclick=async()=>{
+    if(!confirm("Delete this coupon?"))return;
+    const c=COUPON_CACHE[+b.dataset.cdel];
+    b.disabled=true; b.textContent="…";
+    try{ const fb=await waitForFB("fbDeleteCoupon"); await fb.fbDeleteCoupon(c.id); await renderCouponAdmin(); }
+    catch(e){ console.error(e); alert(couponErr(e)); await renderCouponAdmin(); }
+  });
+}
+function couponForm(idx){
+  const list=COUPON_CACHE;
+  const c = idx!=null ? list[idx] : {code:"",type:"percent",value:10,minOrder:0,maxDiscount:0,expiry:"",usageLimit:null,active:true,used:0};
+  const g=(l,v,ph,attr="")=>`<label style="font-size:11px;color:var(--muted);display:block;margin:8px 0 3px">${l}</label><input id="cf_${ph}" ${attr} value="${v??''}" style="width:100%;border:1px solid var(--line);border-radius:8px;padding:8px;font-size:13px"/>`;
+  const wrap=document.getElementById("adminCouponList");
+  wrap.innerHTML=`<div style="background:#fff;border:1.5px solid var(--brand);border-radius:12px;padding:14px">
+    <b style="font-size:14px">${idx!=null?'Edit':'New'} coupon</b>
+    ${g("Code","", "code",`value="${c.code}" placeholder="SAVE20" style="text-transform:uppercase"`)}
+    <label style="font-size:11px;color:var(--muted);display:block;margin:8px 0 3px">Discount type</label>
+    <select id="cf_type" style="width:100%;border:1px solid var(--line);border-radius:8px;padding:8px;font-size:13px">
+      <option value="percent" ${c.type==='percent'?'selected':''}>Percentage (%)</option>
+      <option value="fixed" ${c.type==='fixed'?'selected':''}>Fixed (₹)</option>
+    </select>
+    ${g("Value",c.value,"value",'type="number" min="0"')}
+    ${g("Minimum order value (₹)",c.minOrder,"minOrder",'type="number" min="0"')}
+    ${g("Maximum discount (₹, 0 = none)",c.maxDiscount,"maxDiscount",'type="number" min="0"')}
+    ${g("Expiry date",c.expiry,"expiry",'type="date"')}
+    ${g("Usage limit (blank = unlimited)",c.usageLimit,"usageLimit",'type="number" min="0"')}
+    <label style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px"><input type="checkbox" id="cf_active" ${c.active?'checked':''}/> Active</label>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button id="cf_save" style="flex:1;border:none;background:var(--brand);color:#fff;font-weight:700;font-size:13px;padding:10px;border-radius:9px">Save</button>
+      <button id="cf_cancel" style="flex:0 0 auto;border:1px solid var(--line);background:#fff;font-size:13px;padding:10px 16px;border-radius:9px">Cancel</button>
+    </div>
+  </div>`;
+  document.getElementById("cf_cancel").onclick=renderCouponAdmin;
+  document.getElementById("cf_save").onclick=async()=>{
+    const code=document.getElementById("cf_code").value.trim().toUpperCase();
+    if(!code){ alert("Enter a code"); return; }
+    const ul=document.getElementById("cf_usageLimit").value.trim();
+    const obj={
+      code, type:document.getElementById("cf_type").value,
+      value:+document.getElementById("cf_value").value||0,
+      minOrder:+document.getElementById("cf_minOrder").value||0,
+      maxDiscount:+document.getElementById("cf_maxDiscount").value||0,
+      expiry:document.getElementById("cf_expiry").value||"",
+      usageLimit: ul===""?null:+ul,
+      active:document.getElementById("cf_active").checked,
+      used: c.used||0
+    };
+    const btn=document.getElementById("cf_save"); btn.textContent="Saving…"; btn.disabled=true;
+    try{
+      const fb=await waitForFB("fbSaveCoupon");
+      if(!fb||typeof fb.fbSaveCoupon!=="function")
+        throw new Error("Firebase did not load. Hard-refresh the page (Ctrl+Shift+R) and try again.");
+      // if editing and the code changed, drop the old doc so we don't leave a duplicate
+      if(idx!=null && list[idx] && list[idx].id && list[idx].id !== code.replace(/\s+/g,"_")){
+        await fb.fbDeleteCoupon(list[idx].id);
+      }
+      await fb.fbSaveCoupon(obj);
+      await renderCouponAdmin();
+    }catch(e){
+      console.error("Coupon save failed:",e);
+      alert(couponErr(e));
+      btn.textContent="Save"; btn.disabled=false;
+    }
+  };
+}
+document.getElementById("adminAddCoupon").addEventListener("click",()=>couponForm(null));
+</script>
+</body>
+</html>
